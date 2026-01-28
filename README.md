@@ -20,7 +20,8 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 - **Customizable** - Adjust sensitivity and invert Y-axis per profile
 - **Lightweight** - No performance impact
 - **Privacy Focused** - No data collection, no tracking, no ads
-- **Works Everywhere** - 14+ browsers supported (see below)
+- **Works Everywhere** - 14+ browsers supported including Android (see below)
+- **Mobile Ready** - Use with Bluetooth keyboard & mouse on Android devices
 
 ## 🎯 Default Controls
 
@@ -80,6 +81,12 @@ Download the zip file for your browser. Each release includes SHA256 checksums t
 |---------|--------------|
 | Safari | Requires building with Xcode - see [Safari build guide](safari/README.md) |
 
+#### Android (with Bluetooth Keyboard & Mouse)
+| Browser | Instructions |
+|---------|--------------|
+| Kiwi Browser | Load Chrome extension directly - see [mobile guide](mobile/README.md) |
+| Firefox Nightly | Via custom Add-on collection - see [mobile guide](mobile/README.md) |
+
 ### Install on Chromium-Based Browsers
 
 1. Download the zip for your browser from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
@@ -128,9 +135,9 @@ Safari requires building the extension with Xcode. See the detailed [Safari buil
 | Status | Browsers |
 |--------|----------|
 | ✅ Supported | Chrome, Edge, Firefox, Safari*, Brave, Opera, Vivaldi, Yandex, Whale, Cốc Cốc, 360 Safe, QQ, Sogou, Ecosia, Pale Moon |
+| ✅ Android | Kiwi Browser, Firefox Nightly (with Bluetooth KB+M) - see [mobile guide](mobile/README.md) |
 | ⚠️ Build Required | Safari (*requires Xcode on macOS - see [build guide](safari/README.md)) |
-| ❌ Not Supported | Internet Explorer (deprecated), Edge Legacy (deprecated) |
-| ⚠️ Not Applicable | Mobile browsers - Xbox Cloud Gaming on mobile uses touch controls |
+| ❌ Not Supported | iOS/iPadOS (Apple restrictions), Internet Explorer, Edge Legacy |
 
 ### From Browser Stores
 
@@ -210,6 +217,8 @@ When playing a game on xCloud, the extension detects which game you're playing:
 ├── safari/            # Safari-specific files and build guide
 │   ├── README.md      # Safari build instructions
 │   └── setup.sh       # Setup script for Safari extension
+├── mobile/            # Mobile browser support
+│   └── README.md      # Android installation guide
 └── docs/              # Documentation
     ├── PRIVACY_POLICY.md
     └── STORE_SUBMISSION.md

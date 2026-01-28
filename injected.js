@@ -117,6 +117,14 @@
   const keyState = {};
   const mouseState = { x: 0, y: 0, locked: false };
 
+  // Mobile/tablet detection
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const hasPointerLock = 'pointerLockElement' in document;
+
+  if (isMobile) {
+    console.log('[XCloud KB+M] Mobile device detected - touch/BT keyboard+mouse mode');
+  }
+
   // Button indices
   const BUTTONS = {
     A: 0, B: 1, X: 2, Y: 3,
@@ -186,13 +194,7 @@
 
     // Request pointer lock on left click in game area
     if (e.button === 0 && !mouseState.locked) {
-      const target = e.target;
-      if (target.tagName === 'VIDEO' || target.tagName === 'CANVAS' ||
-          target.closest('[data-testid="game-stream"]') ||
-          target.closest('.StreamPage') ||
-          target.closest('#game-stream')) {
-        document.body.requestPointerLock();
-      }
+      requestPointerLockOnGameStream(e.target);
     }
 
     // Handle right click as trigger
@@ -205,6 +207,44 @@
     if (e.button === 1) {
       keyState['MouseMiddle'] = true;
       e.preventDefault();
+    }
+  }
+
+  // Unified pointer lock request for both desktop and mobile
+  function requestPointerLockOnGameStream(target) {
+    if (mouseState.locked) return;
+
+    const isGameStream = target.tagName === 'VIDEO' || target.tagName === 'CANVAS' ||
+        target.closest('[data-testid="game-stream"]') ||
+        target.closest('.StreamPage') ||
+        target.closest('#game-stream') ||
+        target.closest('[class*="stream"]');
+
+    if (isGameStream && hasPointerLock) {
+      // Use requestPointerLock with unadjustedMovement for better precision (if supported)
+      const lockTarget = document.body;
+      if (lockTarget.requestPointerLock) {
+        try {
+          // Try with unadjustedMovement first (better for games)
+          lockTarget.requestPointerLock({ unadjustedMovement: true }).catch(() => {
+            // Fallback to standard pointer lock
+            lockTarget.requestPointerLock();
+          });
+        } catch (e) {
+          // Old API doesn't return promise
+          lockTarget.requestPointerLock();
+        }
+      }
+    }
+  }
+
+  // Touch event handler for mobile pointer lock
+  function handleTouchStart(e) {
+    if (!config.enabled || !isMobile) return;
+
+    const touch = e.touches[0];
+    if (touch) {
+      requestPointerLockOnGameStream(touch.target);
     }
   }
 
@@ -319,6 +359,11 @@
   document.addEventListener('mouseup', handleMouseUp, true);
   document.addEventListener('contextmenu', handleContextMenu, true);
   document.addEventListener('pointerlockchange', handlePointerLockChange);
+
+  // Mobile touch support for pointer lock
+  if (isMobile) {
+    document.addEventListener('touchstart', handleTouchStart, true);
+  }
 
   // Start update loop
   requestAnimationFrame(updateGamepad);
