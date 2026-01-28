@@ -329,13 +329,23 @@
   window.addEventListener('message', function(event) {
     if (event.source !== window) return;
 
-    if (event.data.type === 'XCLOUD_KBM_CONFIG' && event.data.config) {
-      config = { ...DEFAULT_CONFIG, ...event.data.config };
+    if (event.data.type === 'XCLOUD_KBM_CONFIG') {
+      if (event.data.config) {
+        config = { ...config, ...event.data.config };
+      }
+      if (event.data.keyBindings) {
+        config.keyBindings = { ...DEFAULT_CONFIG.keyBindings, ...event.data.keyBindings };
+      }
       console.log('[XCloud KB+M] Config loaded:', config);
     }
 
     if (event.data.type === 'XCLOUD_KBM_UPDATE_CONFIG') {
-      config = { ...DEFAULT_CONFIG, ...event.data.config };
+      if (event.data.config) {
+        config = { ...config, ...event.data.config };
+      }
+      if (event.data.keyBindings) {
+        config.keyBindings = { ...DEFAULT_CONFIG.keyBindings, ...event.data.keyBindings };
+      }
       console.log('[XCloud KB+M] Config updated:', config);
     }
 

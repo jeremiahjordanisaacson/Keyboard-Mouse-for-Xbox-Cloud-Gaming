@@ -12,7 +12,7 @@
     }
 
     body {
-      width: 320px;
+      width: 340px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #1a1a1a;
       color: #e0e0e0;
@@ -55,12 +55,18 @@
       margin-bottom: 16px;
     }
 
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
     h2 {
       font-size: 12px;
       font-weight: 600;
       color: #b0b0b0;
       text-transform: uppercase;
-      margin-bottom: 8px;
       letter-spacing: 0.5px;
     }
 
@@ -273,68 +279,117 @@
       flex: 1;
     }
 
-    /* Key bindings table - semantic and accessible */
+    /* Key bindings - editable */
     .key-bindings {
-      max-height: 200px;
+      max-height: 280px;
       overflow-y: auto;
       background: #2d2d2d;
       border-radius: 8px;
     }
 
-    .key-bindings table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .key-bindings caption {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-
-    .key-bindings th {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      border: 0;
-    }
-
-    .key-bindings td {
+    .key-binding-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 8px 12px;
-      font-size: 12px;
       border-bottom: 1px solid #3d3d3d;
     }
 
-    .key-bindings tr:last-child td {
+    .key-binding-row:last-child {
       border-bottom: none;
     }
 
-    .key-bindings .action-name {
+    .action-name {
+      font-size: 12px;
       color: #c0c0c0;
     }
 
-    .key-bindings .key-value {
-      text-align: right;
-    }
-
-    kbd {
+    .key-bind-btn {
       background: #3d3d3d;
-      padding: 3px 8px;
+      border: 1px solid #4a4a4a;
       border-radius: 4px;
+      padding: 4px 12px;
+      min-width: 80px;
       font-family: 'Consolas', 'Courier New', monospace;
       font-size: 11px;
       color: #4fbf4f;
-      border: 1px solid #4a4a4a;
-      display: inline-block;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .key-bind-btn:hover {
+      background: #4a4a4a;
+      border-color: #5a5a5a;
+    }
+
+    .key-bind-btn:focus {
+      outline: 2px solid #4fbf4f;
+      outline-offset: 2px;
+    }
+
+    .key-bind-btn:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    .key-bind-btn:focus-visible {
+      outline: 2px solid #4fbf4f;
+      outline-offset: 2px;
+    }
+
+    .key-bind-btn.listening {
+      background: #107c10;
+      color: #fff;
+      border-color: #4fbf4f;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Reset button */
+    .reset-btn {
+      background: transparent;
+      border: 1px solid #666;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 10px;
+      color: #999;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .reset-btn:hover {
+      border-color: #999;
+      color: #ccc;
+    }
+
+    .reset-btn:focus {
+      outline: 2px solid #4fbf4f;
+      outline-offset: 2px;
+    }
+
+    .reset-btn:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    .reset-btn:focus-visible {
+      outline: 2px solid #4fbf4f;
+      outline-offset: 2px;
+    }
+
+    /* Category headers in key bindings */
+    .binding-category {
+      background: #252525;
+      padding: 6px 12px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #3d3d3d;
     }
 
     /* Status - with aria-live */
@@ -387,13 +442,13 @@
         border: 2px solid #fff;
       }
 
-      kbd {
+      .key-bind-btn {
         background: #000;
         border: 2px solid #fff;
         color: #fff;
       }
 
-      h1, .slider-value, .status.active, kbd {
+      h1, .slider-value, .status.active {
         color: #fff;
       }
 
@@ -405,8 +460,13 @@
     /* Reduced motion support */
     @media (prefers-reduced-motion: reduce) {
       .toggle-slider,
-      .toggle-slider:before {
+      .toggle-slider:before,
+      .key-bind-btn {
         transition: none;
+      }
+
+      .key-bind-btn.listening {
+        animation: none;
       }
     }
 
@@ -415,6 +475,19 @@
     button:focus-visible {
       outline: 2px solid #4fbf4f;
       outline-offset: 2px;
+    }
+
+    /* Visually hidden but accessible to screen readers */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
   </style>
 </head>
@@ -476,75 +549,111 @@
     </section>
 
     <section class="section" aria-labelledby="keybindings-heading">
-      <h2 id="keybindings-heading">Key Bindings</h2>
-      <div class="key-bindings" tabindex="0" role="region" aria-labelledby="keybindings-heading">
-        <table>
-          <caption>Current keyboard and mouse bindings for Xbox controller buttons</caption>
-          <thead>
-            <tr>
-              <th scope="col">Action</th>
-              <th scope="col">Key</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="action-name">Move Forward</td>
-              <td class="key-value"><kbd>W</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Move Back</td>
-              <td class="key-value"><kbd>S</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Move Left</td>
-              <td class="key-value"><kbd>A</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Move Right</td>
-              <td class="key-value"><kbd>D</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Jump (A Button)</td>
-              <td class="key-value"><kbd>Space</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Interact (B Button)</td>
-              <td class="key-value"><kbd>E</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Action (X Button)</td>
-              <td class="key-value"><kbd>Q</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Reload (Y Button)</td>
-              <td class="key-value"><kbd>R</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Aim (Left Trigger)</td>
-              <td class="key-value"><kbd>Shift</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Fire (Right Trigger)</td>
-              <td class="key-value"><kbd>Right Click</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Left Bumper</td>
-              <td class="key-value"><kbd>F</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Right Bumper</td>
-              <td class="key-value"><kbd>C</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Sprint (Left Stick)</td>
-              <td class="key-value"><kbd>V</kbd></td>
-            </tr>
-            <tr>
-              <td class="action-name">Melee (Right Stick)</td>
-              <td class="key-value"><kbd>Middle Click</kbd></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="section-header">
+        <h2 id="keybindings-heading">Key Bindings</h2>
+        <button type="button" class="reset-btn" id="resetBindings" aria-label="Reset all key bindings to defaults">
+          Reset
+        </button>
+      </div>
+      <p class="visually-hidden">Click any key to change its binding. Press Escape to cancel.</p>
+      <div class="key-bindings" id="keyBindings" role="region" aria-labelledby="keybindings-heading">
+        <!-- Movement -->
+        <div class="binding-category">Movement</div>
+        <div class="key-binding-row">
+          <span class="action-name">Move Forward</span>
+          <button type="button" class="key-bind-btn" data-action="moveForward" aria-label="Change Move Forward key binding">W</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Move Back</span>
+          <button type="button" class="key-bind-btn" data-action="moveBackward" aria-label="Change Move Back key binding">S</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Move Left</span>
+          <button type="button" class="key-bind-btn" data-action="moveLeft" aria-label="Change Move Left key binding">A</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Move Right</span>
+          <button type="button" class="key-bind-btn" data-action="moveRight" aria-label="Change Move Right key binding">D</button>
+        </div>
+
+        <!-- Face Buttons -->
+        <div class="binding-category">Face Buttons</div>
+        <div class="key-binding-row">
+          <span class="action-name">A Button (Jump)</span>
+          <button type="button" class="key-bind-btn" data-action="actionA" aria-label="Change A Button key binding">Space</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">B Button (Interact)</span>
+          <button type="button" class="key-bind-btn" data-action="actionB" aria-label="Change B Button key binding">E</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">X Button (Action)</span>
+          <button type="button" class="key-bind-btn" data-action="actionX" aria-label="Change X Button key binding">Q</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Y Button (Reload)</span>
+          <button type="button" class="key-bind-btn" data-action="actionY" aria-label="Change Y Button key binding">R</button>
+        </div>
+
+        <!-- Triggers & Bumpers -->
+        <div class="binding-category">Triggers & Bumpers</div>
+        <div class="key-binding-row">
+          <span class="action-name">Left Trigger (Aim)</span>
+          <button type="button" class="key-bind-btn" data-action="leftTrigger" aria-label="Change Left Trigger key binding">Shift</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Right Trigger (Fire)</span>
+          <button type="button" class="key-bind-btn" data-action="rightTrigger" aria-label="Change Right Trigger key binding">Right Click</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Left Bumper</span>
+          <button type="button" class="key-bind-btn" data-action="leftBumper" aria-label="Change Left Bumper key binding">F</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Right Bumper</span>
+          <button type="button" class="key-bind-btn" data-action="rightBumper" aria-label="Change Right Bumper key binding">C</button>
+        </div>
+
+        <!-- Stick Clicks -->
+        <div class="binding-category">Stick Clicks</div>
+        <div class="key-binding-row">
+          <span class="action-name">Left Stick Click (Sprint)</span>
+          <button type="button" class="key-bind-btn" data-action="leftStickClick" aria-label="Change Left Stick Click key binding">V</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Right Stick Click (Melee)</span>
+          <button type="button" class="key-bind-btn" data-action="rightStickClick" aria-label="Change Right Stick Click key binding">Middle Click</button>
+        </div>
+
+        <!-- D-Pad -->
+        <div class="binding-category">D-Pad</div>
+        <div class="key-binding-row">
+          <span class="action-name">D-Pad Up</span>
+          <button type="button" class="key-bind-btn" data-action="dpadUp" aria-label="Change D-Pad Up key binding">1</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">D-Pad Down</span>
+          <button type="button" class="key-bind-btn" data-action="dpadDown" aria-label="Change D-Pad Down key binding">3</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">D-Pad Left</span>
+          <button type="button" class="key-bind-btn" data-action="dpadLeft" aria-label="Change D-Pad Left key binding">4</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">D-Pad Right</span>
+          <button type="button" class="key-bind-btn" data-action="dpadRight" aria-label="Change D-Pad Right key binding">2</button>
+        </div>
+
+        <!-- System -->
+        <div class="binding-category">System</div>
+        <div class="key-binding-row">
+          <span class="action-name">View Button</span>
+          <button type="button" class="key-bind-btn" data-action="view" aria-label="Change View Button key binding">Tab</button>
+        </div>
+        <div class="key-binding-row">
+          <span class="action-name">Menu Button</span>
+          <button type="button" class="key-bind-btn" data-action="menu" aria-label="Change Menu Button key binding">Esc</button>
+        </div>
       </div>
     </section>
 
@@ -558,24 +667,9 @@
     </div>
 
     <footer class="instructions">
-      <strong>How to use:</strong> Go to xbox.com/play, start a game, then click on the game stream to lock your mouse for camera control. Press <kbd>Escape</kbd> to unlock.
+      <strong>Tip:</strong> Click any key binding to change it. Press <kbd>Esc</kbd> to cancel.
     </footer>
   </main>
-
-  <style>
-    /* Visually hidden but accessible to screen readers */
-    .visually-hidden {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-  </style>
 
   <script src="popup.js"></script>
 </body>
