@@ -350,8 +350,9 @@
     }
 
     if (event.data.type === 'XCLOUD_KBM_TOGGLE') {
-      config.enabled = !config.enabled;
-      console.log('[XCloud KB+M] Enabled:', config.enabled);
+      // Use explicit enabled value if provided, otherwise toggle
+      config.enabled = event.data.enabled !== undefined ? event.data.enabled : !config.enabled;
+      console.log('[XCloud KB+M] Controls', config.enabled ? 'ENABLED' : 'DISABLED');
     }
   });
 

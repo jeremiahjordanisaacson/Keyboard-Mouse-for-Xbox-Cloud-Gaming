@@ -38,7 +38,7 @@
     }
   });
 
-  // Listen for messages from popup
+  // Listen for messages from popup and background script
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.type === 'CONFIG_UPDATE') {
       // Forward config update to injected script
@@ -48,14 +48,49 @@
         keyBindings: request.keyBindings
       }, '*');
     }
+
+    if (request.type === 'TOGGLE_CONTROLS') {
+      // Forward toggle command to injected script
+      window.postMessage({
+        type: 'XCLOUD_KBM_TOGGLE',
+        enabled: request.enabled
+      }, '*');
+    }
+
+    if (request.type === 'PROFILE_CHANGED') {
+      // Forward profile change to injected script
+      const profile = request.profile;
+      window.postMessage({
+        type: 'XCLOUD_KBM_UPDATE_CONFIG',
+        config: {
+          mouseSensitivity: profile.mouseSensitivity,
+          invertY: profile.invertY
+        },
+        keyBindings: profile.keyBindings
+      }, '*');
+    }
   });
 
   // Send config when injected script is ready
-  chrome.storage.sync.get(['config', 'keyBindings'], function(result) {
+  chrome.storage.sync.get(['config', 'keyBindings', 'profiles', 'activeProfileId'], function(result) {
+    let config = result.config || null;
+    let keyBindings = result.keyBindings || null;
+
+    // If profiles exist, use active profile settings
+    if (result.profiles && result.activeProfileId) {
+      const activeProfile = result.profiles[result.activeProfileId];
+      if (activeProfile) {
+        keyBindings = activeProfile.keyBindings || keyBindings;
+        config = config || {};
+        config.mouseSensitivity = activeProfile.mouseSensitivity;
+        config.invertY = activeProfile.invertY;
+      }
+    }
+
     window.postMessage({
       type: 'XCLOUD_KBM_CONFIG',
-      config: result.config || null,
-      keyBindings: result.keyBindings || null
+      config: config,
+      keyBindings: keyBindings
     }, '*');
   });
 })();

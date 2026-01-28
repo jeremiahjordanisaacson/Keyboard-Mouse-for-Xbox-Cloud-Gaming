@@ -1,16 +1,35 @@
 {
   "manifest_version": 3,
   "name": "Keyboard & Mouse for Xbox Cloud Gaming",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Play Xbox Cloud Gaming (xCloud) with keyboard and mouse controls",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "host_permissions": [
     "https://www.xbox.com/*",
     "https://xbox.com/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-controls": {
+      "suggested_key": {
+        "default": "Alt+Shift+X",
+        "mac": "Alt+Shift+X"
+      },
+      "description": "Toggle keyboard/mouse controls on/off"
+    },
+    "next-profile": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Switch to next game profile"
+    }
+  },
   "content_scripts": [
     {
       "matches": [

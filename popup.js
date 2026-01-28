@@ -1,4 +1,4 @@
-// Popup script - handles settings UI with accessibility support
+// Popup script - handles settings UI with profiles and accessibility support
 
 document.addEventListener('DOMContentLoaded', function() {
   const enabledCheckbox = document.getElementById('enabled');
@@ -8,6 +8,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const statusEl = document.getElementById('status');
   const resetBindingsBtn = document.getElementById('resetBindings');
   const keyBindButtons = document.querySelectorAll('.key-bind-btn');
+
+  // Profile elements
+  const profileSelect = document.getElementById('profileSelect');
+  const newProfileBtn = document.getElementById('newProfileBtn');
+  const deleteProfileBtn = document.getElementById('deleteProfileBtn');
+  const newProfileModal = document.getElementById('newProfileModal');
+  const newProfileName = document.getElementById('newProfileName');
+  const cancelNewProfile = document.getElementById('cancelNewProfile');
+  const createNewProfile = document.getElementById('createNewProfile');
 
   // Default key bindings
   const DEFAULT_BINDINGS = {
@@ -33,10 +42,10 @@ document.addEventListener('DOMContentLoaded', function() {
     rightStickClick: 'MouseMiddle'
   };
 
-  // Current bindings (will be loaded from storage)
+  // State
+  let profiles = {};
+  let activeProfileId = 'default';
   let currentBindings = { ...DEFAULT_BINDINGS };
-
-  // Currently listening button (if any)
   let listeningButton = null;
 
   // Convert key code to display name
@@ -95,30 +104,99 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Load saved settings
-  chrome.storage.sync.get(['config', 'keyBindings'], function(result) {
-    const config = result.config || {};
-
-    if (config.enabled !== undefined) {
-      enabledCheckbox.checked = config.enabled;
+  // Update profile dropdown
+  function updateProfileDropdown() {
+    profileSelect.innerHTML = '';
+    for (const [id, profile] of Object.entries(profiles)) {
+      const option = document.createElement('option');
+      option.value = id;
+      option.textContent = profile.name;
+      if (id === activeProfileId) {
+        option.selected = true;
+      }
+      profileSelect.appendChild(option);
     }
+  }
 
-    if (config.mouseSensitivity !== undefined) {
-      sensitivitySlider.value = config.mouseSensitivity;
-      sensitivityValue.textContent = config.mouseSensitivity;
-      sensitivitySlider.setAttribute('aria-valuenow', config.mouseSensitivity);
-    }
+  // Load profile data into UI
+  function loadProfileIntoUI(profile) {
+    if (!profile) return;
 
-    if (config.invertY !== undefined) {
-      invertYCheckbox.checked = config.invertY;
-    }
-
-    // Load key bindings
-    if (result.keyBindings) {
-      currentBindings = { ...DEFAULT_BINDINGS, ...result.keyBindings };
-    }
+    currentBindings = { ...DEFAULT_BINDINGS, ...profile.keyBindings };
     updateBindingDisplays();
-  });
+
+    if (profile.mouseSensitivity !== undefined) {
+      sensitivitySlider.value = profile.mouseSensitivity;
+      sensitivityValue.textContent = profile.mouseSensitivity;
+      sensitivitySlider.setAttribute('aria-valuenow', profile.mouseSensitivity);
+    }
+
+    if (profile.invertY !== undefined) {
+      invertYCheckbox.checked = profile.invertY;
+    }
+  }
+
+  // Load all data from storage
+  function loadFromStorage() {
+    chrome.storage.sync.get(['profiles', 'activeProfileId', 'config'], function(result) {
+      // Load config
+      const config = result.config || {};
+      if (config.enabled !== undefined) {
+        enabledCheckbox.checked = config.enabled;
+      }
+
+      // Load profiles
+      profiles = result.profiles || {
+        'default': {
+          id: 'default',
+          name: 'Default',
+          keyBindings: { ...DEFAULT_BINDINGS },
+          mouseSensitivity: 5,
+          invertY: false
+        }
+      };
+
+      activeProfileId = result.activeProfileId || 'default';
+
+      updateProfileDropdown();
+      loadProfileIntoUI(profiles[activeProfileId]);
+    });
+  }
+
+  // Save current profile
+  function saveCurrentProfile() {
+    if (!profiles[activeProfileId]) return;
+
+    profiles[activeProfileId].keyBindings = { ...currentBindings };
+    profiles[activeProfileId].mouseSensitivity = parseInt(sensitivitySlider.value);
+    profiles[activeProfileId].invertY = invertYCheckbox.checked;
+
+    chrome.storage.sync.set({ profiles }, function() {
+      console.log('Profile saved:', activeProfileId);
+    });
+
+    // Also save to legacy format for backward compatibility
+    const config = {
+      enabled: enabledCheckbox.checked,
+      mouseSensitivity: parseInt(sensitivitySlider.value),
+      invertY: invertYCheckbox.checked
+    };
+
+    chrome.storage.sync.set({ config, keyBindings: currentBindings }, function() {
+      console.log('Config saved');
+    });
+
+    // Notify content script
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: 'CONFIG_UPDATE',
+          config: config,
+          keyBindings: currentBindings
+        }).catch(() => {});
+      }
+    });
+  }
 
   // Check if we're on an xCloud page
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
@@ -130,44 +208,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Update status with screen reader announcement
+  // Update status
   function updateStatus(isActive, message) {
     const icon = isActive ? '●' : '○';
     statusEl.innerHTML = `<span aria-hidden="true" class="status-icon">${icon}</span>${message}`;
     statusEl.className = isActive ? 'status active' : 'status';
   }
 
-  // Save settings
-  function saveConfig() {
-    const config = {
-      enabled: enabledCheckbox.checked,
-      mouseSensitivity: parseInt(sensitivitySlider.value),
-      invertY: invertYCheckbox.checked
-    };
+  // Load initial data
+  loadFromStorage();
 
-    chrome.storage.sync.set({ config: config, keyBindings: currentBindings }, function() {
-      console.log('Config saved:', config, 'Bindings:', currentBindings);
-    });
+  // Event listeners
+  enabledCheckbox.addEventListener('change', function() {
+    const config = { enabled: this.checked };
+    chrome.storage.sync.set({ config: { ...config, mouseSensitivity: parseInt(sensitivitySlider.value), invertY: invertYCheckbox.checked } });
 
-    // Send message to content script
+    // Update badge
+    chrome.runtime.sendMessage({ type: 'UPDATE_BADGE', enabled: this.checked });
+
+    // Notify content script
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
       if (tabs[0]?.id) {
         chrome.tabs.sendMessage(tabs[0].id, {
-          type: 'CONFIG_UPDATE',
-          config: config,
-          keyBindings: currentBindings
-        }).catch(() => {
-          // Tab might not have content script loaded
-        });
+          type: 'TOGGLE_CONTROLS',
+          enabled: enabledCheckbox.checked
+        }).catch(() => {});
       }
     });
-  }
 
-  // Event listeners for settings
-  enabledCheckbox.addEventListener('change', function() {
-    saveConfig();
-    const state = this.checked ? 'enabled' : 'disabled';
-    announceToScreenReader(`Controls ${state}`);
+    announceToScreenReader(`Controls ${this.checked ? 'enabled' : 'disabled'}`);
   });
 
   sensitivitySlider.addEventListener('input', function() {
@@ -176,19 +245,111 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   sensitivitySlider.addEventListener('change', function() {
-    saveConfig();
+    saveCurrentProfile();
     announceToScreenReader(`Sensitivity set to ${this.value}`);
   });
 
   invertYCheckbox.addEventListener('change', function() {
-    saveConfig();
-    const state = this.checked ? 'enabled' : 'disabled';
-    announceToScreenReader(`Invert Y axis ${state}`);
+    saveCurrentProfile();
+    announceToScreenReader(`Invert Y axis ${this.checked ? 'enabled' : 'disabled'}`);
+  });
+
+  // Profile selection
+  profileSelect.addEventListener('change', function() {
+    activeProfileId = this.value;
+    chrome.storage.sync.set({ activeProfileId });
+    loadProfileIntoUI(profiles[activeProfileId]);
+
+    // Notify background to update content scripts
+    chrome.runtime.sendMessage({
+      type: 'SET_ACTIVE_PROFILE',
+      profileId: activeProfileId
+    });
+
+    announceToScreenReader(`Switched to ${profiles[activeProfileId].name} profile`);
+  });
+
+  // New profile button
+  newProfileBtn.addEventListener('click', function() {
+    newProfileModal.classList.add('active');
+    newProfileName.value = '';
+    newProfileName.focus();
+  });
+
+  // Cancel new profile
+  cancelNewProfile.addEventListener('click', function() {
+    newProfileModal.classList.remove('active');
+  });
+
+  // Create new profile
+  createNewProfile.addEventListener('click', function() {
+    const name = newProfileName.value.trim();
+    if (!name) {
+      newProfileName.focus();
+      return;
+    }
+
+    chrome.runtime.sendMessage({ type: 'CREATE_PROFILE', name }, function(response) {
+      if (response.success) {
+        // Reload profiles
+        chrome.storage.sync.get(['profiles'], function(result) {
+          profiles = result.profiles;
+          activeProfileId = response.profileId;
+          chrome.storage.sync.set({ activeProfileId });
+          updateProfileDropdown();
+          loadProfileIntoUI(profiles[activeProfileId]);
+          announceToScreenReader(`Created ${name} profile`);
+        });
+      }
+    });
+
+    newProfileModal.classList.remove('active');
+  });
+
+  // Enter key in modal
+  newProfileName.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      createNewProfile.click();
+    } else if (e.key === 'Escape') {
+      cancelNewProfile.click();
+    }
+  });
+
+  // Click outside modal to close
+  newProfileModal.addEventListener('click', function(e) {
+    if (e.target === newProfileModal) {
+      newProfileModal.classList.remove('active');
+    }
+  });
+
+  // Delete profile
+  deleteProfileBtn.addEventListener('click', function() {
+    if (activeProfileId === 'default') {
+      announceToScreenReader('Cannot delete the default profile');
+      return;
+    }
+
+    const profileName = profiles[activeProfileId]?.name || activeProfileId;
+
+    if (confirm(`Delete "${profileName}" profile?`)) {
+      chrome.runtime.sendMessage({ type: 'DELETE_PROFILE', profileId: activeProfileId }, function(response) {
+        if (response.success) {
+          chrome.storage.sync.get(['profiles', 'activeProfileId'], function(result) {
+            profiles = result.profiles;
+            activeProfileId = result.activeProfileId;
+            updateProfileDropdown();
+            loadProfileIntoUI(profiles[activeProfileId]);
+            announceToScreenReader(`Deleted ${profileName} profile`);
+          });
+        } else {
+          announceToScreenReader(response.error || 'Cannot delete this profile');
+        }
+      });
+    }
   });
 
   // Key binding functionality
   function startListening(button) {
-    // Cancel any previous listening
     if (listeningButton) {
       listeningButton.classList.remove('listening');
       listeningButton.textContent = keyCodeToDisplayName(currentBindings[listeningButton.dataset.action]);
@@ -208,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (newCode) {
       currentBindings[action] = newCode;
-      saveConfig();
+      saveCurrentProfile();
       announceToScreenReader(`${action} bound to ${keyCodeToDisplayName(newCode)}`);
     }
 
@@ -218,11 +379,9 @@ document.addEventListener('DOMContentLoaded', function() {
     listeningButton = null;
   }
 
-  // Click handler for binding buttons
   keyBindButtons.forEach(btn => {
     btn.addEventListener('click', function() {
       if (listeningButton === this) {
-        // Clicking same button cancels
         stopListening();
       } else {
         startListening(this);
@@ -230,7 +389,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // Keyboard listener for key binding
   document.addEventListener('keydown', function(e) {
     if (!listeningButton) return;
 
@@ -246,11 +404,8 @@ document.addEventListener('DOMContentLoaded', function() {
     stopListening(e.code);
   }, true);
 
-  // Mouse listener for key binding
   document.addEventListener('mousedown', function(e) {
     if (!listeningButton) return;
-
-    // Don't capture left clicks on the button itself (that's for starting/stopping)
     if (e.button === 0 && e.target === listeningButton) return;
 
     e.preventDefault();
@@ -269,22 +424,21 @@ document.addEventListener('DOMContentLoaded', function() {
     stopListening(mouseCode);
   }, true);
 
-  // Prevent context menu when binding right click
   document.addEventListener('contextmenu', function(e) {
     if (listeningButton) {
       e.preventDefault();
     }
   });
 
-  // Reset bindings button
+  // Reset bindings
   resetBindingsBtn.addEventListener('click', function() {
     currentBindings = { ...DEFAULT_BINDINGS };
     updateBindingDisplays();
-    saveConfig();
+    saveCurrentProfile();
     announceToScreenReader('All key bindings reset to defaults');
   });
 
-  // Announce messages to screen readers
+  // Screen reader announcements
   function announceToScreenReader(message) {
     const announcement = document.createElement('div');
     announcement.setAttribute('role', 'status');
@@ -304,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const keyBindingsContainer = document.getElementById('keyBindings');
   if (keyBindingsContainer) {
     keyBindingsContainer.addEventListener('keydown', function(e) {
-      if (listeningButton) return; // Don't scroll while listening
+      if (listeningButton) return;
 
       const scrollAmount = 40;
       if (e.key === 'ArrowDown' && !e.target.classList.contains('key-bind-btn')) {
