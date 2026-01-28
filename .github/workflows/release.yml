@@ -1,0 +1,100 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag or input
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF#refs/tags/v}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Update manifest versions
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Update Chrome manifest
+          jq --arg v "$VERSION" '.version = $v' manifest.json > tmp.json && mv tmp.json manifest.json
+          # Update Firefox manifest
+          jq --arg v "$VERSION" '.version = $v' firefox/manifest.json > tmp.json && mv tmp.json firefox/manifest.json
+
+      - name: Package Chrome extension
+        run: |
+          mkdir -p dist
+          zip -r dist/keyboard-mouse-xbox-chrome-v${{ steps.version.outputs.version }}.zip \
+            manifest.json \
+            content.js \
+            injected.js \
+            popup.html \
+            popup.js \
+            icons/ \
+            -x "*.git*"
+
+      - name: Package Firefox extension
+        run: |
+          # Create temp directory with Firefox manifest
+          mkdir -p firefox-build
+          cp content.js injected.js popup.html popup.js firefox-build/
+          cp -r icons firefox-build/
+          cp firefox/manifest.json firefox-build/manifest.json
+          cd firefox-build
+          zip -r ../dist/keyboard-mouse-xbox-firefox-v${{ steps.version.outputs.version }}.zip .
+
+      - name: Generate SHA256 checksums
+        run: |
+          cd dist
+          sha256sum *.zip > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          echo "## Keyboard & Mouse for Xbox Cloud Gaming v${{ steps.version.outputs.version }}" > release_notes.md
+          echo "" >> release_notes.md
+          echo "### Downloads" >> release_notes.md
+          echo "- **Chrome**: Download the Chrome zip, extract, go to \`chrome://extensions\`, enable Developer mode, click 'Load unpacked', and select the extracted folder." >> release_notes.md
+          echo "- **Firefox**: Download the Firefox zip and install via \`about:debugging\` > 'Load Temporary Add-on'." >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### SHA256 Checksums" >> release_notes.md
+          echo "Verify your download integrity:" >> release_notes.md
+          echo "\`\`\`" >> release_notes.md
+          cat dist/SHA256SUMS.txt >> release_notes.md
+          echo "\`\`\`" >> release_notes.md
+          echo "" >> release_notes.md
+          echo "### Changes" >> release_notes.md
+          echo "See commit history for changes in this release." >> release_notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: v${{ steps.version.outputs.version }}
+          body_path: release_notes.md
+          files: |
+            dist/keyboard-mouse-xbox-chrome-v${{ steps.version.outputs.version }}.zip
+            dist/keyboard-mouse-xbox-firefox-v${{ steps.version.outputs.version }}.zip
+            dist/SHA256SUMS.txt
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
