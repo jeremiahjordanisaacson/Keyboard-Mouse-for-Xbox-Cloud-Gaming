@@ -34,56 +34,140 @@ jobs:
       - name: Update manifest versions
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          # Update Chrome manifest
           jq --arg v "$VERSION" '.version = $v' manifest.json > tmp.json && mv tmp.json manifest.json
-          # Update Firefox manifest
           jq --arg v "$VERSION" '.version = $v' firefox/manifest.json > tmp.json && mv tmp.json firefox/manifest.json
 
-      - name: Package Chrome extension
+      - name: Package browser extensions
         run: |
+          VERSION="${{ steps.version.outputs.version }}"
           mkdir -p dist
-          zip -r dist/keyboard-mouse-xbox-chrome-v${{ steps.version.outputs.version }}.zip \
-            manifest.json \
-            content.js \
-            injected.js \
-            popup.html \
-            popup.js \
-            icons/ \
-            -x "*.git*"
 
-      - name: Package Firefox extension
-        run: |
-          # Create temp directory with Firefox manifest
+          # Files to include in Chromium-based builds
+          CHROMIUM_FILES="manifest.json content.js injected.js popup.html popup.js icons/"
+
+          # Create Chromium-based browser packages (same extension, different names for clarity)
+          for BROWSER in Chrome Edge Brave Opera Vivaldi; do
+            LOWER_BROWSER=$(echo "$BROWSER" | tr '[:upper:]' '[:lower:]')
+            zip -r "dist/Xbox-Cloud-Gaming-KBM-${BROWSER}-v${VERSION}.zip" $CHROMIUM_FILES -x "*.git*"
+          done
+
+          # Create Firefox package (uses different manifest)
           mkdir -p firefox-build
           cp content.js injected.js popup.html popup.js firefox-build/
           cp -r icons firefox-build/
           cp firefox/manifest.json firefox-build/manifest.json
           cd firefox-build
-          zip -r ../dist/keyboard-mouse-xbox-firefox-v${{ steps.version.outputs.version }}.zip .
+          zip -r "../dist/Xbox-Cloud-Gaming-KBM-Firefox-v${VERSION}.zip" .
 
       - name: Generate SHA256 checksums
         run: |
           cd dist
+          for file in *.zip; do
+            sha256sum "$file" > "${file}.sha256"
+          done
           sha256sum *.zip > SHA256SUMS.txt
+          echo "=== All Checksums ==="
           cat SHA256SUMS.txt
 
       - name: Generate release notes
-        id: notes
         run: |
-          echo "## Keyboard & Mouse for Xbox Cloud Gaming v${{ steps.version.outputs.version }}" > release_notes.md
-          echo "" >> release_notes.md
-          echo "### Downloads" >> release_notes.md
-          echo "- **Chrome**: Download the Chrome zip, extract, go to \`chrome://extensions\`, enable Developer mode, click 'Load unpacked', and select the extracted folder." >> release_notes.md
-          echo "- **Firefox**: Download the Firefox zip and install via \`about:debugging\` > 'Load Temporary Add-on'." >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### SHA256 Checksums" >> release_notes.md
-          echo "Verify your download integrity:" >> release_notes.md
-          echo "\`\`\`" >> release_notes.md
+          VERSION="${{ steps.version.outputs.version }}"
+          cat > release_notes.md << 'NOTES'
+          ## Keyboard & Mouse for Xbox Cloud Gaming
+
+          Play Xbox Cloud Gaming with full keyboard and mouse support.
+
+          ---
+
+          ### Download for Your Browser
+
+          | Browser | Download | Checksum |
+          |---------|----------|----------|
+          NOTES
+
+          # Add each browser to the table
+          for BROWSER in Chrome Edge Brave Opera Vivaldi Firefox; do
+            ZIP="Xbox-Cloud-Gaming-KBM-${BROWSER}-v${VERSION}.zip"
+            echo "| **${BROWSER}** | [${ZIP}](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}) | [SHA256](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}.sha256) |" >> release_notes.md
+          done
+
+          cat >> release_notes.md << 'NOTES'
+
+          ---
+
+          ### Installation Instructions
+
+          #### Google Chrome
+          1. Download `Xbox-Cloud-Gaming-KBM-Chrome-v*.zip`
+          2. Extract the zip file to a folder
+          3. Open Chrome and go to `chrome://extensions`
+          4. Enable **Developer mode** (toggle in top right)
+          5. Click **Load unpacked** and select the extracted folder
+
+          #### Microsoft Edge
+          1. Download `Xbox-Cloud-Gaming-KBM-Edge-v*.zip`
+          2. Extract the zip file to a folder
+          3. Open Edge and go to `edge://extensions`
+          4. Enable **Developer mode** (toggle in left sidebar)
+          5. Click **Load unpacked** and select the extracted folder
+
+          #### Brave
+          1. Download `Xbox-Cloud-Gaming-KBM-Brave-v*.zip`
+          2. Extract the zip file to a folder
+          3. Open Brave and go to `brave://extensions`
+          4. Enable **Developer mode** (toggle in top right)
+          5. Click **Load unpacked** and select the extracted folder
+
+          #### Opera
+          1. Download `Xbox-Cloud-Gaming-KBM-Opera-v*.zip`
+          2. Extract the zip file to a folder
+          3. Open Opera and go to `opera://extensions`
+          4. Enable **Developer mode** (toggle in top right)
+          5. Click **Load unpacked** and select the extracted folder
+
+          #### Vivaldi
+          1. Download `Xbox-Cloud-Gaming-KBM-Vivaldi-v*.zip`
+          2. Extract the zip file to a folder
+          3. Open Vivaldi and go to `vivaldi://extensions`
+          4. Enable **Developer mode** (toggle in top right)
+          5. Click **Load unpacked** and select the extracted folder
+
+          #### Mozilla Firefox
+          1. Download `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip`
+          2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
+          3. Click **Load Temporary Add-on**
+          4. Select the downloaded zip file (no need to extract)
+
+          ---
+
+          ### Verify Your Download (SHA256)
+
+          Each download has a matching `.sha256` file. To verify:
+
+          **Windows (PowerShell):**
+          ```powershell
+          Get-FileHash .\Xbox-Cloud-Gaming-KBM-Chrome-v*.zip -Algorithm SHA256
+          ```
+
+          **macOS/Linux:**
+          ```bash
+          sha256sum Xbox-Cloud-Gaming-KBM-Chrome-v*.zip
+          ```
+
+          Compare the output with the contents of the `.sha256` file.
+
+          ---
+
+          ### All Checksums
+
+          ```
+          NOTES
+
           cat dist/SHA256SUMS.txt >> release_notes.md
-          echo "\`\`\`" >> release_notes.md
-          echo "" >> release_notes.md
-          echo "### Changes" >> release_notes.md
-          echo "See commit history for changes in this release." >> release_notes.md
+
+          cat >> release_notes.md << 'NOTES'
+          ```
+          NOTES
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
@@ -91,8 +175,8 @@ jobs:
           name: v${{ steps.version.outputs.version }}
           body_path: release_notes.md
           files: |
-            dist/keyboard-mouse-xbox-chrome-v${{ steps.version.outputs.version }}.zip
-            dist/keyboard-mouse-xbox-firefox-v${{ steps.version.outputs.version }}.zip
+            dist/*.zip
+            dist/*.sha256
             dist/SHA256SUMS.txt
           draft: false
           prerelease: false
