@@ -5,7 +5,6 @@ Play Xbox Cloud Gaming (xCloud) with your keyboard and mouse instead of a contro
 This browser extension injects a virtual Xbox controller into the Xbox Cloud Gaming webpage, allowing you to use keyboard keys for buttons and mouse movement for camera control.
 
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-Chrome%20%7C%20Edge%20%7C%20Firefox%20%7C%20Opera%20%7C%20Brave-blue)
 [![Latest Release](https://img.shields.io/github/v/release/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming)](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest)
 
 ## ✨ Features
@@ -16,7 +15,7 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 - **Customizable** - Adjust sensitivity and invert Y-axis
 - **Lightweight** - No performance impact
 - **Privacy Focused** - No data collection, no tracking, no ads
-- **Works Everywhere** - Chrome, Edge, Firefox, Opera, Brave, and more
+- **Works Everywhere** - 14+ browsers supported (see below)
 
 ## 🎯 Default Controls
 
@@ -49,35 +48,65 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 
 Download the zip file for your browser. Each release includes SHA256 checksums to verify your download.
 
+#### Chromium-Based Browsers
 | Browser | Download |
 |---------|----------|
 | Google Chrome | `Xbox-Cloud-Gaming-KBM-Chrome-v*.zip` |
 | Microsoft Edge | `Xbox-Cloud-Gaming-KBM-Edge-v*.zip` |
-| Mozilla Firefox | `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip` |
 | Brave | `Xbox-Cloud-Gaming-KBM-Brave-v*.zip` |
 | Opera | `Xbox-Cloud-Gaming-KBM-Opera-v*.zip` |
 | Vivaldi | `Xbox-Cloud-Gaming-KBM-Vivaldi-v*.zip` |
+| Yandex Browser | `Xbox-Cloud-Gaming-KBM-Yandex-v*.zip` |
+| Naver Whale | `Xbox-Cloud-Gaming-KBM-Whale-v*.zip` |
+| Cốc Cốc | `Xbox-Cloud-Gaming-KBM-CocCoc-v*.zip` |
+| 360 Safe Browser | `Xbox-Cloud-Gaming-KBM-360Browser-v*.zip` |
+| QQ Browser | `Xbox-Cloud-Gaming-KBM-QQBrowser-v*.zip` |
+| Sogou Explorer | `Xbox-Cloud-Gaming-KBM-SogouExplorer-v*.zip` |
+| Ecosia | `Xbox-Cloud-Gaming-KBM-Ecosia-v*.zip` |
 
-### Install on Chrome / Edge / Brave / Opera / Vivaldi
+#### Firefox-Based Browsers
+| Browser | Download |
+|---------|----------|
+| Mozilla Firefox | `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip` |
+| Pale Moon | `Xbox-Cloud-Gaming-KBM-PaleMoon-v*.zip` |
+
+### Install on Chromium-Based Browsers
 
 1. Download the zip for your browser from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
 2. Extract the zip file to a folder on your computer
 3. Open your browser's extension page:
-   - Chrome: `chrome://extensions`
-   - Edge: `edge://extensions`
-   - Brave: `brave://extensions`
-   - Opera: `opera://extensions`
-   - Vivaldi: `vivaldi://extensions`
+   - **Chrome**: `chrome://extensions`
+   - **Edge**: `edge://extensions`
+   - **Brave**: `brave://extensions`
+   - **Opera**: `opera://extensions`
+   - **Vivaldi**: `vivaldi://extensions`
+   - **Yandex**: `browser://extensions`
+   - **Whale**: `whale://extensions`
+   - **Cốc Cốc**: `coccoc://extensions`
+   - **360 Safe Browser**: Settings → Extensions
+   - **QQ Browser**: Settings → Extensions
+   - **Sogou Explorer**: Settings → Extensions
+   - **Ecosia**: `chrome://extensions`
 4. Enable **Developer Mode** (toggle in top-right or sidebar)
 5. Click **Load unpacked**
 6. Select the extracted folder
 
-### Install on Firefox
+### Install on Firefox-Based Browsers
 
-1. Download `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip` from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
-2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
+1. Download the zip for your browser from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
+2. Open the debugging page:
+   - **Firefox**: `about:debugging#/runtime/this-firefox`
+   - **Pale Moon**: `about:debugging`
 3. Click **Load Temporary Add-on**
 4. Select the downloaded zip file (no need to extract)
+
+### Browser Compatibility
+
+| Status | Browsers |
+|--------|----------|
+| ✅ Supported | Chrome, Edge, Firefox, Brave, Opera, Vivaldi, Yandex, Whale, Cốc Cốc, 360 Safe, QQ, Sogou, Ecosia, Pale Moon |
+| ❌ Not Supported | Safari (requires different format), Internet Explorer (deprecated), Edge Legacy (deprecated) |
+| ⚠️ Not Applicable | Mobile browsers - Xbox Cloud Gaming on mobile uses touch controls |
 
 ### From Browser Stores
 

@@ -45,19 +45,24 @@ jobs:
           # Files to include in Chromium-based builds
           CHROMIUM_FILES="manifest.json content.js injected.js popup.html popup.js icons/"
 
-          # Create Chromium-based browser packages (same extension, different names for clarity)
-          for BROWSER in Chrome Edge Brave Opera Vivaldi; do
-            LOWER_BROWSER=$(echo "$BROWSER" | tr '[:upper:]' '[:lower:]')
+          # Chromium-based browsers (all use the same extension format)
+          CHROMIUM_BROWSERS="Chrome Edge Brave Opera Vivaldi Yandex Whale CocCoc 360Browser QQBrowser SogouExplorer Ecosia"
+
+          for BROWSER in $CHROMIUM_BROWSERS; do
             zip -r "dist/Xbox-Cloud-Gaming-KBM-${BROWSER}-v${VERSION}.zip" $CHROMIUM_FILES -x "*.git*"
           done
 
-          # Create Firefox package (uses different manifest)
+          # Firefox-based browsers
           mkdir -p firefox-build
           cp content.js injected.js popup.html popup.js firefox-build/
           cp -r icons firefox-build/
           cp firefox/manifest.json firefox-build/manifest.json
           cd firefox-build
-          zip -r "../dist/Xbox-Cloud-Gaming-KBM-Firefox-v${VERSION}.zip" .
+
+          FIREFOX_BROWSERS="Firefox PaleMoon"
+          for BROWSER in $FIREFOX_BROWSERS; do
+            zip -r "../dist/Xbox-Cloud-Gaming-KBM-${BROWSER}-v${VERSION}.zip" .
+          done
 
       - name: Generate SHA256 checksums
         run: |
@@ -81,14 +86,42 @@ jobs:
 
           ### Download for Your Browser
 
+          #### Chromium-Based Browsers
           | Browser | Download | Checksum |
           |---------|----------|----------|
           NOTES
 
-          # Add each browser to the table
-          for BROWSER in Chrome Edge Brave Opera Vivaldi Firefox; do
+          # Chromium browsers
+          for BROWSER in Chrome Edge Brave Opera Vivaldi Yandex Whale CocCoc 360Browser QQBrowser SogouExplorer Ecosia; do
             ZIP="Xbox-Cloud-Gaming-KBM-${BROWSER}-v${VERSION}.zip"
-            echo "| **${BROWSER}** | [${ZIP}](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}) | [SHA256](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}.sha256) |" >> release_notes.md
+            # Display names
+            case $BROWSER in
+              CocCoc) DISPLAY="Cốc Cốc" ;;
+              360Browser) DISPLAY="360 Safe Browser" ;;
+              QQBrowser) DISPLAY="QQ Browser" ;;
+              SogouExplorer) DISPLAY="Sogou Explorer" ;;
+              Yandex) DISPLAY="Yandex Browser" ;;
+              Whale) DISPLAY="Naver Whale" ;;
+              *) DISPLAY="$BROWSER" ;;
+            esac
+            echo "| **${DISPLAY}** | [Download](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}) | [SHA256](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}.sha256) |" >> release_notes.md
+          done
+
+          cat >> release_notes.md << 'NOTES'
+
+          #### Firefox-Based Browsers
+          | Browser | Download | Checksum |
+          |---------|----------|----------|
+          NOTES
+
+          # Firefox browsers
+          for BROWSER in Firefox PaleMoon; do
+            ZIP="Xbox-Cloud-Gaming-KBM-${BROWSER}-v${VERSION}.zip"
+            case $BROWSER in
+              PaleMoon) DISPLAY="Pale Moon" ;;
+              *) DISPLAY="$BROWSER" ;;
+            esac
+            echo "| **${DISPLAY}** | [Download](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}) | [SHA256](https://github.com/${{ github.repository }}/releases/download/v${VERSION}/${ZIP}.sha256) |" >> release_notes.md
           done
 
           cat >> release_notes.md << 'NOTES'
@@ -97,46 +130,45 @@ jobs:
 
           ### Installation Instructions
 
-          #### Google Chrome
-          1. Download `Xbox-Cloud-Gaming-KBM-Chrome-v*.zip`
-          2. Extract the zip file to a folder
-          3. Open Chrome and go to `chrome://extensions`
-          4. Enable **Developer mode** (toggle in top right)
-          5. Click **Load unpacked** and select the extracted folder
+          #### Chromium-Based Browsers (Chrome, Edge, Brave, Opera, Vivaldi, Yandex, Whale, Cốc Cốc, 360, QQ, Sogou, Ecosia)
 
-          #### Microsoft Edge
-          1. Download `Xbox-Cloud-Gaming-KBM-Edge-v*.zip`
-          2. Extract the zip file to a folder
-          3. Open Edge and go to `edge://extensions`
-          4. Enable **Developer mode** (toggle in left sidebar)
-          5. Click **Load unpacked** and select the extracted folder
+          1. Download the zip file for your browser from the table above
+          2. Extract the zip file to a folder on your computer
+          3. Open your browser's extension page:
+             - **Chrome**: `chrome://extensions`
+             - **Edge**: `edge://extensions`
+             - **Brave**: `brave://extensions`
+             - **Opera**: `opera://extensions`
+             - **Vivaldi**: `vivaldi://extensions`
+             - **Yandex**: `browser://extensions`
+             - **Whale**: `whale://extensions`
+             - **Cốc Cốc**: `coccoc://extensions`
+             - **360 Safe Browser**: Settings → Extensions
+             - **QQ Browser**: Settings → Extensions
+             - **Sogou Explorer**: Settings → Extensions
+             - **Ecosia**: `chrome://extensions`
+          4. Enable **Developer mode** (usually a toggle in the top-right or sidebar)
+          5. Click **Load unpacked**
+          6. Select the extracted folder
 
-          #### Brave
-          1. Download `Xbox-Cloud-Gaming-KBM-Brave-v*.zip`
-          2. Extract the zip file to a folder
-          3. Open Brave and go to `brave://extensions`
-          4. Enable **Developer mode** (toggle in top right)
-          5. Click **Load unpacked** and select the extracted folder
+          #### Firefox-Based Browsers (Firefox, Pale Moon)
 
-          #### Opera
-          1. Download `Xbox-Cloud-Gaming-KBM-Opera-v*.zip`
-          2. Extract the zip file to a folder
-          3. Open Opera and go to `opera://extensions`
-          4. Enable **Developer mode** (toggle in top right)
-          5. Click **Load unpacked** and select the extracted folder
-
-          #### Vivaldi
-          1. Download `Xbox-Cloud-Gaming-KBM-Vivaldi-v*.zip`
-          2. Extract the zip file to a folder
-          3. Open Vivaldi and go to `vivaldi://extensions`
-          4. Enable **Developer mode** (toggle in top right)
-          5. Click **Load unpacked** and select the extracted folder
-
-          #### Mozilla Firefox
-          1. Download `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip`
-          2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
+          1. Download the Firefox or Pale Moon zip from the table above
+          2. Open the debugging page:
+             - **Firefox**: `about:debugging#/runtime/this-firefox`
+             - **Pale Moon**: `about:debugging`
           3. Click **Load Temporary Add-on**
           4. Select the downloaded zip file (no need to extract)
+
+          ---
+
+          ### Browser Compatibility Notes
+
+          | Status | Browsers |
+          |--------|----------|
+          | ✅ **Fully Supported** | Chrome, Edge, Firefox, Brave, Opera, Vivaldi, Yandex, Whale, Cốc Cốc, 360 Safe, QQ, Sogou, Ecosia, Pale Moon |
+          | ❌ **Not Supported** | Safari (requires different format), Internet Explorer (deprecated), Edge Legacy (deprecated) |
+          | ⚠️ **Not Applicable** | Mobile browsers (Samsung Internet, UC Browser, etc.) - Xbox Cloud Gaming on mobile uses touch controls |
 
           ---
 
