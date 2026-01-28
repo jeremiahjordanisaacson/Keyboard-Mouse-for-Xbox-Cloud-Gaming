@@ -12,7 +12,10 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 - **WASD Movement** - Smooth analog stick simulation
 - **Mouse Camera Control** - Adjustable sensitivity with pointer lock
 - **All Buttons Mapped** - Every Xbox controller button accessible via keyboard
-- **Customizable** - Adjust sensitivity and invert Y-axis
+- **Custom Key Bindings** - Rebind any action to your preferred keys or mouse buttons
+- **Game Profiles** - Save different configurations for different games (FPS, Racing, etc.)
+- **Quick Toggle Hotkeys** - Instantly toggle controls or switch profiles with keyboard shortcuts
+- **Customizable** - Adjust sensitivity and invert Y-axis per profile
 - **Lightweight** - No performance impact
 - **Privacy Focused** - No data collection, no tracking, no ads
 - **Works Everywhere** - 14+ browsers supported (see below)
@@ -125,21 +128,47 @@ Coming soon to:
 6. Play with keyboard and mouse!
 7. Press **Escape** to unlock your mouse
 
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Alt+Shift+X` | Toggle controls on/off |
+| `Alt+Shift+P` | Switch to next profile |
+
+These shortcuts work globally, even when the popup is closed.
+
 ## ⚙️ Settings
 
 Click the extension icon in your browser toolbar to:
+
+### General
 - Enable/disable the controls
 - Adjust mouse sensitivity (1-20)
 - Invert Y-axis
+
+### Game Profiles
+- **Switch profiles** - Use the dropdown to select a profile
+- **Create profile** - Click + to create a new profile
+- **Delete profile** - Click × to delete the current profile (except Default)
+- **Built-in profiles**: Default, FPS/Shooter, Racing
+
+Each profile saves its own key bindings, sensitivity, and invert Y setting.
+
+### Custom Key Bindings
+- Click any key binding button to rebind it
+- Press the new key or mouse button you want to use
+- Press Escape to cancel
+- Click "Reset to Defaults" to restore all bindings
 
 ## 📁 Project Structure
 
 ```
 ├── manifest.json      # Extension manifest (Chrome/Edge/Opera/Brave)
+├── background.js      # Service worker - handles hotkeys & profile management
 ├── content.js         # Content script - loads injected code
 ├── injected.js        # Main logic - virtual gamepad & input handling
 ├── popup.html         # Settings popup UI
-├── popup.js           # Settings logic
+├── popup.js           # Settings logic & profile management
 ├── icons/             # Extension icons
 ├── firefox/           # Firefox-specific files
 │   └── manifest.json  # Firefox manifest (Manifest V2)
@@ -150,12 +179,13 @@ Click the extension icon in your browser toolbar to:
 
 ## 🔧 How It Works
 
-1. **Content Script** (`content.js`) runs when you visit xbox.com/play
-2. **Injected Script** (`injected.js`) is injected into the page context
-3. **Virtual Gamepad** overrides `navigator.getGamepads()` to return a simulated Xbox 360 controller
-4. **Input Capture** listens for keyboard and mouse events
-5. **Gamepad State** is updated 60 times per second based on your inputs
-6. **xCloud** detects the virtual controller and accepts input
+1. **Background Script** (`background.js`) runs persistently to handle global hotkeys and profile management
+2. **Content Script** (`content.js`) runs when you visit xbox.com/play
+3. **Injected Script** (`injected.js`) is injected into the page context
+4. **Virtual Gamepad** overrides `navigator.getGamepads()` to return a simulated Xbox 360 controller
+5. **Input Capture** listens for keyboard and mouse events
+6. **Gamepad State** is updated 60 times per second based on your inputs
+7. **xCloud** detects the virtual controller and accepts input
 
 ## 🤝 Contributing
 
