@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "لوحة المفاتيح والماوس لـ Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "العب Xbox Cloud Gaming (xCloud) بلوحة المفاتيح والماوس"
+  },
+  "enableControls": {
+    "message": "تفعيل التحكم"
+  },
+  "enabled": {
+    "message": "مفعّل"
+  },
+  "disabled": {
+    "message": "معطّل"
+  },
+  "mouseSensitivity": {
+    "message": "حساسية الماوس"
+  },
+  "invertYAxis": {
+    "message": "عكس المحور Y"
+  },
+  "profile": {
+    "message": "الملف الشخصي"
+  },
+  "profileDefault": {
+    "message": "افتراضي"
+  },
+  "profileFPS": {
+    "message": "FPS / تصويب"
+  },
+  "profileRacing": {
+    "message": "سباق"
+  },
+  "newProfile": {
+    "message": "ملف جديد"
+  },
+  "deleteProfile": {
+    "message": "حذف الملف"
+  },
+  "createProfile": {
+    "message": "إنشاء ملف شخصي"
+  },
+  "profileName": {
+    "message": "اسم الملف"
+  },
+  "enterProfileName": {
+    "message": "أدخل اسم الملف..."
+  },
+  "cancel": {
+    "message": "إلغاء"
+  },
+  "create": {
+    "message": "إنشاء"
+  },
+  "keyBindings": {
+    "message": "تعيينات المفاتيح"
+  },
+  "resetToDefaults": {
+    "message": "إعادة التعيين"
+  },
+  "movement": {
+    "message": "الحركة"
+  },
+  "faceButtons": {
+    "message": "الأزرار الأمامية"
+  },
+  "bumpersAndTriggers": {
+    "message": "الأزرار والزناد"
+  },
+  "dPad": {
+    "message": "لوحة الاتجاهات"
+  },
+  "special": {
+    "message": "خاص"
+  },
+  "moveForward": {
+    "message": "للأمام"
+  },
+  "moveBackward": {
+    "message": "للخلف"
+  },
+  "moveLeft": {
+    "message": "يسار"
+  },
+  "moveRight": {
+    "message": "يمين"
+  },
+  "actionA": {
+    "message": "زر A"
+  },
+  "actionB": {
+    "message": "زر B"
+  },
+  "actionX": {
+    "message": "زر X"
+  },
+  "actionY": {
+    "message": "زر Y"
+  },
+  "leftBumper": {
+    "message": "الزر الأيسر العلوي"
+  },
+  "rightBumper": {
+    "message": "الزر الأيمن العلوي"
+  },
+  "leftTrigger": {
+    "message": "الزناد الأيسر"
+  },
+  "rightTrigger": {
+    "message": "الزناد الأيمن"
+  },
+  "dpadUp": {
+    "message": "أعلى"
+  },
+  "dpadDown": {
+    "message": "أسفل"
+  },
+  "dpadLeft": {
+    "message": "يسار"
+  },
+  "dpadRight": {
+    "message": "يمين"
+  },
+  "view": {
+    "message": "عرض"
+  },
+  "menu": {
+    "message": "القائمة"
+  },
+  "leftStickClick": {
+    "message": "نقر العصا اليسرى"
+  },
+  "rightStickClick": {
+    "message": "نقر العصا اليمنى"
+  },
+  "hotkeys": {
+    "message": "اختصارات"
+  },
+  "toggleControls": {
+    "message": "تبديل التحكم"
+  },
+  "nextProfile": {
+    "message": "الملف التالي"
+  },
+  "pressKey": {
+    "message": "اضغط مفتاح..."
+  },
+  "pressKeyOrMouse": {
+    "message": "اضغط مفتاح أو زر الماوس. Escape للإلغاء."
+  },
+  "keyBindingCancelled": {
+    "message": "تم إلغاء التعيين"
+  },
+  "bindingsReset": {
+    "message": "تم إعادة تعيين جميع المفاتيح"
+  },
+  "cannotDeleteDefault": {
+    "message": "لا يمكن حذف الملف الافتراضي"
+  },
+  "deleteProfileConfirm": {
+    "message": "حذف الملف \"$PROFILE_NAME$\"؟",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "تم إنشاء الملف $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "تم حذف الملف $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "تم التبديل إلى الملف $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "تم تفعيل التحكم"
+  },
+  "controlsDisabled": {
+    "message": "تم تعطيل التحكم"
+  },
+  "boundTo": {
+    "message": "تم تعيين $ACTION$ إلى $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "نشط في هذه الصفحة"
+  },
+  "statusInactive": {
+    "message": "انتقل إلى xbox.com/play"
+  },
+  "changeBinding": {
+    "message": "تغيير تعيين $ACTION$. حالياً $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "في انتظار المفتاح. Escape للإلغاء."
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Teclado e Mouse para Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Jogue Xbox Cloud Gaming (xCloud) com controles de teclado e mouse"
+  },
+  "enableControls": {
+    "message": "Habilitar Controles"
+  },
+  "enabled": {
+    "message": "Habilitado"
+  },
+  "disabled": {
+    "message": "Desabilitado"
+  },
+  "mouseSensitivity": {
+    "message": "Sensibilidade do Mouse"
+  },
+  "invertYAxis": {
+    "message": "Inverter Eixo Y"
+  },
+  "profile": {
+    "message": "Perfil"
+  },
+  "profileDefault": {
+    "message": "Padrão"
+  },
+  "profileFPS": {
+    "message": "FPS / Tiro"
+  },
+  "profileRacing": {
+    "message": "Corrida"
+  },
+  "newProfile": {
+    "message": "Novo Perfil"
+  },
+  "deleteProfile": {
+    "message": "Excluir Perfil"
+  },
+  "createProfile": {
+    "message": "Criar Perfil"
+  },
+  "profileName": {
+    "message": "Nome do Perfil"
+  },
+  "enterProfileName": {
+    "message": "Digite o nome do perfil..."
+  },
+  "cancel": {
+    "message": "Cancelar"
+  },
+  "create": {
+    "message": "Criar"
+  },
+  "keyBindings": {
+    "message": "Atalhos de Teclas"
+  },
+  "resetToDefaults": {
+    "message": "Redefinir Padrões"
+  },
+  "movement": {
+    "message": "Movimento"
+  },
+  "faceButtons": {
+    "message": "Botões Frontais"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumpers e Gatilhos"
+  },
+  "dPad": {
+    "message": "Direcional"
+  },
+  "special": {
+    "message": "Especial"
+  },
+  "moveForward": {
+    "message": "Frente"
+  },
+  "moveBackward": {
+    "message": "Trás"
+  },
+  "moveLeft": {
+    "message": "Esquerda"
+  },
+  "moveRight": {
+    "message": "Direita"
+  },
+  "actionA": {
+    "message": "Botão A"
+  },
+  "actionB": {
+    "message": "Botão B"
+  },
+  "actionX": {
+    "message": "Botão X"
+  },
+  "actionY": {
+    "message": "Botão Y"
+  },
+  "leftBumper": {
+    "message": "Bumper Esquerdo"
+  },
+  "rightBumper": {
+    "message": "Bumper Direito"
+  },
+  "leftTrigger": {
+    "message": "Gatilho Esquerdo"
+  },
+  "rightTrigger": {
+    "message": "Gatilho Direito"
+  },
+  "dpadUp": {
+    "message": "Direcional Cima"
+  },
+  "dpadDown": {
+    "message": "Direcional Baixo"
+  },
+  "dpadLeft": {
+    "message": "Direcional Esquerda"
+  },
+  "dpadRight": {
+    "message": "Direcional Direita"
+  },
+  "view": {
+    "message": "Visualizar"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Clique Analógico Esquerdo"
+  },
+  "rightStickClick": {
+    "message": "Clique Analógico Direito"
+  },
+  "hotkeys": {
+    "message": "Atalhos"
+  },
+  "toggleControls": {
+    "message": "Alternar Controles"
+  },
+  "nextProfile": {
+    "message": "Próximo Perfil"
+  },
+  "pressKey": {
+    "message": "Pressione..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Pressione uma tecla ou botão do mouse. Escape para cancelar."
+  },
+  "keyBindingCancelled": {
+    "message": "Atribuição cancelada"
+  },
+  "bindingsReset": {
+    "message": "Todos os atalhos redefinidos"
+  },
+  "cannotDeleteDefault": {
+    "message": "Não é possível excluir o perfil padrão"
+  },
+  "deleteProfileConfirm": {
+    "message": "Excluir perfil \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Perfil $PROFILE_NAME$ criado",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Perfil $PROFILE_NAME$ excluído",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Alterado para perfil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Controles habilitados"
+  },
+  "controlsDisabled": {
+    "message": "Controles desabilitados"
+  },
+  "boundTo": {
+    "message": "$ACTION$ atribuído a $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Ativo nesta página"
+  },
+  "statusInactive": {
+    "message": "Vá para xbox.com/play para usar"
+  },
+  "changeBinding": {
+    "message": "Alterar atribuição de $ACTION$. Atualmente $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Aguardando tecla. Escape para cancelar."
+  }
+}

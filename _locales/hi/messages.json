@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Xbox Cloud Gaming के लिए कीबोर्ड और माउस"
+  },
+  "extDescription": {
+    "message": "कीबोर्ड और माउस से Xbox Cloud Gaming (xCloud) खेलें"
+  },
+  "enableControls": {
+    "message": "नियंत्रण सक्षम करें"
+  },
+  "enabled": {
+    "message": "सक्षम"
+  },
+  "disabled": {
+    "message": "अक्षम"
+  },
+  "mouseSensitivity": {
+    "message": "माउस संवेदनशीलता"
+  },
+  "invertYAxis": {
+    "message": "Y-अक्ष उलटें"
+  },
+  "profile": {
+    "message": "प्रोफ़ाइल"
+  },
+  "profileDefault": {
+    "message": "डिफ़ॉल्ट"
+  },
+  "profileFPS": {
+    "message": "FPS / शूटर"
+  },
+  "profileRacing": {
+    "message": "रेसिंग"
+  },
+  "newProfile": {
+    "message": "नई प्रोफ़ाइल"
+  },
+  "deleteProfile": {
+    "message": "प्रोफ़ाइल हटाएं"
+  },
+  "createProfile": {
+    "message": "प्रोफ़ाइल बनाएं"
+  },
+  "profileName": {
+    "message": "प्रोफ़ाइल नाम"
+  },
+  "enterProfileName": {
+    "message": "प्रोफ़ाइल नाम दर्ज करें..."
+  },
+  "cancel": {
+    "message": "रद्द करें"
+  },
+  "create": {
+    "message": "बनाएं"
+  },
+  "keyBindings": {
+    "message": "कुंजी बाइंडिंग"
+  },
+  "resetToDefaults": {
+    "message": "डिफ़ॉल्ट पर रीसेट"
+  },
+  "movement": {
+    "message": "गति"
+  },
+  "faceButtons": {
+    "message": "फेस बटन"
+  },
+  "bumpersAndTriggers": {
+    "message": "बम्पर और ट्रिगर"
+  },
+  "dPad": {
+    "message": "डी-पैड"
+  },
+  "special": {
+    "message": "विशेष"
+  },
+  "moveForward": {
+    "message": "आगे"
+  },
+  "moveBackward": {
+    "message": "पीछे"
+  },
+  "moveLeft": {
+    "message": "बाएं"
+  },
+  "moveRight": {
+    "message": "दाएं"
+  },
+  "actionA": {
+    "message": "A बटन"
+  },
+  "actionB": {
+    "message": "B बटन"
+  },
+  "actionX": {
+    "message": "X बटन"
+  },
+  "actionY": {
+    "message": "Y बटन"
+  },
+  "leftBumper": {
+    "message": "बायां बम्पर"
+  },
+  "rightBumper": {
+    "message": "दायां बम्पर"
+  },
+  "leftTrigger": {
+    "message": "बायां ट्रिगर"
+  },
+  "rightTrigger": {
+    "message": "दायां ट्रिगर"
+  },
+  "dpadUp": {
+    "message": "डी-पैड ऊपर"
+  },
+  "dpadDown": {
+    "message": "डी-पैड नीचे"
+  },
+  "dpadLeft": {
+    "message": "डी-पैड बाएं"
+  },
+  "dpadRight": {
+    "message": "डी-पैड दाएं"
+  },
+  "view": {
+    "message": "व्यू"
+  },
+  "menu": {
+    "message": "मेनू"
+  },
+  "leftStickClick": {
+    "message": "बायां स्टिक क्लिक"
+  },
+  "rightStickClick": {
+    "message": "दायां स्टिक क्लिक"
+  },
+  "hotkeys": {
+    "message": "हॉटकी"
+  },
+  "toggleControls": {
+    "message": "नियंत्रण टॉगल"
+  },
+  "nextProfile": {
+    "message": "अगली प्रोफ़ाइल"
+  },
+  "pressKey": {
+    "message": "कुंजी दबाएं..."
+  },
+  "pressKeyOrMouse": {
+    "message": "कुंजी या माउस बटन दबाएं। रद्द करने के लिए Escape।"
+  },
+  "keyBindingCancelled": {
+    "message": "कुंजी बाइंडिंग रद्द"
+  },
+  "bindingsReset": {
+    "message": "सभी बाइंडिंग रीसेट"
+  },
+  "cannotDeleteDefault": {
+    "message": "डिफ़ॉल्ट प्रोफ़ाइल हटाई नहीं जा सकती"
+  },
+  "deleteProfileConfirm": {
+    "message": "\"$PROFILE_NAME$\" प्रोफ़ाइल हटाएं?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "$PROFILE_NAME$ प्रोफ़ाइल बनाई गई",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "$PROFILE_NAME$ प्रोफ़ाइल हटाई गई",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "$PROFILE_NAME$ प्रोफ़ाइल पर स्विच किया",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "नियंत्रण सक्षम"
+  },
+  "controlsDisabled": {
+    "message": "नियंत्रण अक्षम"
+  },
+  "boundTo": {
+    "message": "$ACTION$ को $KEY$ से बाइंड किया",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "इस पेज पर सक्रिय"
+  },
+  "statusInactive": {
+    "message": "उपयोग के लिए xbox.com/play पर जाएं"
+  },
+  "changeBinding": {
+    "message": "$ACTION$ बाइंडिंग बदलें। वर्तमान में $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "कुंजी की प्रतीक्षा। रद्द करने के लिए Escape।"
+  }
+}

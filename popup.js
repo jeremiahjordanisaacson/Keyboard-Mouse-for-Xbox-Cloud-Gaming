@@ -1,6 +1,43 @@
 // Popup script - handles settings UI with profiles and accessibility support
 
+// Localization helper
+function getMessage(key, substitutions) {
+  return chrome.i18n.getMessage(key, substitutions) || key;
+}
+
+// Apply localization to all elements with data-i18n attributes
+function localizeUI() {
+  // Localize text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const message = getMessage(key);
+    if (message && message !== key) {
+      el.textContent = message;
+    }
+  });
+
+  // Localize placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const message = getMessage(key);
+    if (message && message !== key) {
+      el.placeholder = message;
+    }
+  });
+
+  // Localize titles
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    const message = getMessage(key);
+    if (message && message !== key) {
+      el.title = message;
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+  // Apply localization
+  localizeUI();
   const enabledCheckbox = document.getElementById('enabled');
   const sensitivitySlider = document.getElementById('sensitivity');
   const sensitivityValue = document.getElementById('sensitivityValue');
@@ -17,6 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const newProfileName = document.getElementById('newProfileName');
   const cancelNewProfile = document.getElementById('cancelNewProfile');
   const createNewProfile = document.getElementById('createNewProfile');
+
+  // Auto-switch elements
+  const autoSwitchRow = document.getElementById('autoSwitchRow');
+  const currentGameNameEl = document.getElementById('currentGameName');
+  const assignGameBtn = document.getElementById('assignGameBtn');
 
   // Default key bindings
   const DEFAULT_BINDINGS = {
@@ -47,6 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
   let activeProfileId = 'default';
   let currentBindings = { ...DEFAULT_BINDINGS };
   let listeningButton = null;
+  let gameProfiles = {};
+  let currentGameTitle = null;
 
   // Convert key code to display name
   function keyCodeToDisplayName(code) {
@@ -116,6 +160,51 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       profileSelect.appendChild(option);
     }
+  }
+
+  // Update auto-switch UI
+  function updateAutoSwitchUI() {
+    if (!currentGameTitle) {
+      autoSwitchRow.style.display = 'none';
+      return;
+    }
+
+    autoSwitchRow.style.display = 'block';
+    currentGameNameEl.textContent = currentGameTitle;
+
+    // Check if this game is already assigned to a profile
+    const assignedProfileId = gameProfiles[currentGameTitle];
+
+    if (assignedProfileId) {
+      const assignedProfile = profiles[assignedProfileId];
+      assignGameBtn.textContent = getMessage('removeGameAssignment');
+      assignGameBtn.classList.add('assigned');
+      assignGameBtn.setAttribute('data-assigned', 'true');
+    } else {
+      assignGameBtn.textContent = getMessage('assignToGame');
+      assignGameBtn.classList.remove('assigned');
+      assignGameBtn.removeAttribute('data-assigned');
+    }
+  }
+
+  // Detect current game from active tab
+  function detectCurrentGame() {
+    chrome.runtime.sendMessage({ type: 'GET_CURRENT_GAME' }, function(response) {
+      if (response && response.gameTitle) {
+        currentGameTitle = response.gameTitle;
+        updateAutoSwitchUI();
+      }
+    });
+  }
+
+  // Load game profiles from storage
+  function loadGameProfiles() {
+    chrome.runtime.sendMessage({ type: 'GET_GAME_PROFILES' }, function(response) {
+      if (response && response.gameProfiles) {
+        gameProfiles = response.gameProfiles;
+        updateAutoSwitchUI();
+      }
+    });
   }
 
   // Load profile data into UI
@@ -202,9 +291,9 @@ document.addEventListener('DOMContentLoaded', function() {
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     const url = tabs[0]?.url || '';
     if (url.includes('xbox.com') && url.includes('play')) {
-      updateStatus(true, 'Active on this page');
+      updateStatus(true, getMessage('statusActive'));
     } else {
-      updateStatus(false, 'Go to xbox.com/play to use');
+      updateStatus(false, getMessage('statusInactive'));
     }
   });
 
@@ -217,6 +306,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Load initial data
   loadFromStorage();
+  loadGameProfiles();
+  detectCurrentGame();
 
   // Event listeners
   enabledCheckbox.addEventListener('change', function() {
@@ -236,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    announceToScreenReader(`Controls ${this.checked ? 'enabled' : 'disabled'}`);
+    announceToScreenReader(this.checked ? getMessage('controlsEnabled') : getMessage('controlsDisabled'));
   });
 
   sensitivitySlider.addEventListener('input', function() {
@@ -266,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
       profileId: activeProfileId
     });
 
-    announceToScreenReader(`Switched to ${profiles[activeProfileId].name} profile`);
+    announceToScreenReader(getMessage('switchedToProfile', [profiles[activeProfileId].name]));
   });
 
   // New profile button
@@ -298,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
           chrome.storage.sync.set({ activeProfileId });
           updateProfileDropdown();
           loadProfileIntoUI(profiles[activeProfileId]);
-          announceToScreenReader(`Created ${name} profile`);
+          announceToScreenReader(getMessage('profileCreated', [name]));
         });
       }
     });
@@ -325,13 +416,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Delete profile
   deleteProfileBtn.addEventListener('click', function() {
     if (activeProfileId === 'default') {
-      announceToScreenReader('Cannot delete the default profile');
+      announceToScreenReader(getMessage('cannotDeleteDefault'));
       return;
     }
 
     const profileName = profiles[activeProfileId]?.name || activeProfileId;
 
-    if (confirm(`Delete "${profileName}" profile?`)) {
+    if (confirm(getMessage('deleteProfileConfirm', [profileName]))) {
       chrome.runtime.sendMessage({ type: 'DELETE_PROFILE', profileId: activeProfileId }, function(response) {
         if (response.success) {
           chrome.storage.sync.get(['profiles', 'activeProfileId'], function(result) {
@@ -339,10 +430,45 @@ document.addEventListener('DOMContentLoaded', function() {
             activeProfileId = result.activeProfileId;
             updateProfileDropdown();
             loadProfileIntoUI(profiles[activeProfileId]);
-            announceToScreenReader(`Deleted ${profileName} profile`);
+            announceToScreenReader(getMessage('profileDeleted', [profileName]));
           });
         } else {
-          announceToScreenReader(response.error || 'Cannot delete this profile');
+          announceToScreenReader(response.error || getMessage('cannotDeleteDefault'));
+        }
+      });
+    }
+  });
+
+  // Assign/remove game profile
+  assignGameBtn.addEventListener('click', function() {
+    if (!currentGameTitle) return;
+
+    const isAssigned = this.getAttribute('data-assigned') === 'true';
+    const profileName = profiles[activeProfileId]?.name || activeProfileId;
+
+    if (isAssigned) {
+      // Remove assignment
+      chrome.runtime.sendMessage({
+        type: 'REMOVE_GAME_PROFILE',
+        gameTitle: currentGameTitle
+      }, function(response) {
+        if (response.success) {
+          delete gameProfiles[currentGameTitle];
+          updateAutoSwitchUI();
+          announceToScreenReader(getMessage('gameAssignmentRemoved', [currentGameTitle]));
+        }
+      });
+    } else {
+      // Assign current profile to this game
+      chrome.runtime.sendMessage({
+        type: 'ASSIGN_GAME_PROFILE',
+        gameTitle: currentGameTitle,
+        profileId: activeProfileId
+      }, function(response) {
+        if (response.success) {
+          gameProfiles[currentGameTitle] = activeProfileId;
+          updateAutoSwitchUI();
+          announceToScreenReader(getMessage('profileAssignedToGame', [profileName, currentGameTitle]));
         }
       });
     }
@@ -357,25 +483,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     listeningButton = button;
     button.classList.add('listening');
-    button.textContent = 'Press key...';
-    button.setAttribute('aria-label', 'Listening for key press. Press Escape to cancel.');
-    announceToScreenReader('Press a key or mouse button to bind. Press Escape to cancel.');
+    button.textContent = getMessage('pressKey');
+    button.setAttribute('aria-label', getMessage('listeningForKey'));
+    announceToScreenReader(getMessage('pressKeyOrMouse'));
   }
 
   function stopListening(newCode = null) {
     if (!listeningButton) return;
 
     const action = listeningButton.dataset.action;
+    const actionName = getMessage(action) || action;
 
     if (newCode) {
       currentBindings[action] = newCode;
       saveCurrentProfile();
-      announceToScreenReader(`${action} bound to ${keyCodeToDisplayName(newCode)}`);
+      announceToScreenReader(getMessage('boundTo', [actionName, keyCodeToDisplayName(newCode)]));
     }
 
     listeningButton.classList.remove('listening');
     listeningButton.textContent = keyCodeToDisplayName(currentBindings[action]);
-    listeningButton.setAttribute('aria-label', `Change ${action} key binding. Currently ${keyCodeToDisplayName(currentBindings[action])}`);
+    listeningButton.setAttribute('aria-label', getMessage('changeBinding', [actionName, keyCodeToDisplayName(currentBindings[action])]));
     listeningButton = null;
   }
 
@@ -397,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (e.code === 'Escape') {
       stopListening();
-      announceToScreenReader('Key binding cancelled');
+      announceToScreenReader(getMessage('keyBindingCancelled'));
       return;
     }
 
@@ -435,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
     currentBindings = { ...DEFAULT_BINDINGS };
     updateBindingDisplays();
     saveCurrentProfile();
-    announceToScreenReader('All key bindings reset to defaults');
+    announceToScreenReader(getMessage('bindingsReset'));
   });
 
   // Screen reader announcements

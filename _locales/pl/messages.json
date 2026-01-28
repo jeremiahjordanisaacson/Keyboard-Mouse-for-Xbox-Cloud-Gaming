@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Klawiatura i Mysz dla Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Graj w Xbox Cloud Gaming (xCloud) za pomocą klawiatury i myszy"
+  },
+  "enableControls": {
+    "message": "Włącz Sterowanie"
+  },
+  "enabled": {
+    "message": "Włączone"
+  },
+  "disabled": {
+    "message": "Wyłączone"
+  },
+  "mouseSensitivity": {
+    "message": "Czułość Myszy"
+  },
+  "invertYAxis": {
+    "message": "Odwróć Oś Y"
+  },
+  "profile": {
+    "message": "Profil"
+  },
+  "profileDefault": {
+    "message": "Domyślny"
+  },
+  "profileFPS": {
+    "message": "FPS / Strzelanka"
+  },
+  "profileRacing": {
+    "message": "Wyścigi"
+  },
+  "newProfile": {
+    "message": "Nowy Profil"
+  },
+  "deleteProfile": {
+    "message": "Usuń Profil"
+  },
+  "createProfile": {
+    "message": "Utwórz Profil"
+  },
+  "profileName": {
+    "message": "Nazwa Profilu"
+  },
+  "enterProfileName": {
+    "message": "Wprowadź nazwę profilu..."
+  },
+  "cancel": {
+    "message": "Anuluj"
+  },
+  "create": {
+    "message": "Utwórz"
+  },
+  "keyBindings": {
+    "message": "Przypisania Klawiszy"
+  },
+  "resetToDefaults": {
+    "message": "Przywróć Domyślne"
+  },
+  "movement": {
+    "message": "Ruch"
+  },
+  "faceButtons": {
+    "message": "Przyciski Główne"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumpery i Spusty"
+  },
+  "dPad": {
+    "message": "Krzyżak"
+  },
+  "special": {
+    "message": "Specjalne"
+  },
+  "moveForward": {
+    "message": "Do Przodu"
+  },
+  "moveBackward": {
+    "message": "Do Tyłu"
+  },
+  "moveLeft": {
+    "message": "W Lewo"
+  },
+  "moveRight": {
+    "message": "W Prawo"
+  },
+  "actionA": {
+    "message": "Przycisk A"
+  },
+  "actionB": {
+    "message": "Przycisk B"
+  },
+  "actionX": {
+    "message": "Przycisk X"
+  },
+  "actionY": {
+    "message": "Przycisk Y"
+  },
+  "leftBumper": {
+    "message": "Lewy Bumper"
+  },
+  "rightBumper": {
+    "message": "Prawy Bumper"
+  },
+  "leftTrigger": {
+    "message": "Lewy Spust"
+  },
+  "rightTrigger": {
+    "message": "Prawy Spust"
+  },
+  "dpadUp": {
+    "message": "Krzyżak Góra"
+  },
+  "dpadDown": {
+    "message": "Krzyżak Dół"
+  },
+  "dpadLeft": {
+    "message": "Krzyżak Lewo"
+  },
+  "dpadRight": {
+    "message": "Krzyżak Prawo"
+  },
+  "view": {
+    "message": "Widok"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Klik Lewego Drążka"
+  },
+  "rightStickClick": {
+    "message": "Klik Prawego Drążka"
+  },
+  "hotkeys": {
+    "message": "Skróty"
+  },
+  "toggleControls": {
+    "message": "Przełącz Sterowanie"
+  },
+  "nextProfile": {
+    "message": "Następny Profil"
+  },
+  "pressKey": {
+    "message": "Naciśnij klawisz..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Naciśnij klawisz lub przycisk myszy. Escape aby anulować."
+  },
+  "keyBindingCancelled": {
+    "message": "Przypisanie anulowane"
+  },
+  "bindingsReset": {
+    "message": "Wszystkie przypisania przywrócone"
+  },
+  "cannotDeleteDefault": {
+    "message": "Nie można usunąć domyślnego profilu"
+  },
+  "deleteProfileConfirm": {
+    "message": "Usunąć profil \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Utworzono profil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Usunięto profil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Przełączono na profil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Sterowanie włączone"
+  },
+  "controlsDisabled": {
+    "message": "Sterowanie wyłączone"
+  },
+  "boundTo": {
+    "message": "$ACTION$ przypisano do $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Aktywne na tej stronie"
+  },
+  "statusInactive": {
+    "message": "Przejdź do xbox.com/play"
+  },
+  "changeBinding": {
+    "message": "Zmień przypisanie $ACTION$. Obecnie $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Oczekiwanie na klawisz. Escape aby anulować."
+  }
+}

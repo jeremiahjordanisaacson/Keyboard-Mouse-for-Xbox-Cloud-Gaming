@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Tastiera e Mouse per Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Gioca a Xbox Cloud Gaming (xCloud) con tastiera e mouse"
+  },
+  "enableControls": {
+    "message": "Abilita Controlli"
+  },
+  "enabled": {
+    "message": "Abilitato"
+  },
+  "disabled": {
+    "message": "Disabilitato"
+  },
+  "mouseSensitivity": {
+    "message": "Sensibilità Mouse"
+  },
+  "invertYAxis": {
+    "message": "Inverti Asse Y"
+  },
+  "profile": {
+    "message": "Profilo"
+  },
+  "profileDefault": {
+    "message": "Predefinito"
+  },
+  "profileFPS": {
+    "message": "FPS / Sparatutto"
+  },
+  "profileRacing": {
+    "message": "Corse"
+  },
+  "newProfile": {
+    "message": "Nuovo Profilo"
+  },
+  "deleteProfile": {
+    "message": "Elimina Profilo"
+  },
+  "createProfile": {
+    "message": "Crea Profilo"
+  },
+  "profileName": {
+    "message": "Nome Profilo"
+  },
+  "enterProfileName": {
+    "message": "Inserisci nome profilo..."
+  },
+  "cancel": {
+    "message": "Annulla"
+  },
+  "create": {
+    "message": "Crea"
+  },
+  "keyBindings": {
+    "message": "Associazioni Tasti"
+  },
+  "resetToDefaults": {
+    "message": "Ripristina"
+  },
+  "movement": {
+    "message": "Movimento"
+  },
+  "faceButtons": {
+    "message": "Pulsanti Frontali"
+  },
+  "bumpersAndTriggers": {
+    "message": "Dorsali e Grilletti"
+  },
+  "dPad": {
+    "message": "Croce Direzionale"
+  },
+  "special": {
+    "message": "Speciale"
+  },
+  "moveForward": {
+    "message": "Avanti"
+  },
+  "moveBackward": {
+    "message": "Indietro"
+  },
+  "moveLeft": {
+    "message": "Sinistra"
+  },
+  "moveRight": {
+    "message": "Destra"
+  },
+  "actionA": {
+    "message": "Pulsante A"
+  },
+  "actionB": {
+    "message": "Pulsante B"
+  },
+  "actionX": {
+    "message": "Pulsante X"
+  },
+  "actionY": {
+    "message": "Pulsante Y"
+  },
+  "leftBumper": {
+    "message": "Dorsale Sinistro"
+  },
+  "rightBumper": {
+    "message": "Dorsale Destro"
+  },
+  "leftTrigger": {
+    "message": "Grilletto Sinistro"
+  },
+  "rightTrigger": {
+    "message": "Grilletto Destro"
+  },
+  "dpadUp": {
+    "message": "Croce Su"
+  },
+  "dpadDown": {
+    "message": "Croce Giù"
+  },
+  "dpadLeft": {
+    "message": "Croce Sinistra"
+  },
+  "dpadRight": {
+    "message": "Croce Destra"
+  },
+  "view": {
+    "message": "Visualizza"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Clic Stick Sinistro"
+  },
+  "rightStickClick": {
+    "message": "Clic Stick Destro"
+  },
+  "hotkeys": {
+    "message": "Scorciatoie"
+  },
+  "toggleControls": {
+    "message": "Attiva/Disattiva"
+  },
+  "nextProfile": {
+    "message": "Profilo Successivo"
+  },
+  "pressKey": {
+    "message": "Premi tasto..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Premi un tasto o pulsante del mouse. Escape per annullare."
+  },
+  "keyBindingCancelled": {
+    "message": "Associazione annullata"
+  },
+  "bindingsReset": {
+    "message": "Tutte le associazioni ripristinate"
+  },
+  "cannotDeleteDefault": {
+    "message": "Impossibile eliminare il profilo predefinito"
+  },
+  "deleteProfileConfirm": {
+    "message": "Eliminare il profilo \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Profilo $PROFILE_NAME$ creato",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Profilo $PROFILE_NAME$ eliminato",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Passato al profilo $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Controlli abilitati"
+  },
+  "controlsDisabled": {
+    "message": "Controlli disabilitati"
+  },
+  "boundTo": {
+    "message": "$ACTION$ associato a $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Attivo su questa pagina"
+  },
+  "statusInactive": {
+    "message": "Vai su xbox.com/play per usare"
+  },
+  "changeBinding": {
+    "message": "Cambia associazione $ACTION$. Attualmente $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "In attesa del tasto. Escape per annullare."
+  }
+}

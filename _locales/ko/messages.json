@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Xbox 클라우드 게임용 키보드 & 마우스"
+  },
+  "extDescription": {
+    "message": "키보드와 마우스로 Xbox 클라우드 게임(xCloud) 플레이"
+  },
+  "enableControls": {
+    "message": "컨트롤 활성화"
+  },
+  "enabled": {
+    "message": "활성화됨"
+  },
+  "disabled": {
+    "message": "비활성화됨"
+  },
+  "mouseSensitivity": {
+    "message": "마우스 감도"
+  },
+  "invertYAxis": {
+    "message": "Y축 반전"
+  },
+  "profile": {
+    "message": "프로필"
+  },
+  "profileDefault": {
+    "message": "기본"
+  },
+  "profileFPS": {
+    "message": "FPS/슈터"
+  },
+  "profileRacing": {
+    "message": "레이싱"
+  },
+  "newProfile": {
+    "message": "새 프로필"
+  },
+  "deleteProfile": {
+    "message": "프로필 삭제"
+  },
+  "createProfile": {
+    "message": "프로필 만들기"
+  },
+  "profileName": {
+    "message": "프로필 이름"
+  },
+  "enterProfileName": {
+    "message": "프로필 이름 입력..."
+  },
+  "cancel": {
+    "message": "취소"
+  },
+  "create": {
+    "message": "만들기"
+  },
+  "keyBindings": {
+    "message": "키 바인딩"
+  },
+  "resetToDefaults": {
+    "message": "기본값으로 재설정"
+  },
+  "movement": {
+    "message": "이동"
+  },
+  "faceButtons": {
+    "message": "페이스 버튼"
+  },
+  "bumpersAndTriggers": {
+    "message": "범퍼 & 트리거"
+  },
+  "dPad": {
+    "message": "방향 패드"
+  },
+  "special": {
+    "message": "특수"
+  },
+  "moveForward": {
+    "message": "앞으로"
+  },
+  "moveBackward": {
+    "message": "뒤로"
+  },
+  "moveLeft": {
+    "message": "왼쪽"
+  },
+  "moveRight": {
+    "message": "오른쪽"
+  },
+  "actionA": {
+    "message": "A 버튼"
+  },
+  "actionB": {
+    "message": "B 버튼"
+  },
+  "actionX": {
+    "message": "X 버튼"
+  },
+  "actionY": {
+    "message": "Y 버튼"
+  },
+  "leftBumper": {
+    "message": "왼쪽 범퍼"
+  },
+  "rightBumper": {
+    "message": "오른쪽 범퍼"
+  },
+  "leftTrigger": {
+    "message": "왼쪽 트리거"
+  },
+  "rightTrigger": {
+    "message": "오른쪽 트리거"
+  },
+  "dpadUp": {
+    "message": "방향키 위"
+  },
+  "dpadDown": {
+    "message": "방향키 아래"
+  },
+  "dpadLeft": {
+    "message": "방향키 왼쪽"
+  },
+  "dpadRight": {
+    "message": "방향키 오른쪽"
+  },
+  "view": {
+    "message": "뷰"
+  },
+  "menu": {
+    "message": "메뉴"
+  },
+  "leftStickClick": {
+    "message": "왼쪽 스틱 클릭"
+  },
+  "rightStickClick": {
+    "message": "오른쪽 스틱 클릭"
+  },
+  "hotkeys": {
+    "message": "단축키"
+  },
+  "toggleControls": {
+    "message": "컨트롤 전환"
+  },
+  "nextProfile": {
+    "message": "다음 프로필"
+  },
+  "pressKey": {
+    "message": "키를 누르세요..."
+  },
+  "pressKeyOrMouse": {
+    "message": "키 또는 마우스 버튼을 누르세요. ESC로 취소."
+  },
+  "keyBindingCancelled": {
+    "message": "키 바인딩 취소됨"
+  },
+  "bindingsReset": {
+    "message": "모든 키 바인딩이 재설정됨"
+  },
+  "cannotDeleteDefault": {
+    "message": "기본 프로필은 삭제할 수 없습니다"
+  },
+  "deleteProfileConfirm": {
+    "message": "\"$PROFILE_NAME$\" 프로필을 삭제하시겠습니까?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "$PROFILE_NAME$ 프로필 생성됨",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "$PROFILE_NAME$ 프로필 삭제됨",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "$PROFILE_NAME$ 프로필로 전환됨",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "컨트롤 활성화됨"
+  },
+  "controlsDisabled": {
+    "message": "컨트롤 비활성화됨"
+  },
+  "boundTo": {
+    "message": "$ACTION$을(를) $KEY$에 바인딩함",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "이 페이지에서 활성화됨"
+  },
+  "statusInactive": {
+    "message": "xbox.com/play로 이동하세요"
+  },
+  "changeBinding": {
+    "message": "$ACTION$ 키 바인딩 변경. 현재 $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "키 입력 대기 중. ESC로 취소."
+  }
+}

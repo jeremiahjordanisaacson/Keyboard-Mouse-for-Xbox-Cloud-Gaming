@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Keyboard & Mouse untuk Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Main Xbox Cloud Gaming (xCloud) dengan keyboard dan mouse"
+  },
+  "enableControls": {
+    "message": "Aktifkan Kontrol"
+  },
+  "enabled": {
+    "message": "Aktif"
+  },
+  "disabled": {
+    "message": "Nonaktif"
+  },
+  "mouseSensitivity": {
+    "message": "Sensitivitas Mouse"
+  },
+  "invertYAxis": {
+    "message": "Balik Sumbu Y"
+  },
+  "profile": {
+    "message": "Profil"
+  },
+  "profileDefault": {
+    "message": "Default"
+  },
+  "profileFPS": {
+    "message": "FPS / Tembak"
+  },
+  "profileRacing": {
+    "message": "Balap"
+  },
+  "newProfile": {
+    "message": "Profil Baru"
+  },
+  "deleteProfile": {
+    "message": "Hapus Profil"
+  },
+  "createProfile": {
+    "message": "Buat Profil"
+  },
+  "profileName": {
+    "message": "Nama Profil"
+  },
+  "enterProfileName": {
+    "message": "Masukkan nama profil..."
+  },
+  "cancel": {
+    "message": "Batal"
+  },
+  "create": {
+    "message": "Buat"
+  },
+  "keyBindings": {
+    "message": "Pengaturan Tombol"
+  },
+  "resetToDefaults": {
+    "message": "Reset"
+  },
+  "movement": {
+    "message": "Gerakan"
+  },
+  "faceButtons": {
+    "message": "Tombol Utama"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumper & Trigger"
+  },
+  "dPad": {
+    "message": "D-Pad"
+  },
+  "special": {
+    "message": "Khusus"
+  },
+  "moveForward": {
+    "message": "Maju"
+  },
+  "moveBackward": {
+    "message": "Mundur"
+  },
+  "moveLeft": {
+    "message": "Kiri"
+  },
+  "moveRight": {
+    "message": "Kanan"
+  },
+  "actionA": {
+    "message": "Tombol A"
+  },
+  "actionB": {
+    "message": "Tombol B"
+  },
+  "actionX": {
+    "message": "Tombol X"
+  },
+  "actionY": {
+    "message": "Tombol Y"
+  },
+  "leftBumper": {
+    "message": "Bumper Kiri"
+  },
+  "rightBumper": {
+    "message": "Bumper Kanan"
+  },
+  "leftTrigger": {
+    "message": "Trigger Kiri"
+  },
+  "rightTrigger": {
+    "message": "Trigger Kanan"
+  },
+  "dpadUp": {
+    "message": "D-Pad Atas"
+  },
+  "dpadDown": {
+    "message": "D-Pad Bawah"
+  },
+  "dpadLeft": {
+    "message": "D-Pad Kiri"
+  },
+  "dpadRight": {
+    "message": "D-Pad Kanan"
+  },
+  "view": {
+    "message": "Lihat"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Klik Stick Kiri"
+  },
+  "rightStickClick": {
+    "message": "Klik Stick Kanan"
+  },
+  "hotkeys": {
+    "message": "Pintasan"
+  },
+  "toggleControls": {
+    "message": "Alihkan Kontrol"
+  },
+  "nextProfile": {
+    "message": "Profil Berikutnya"
+  },
+  "pressKey": {
+    "message": "Tekan tombol..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Tekan tombol keyboard atau mouse. Escape untuk membatalkan."
+  },
+  "keyBindingCancelled": {
+    "message": "Pengaturan tombol dibatalkan"
+  },
+  "bindingsReset": {
+    "message": "Semua pengaturan direset"
+  },
+  "cannotDeleteDefault": {
+    "message": "Tidak dapat menghapus profil default"
+  },
+  "deleteProfileConfirm": {
+    "message": "Hapus profil \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Profil $PROFILE_NAME$ dibuat",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Profil $PROFILE_NAME$ dihapus",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Beralih ke profil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Kontrol diaktifkan"
+  },
+  "controlsDisabled": {
+    "message": "Kontrol dinonaktifkan"
+  },
+  "boundTo": {
+    "message": "$ACTION$ diatur ke $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Aktif di halaman ini"
+  },
+  "statusInactive": {
+    "message": "Pergi ke xbox.com/play untuk menggunakan"
+  },
+  "changeBinding": {
+    "message": "Ubah pengaturan $ACTION$. Saat ini $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Menunggu tombol. Escape untuk membatalkan."
+  }
+}

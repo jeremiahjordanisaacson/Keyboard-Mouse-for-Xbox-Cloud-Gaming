@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Xbox Cloud Gaming için Klavye ve Fare"
+  },
+  "extDescription": {
+    "message": "Xbox Cloud Gaming'i (xCloud) klavye ve fare ile oynayın"
+  },
+  "enableControls": {
+    "message": "Kontrolleri Etkinleştir"
+  },
+  "enabled": {
+    "message": "Etkin"
+  },
+  "disabled": {
+    "message": "Devre Dışı"
+  },
+  "mouseSensitivity": {
+    "message": "Fare Hassasiyeti"
+  },
+  "invertYAxis": {
+    "message": "Y Eksenini Ters Çevir"
+  },
+  "profile": {
+    "message": "Profil"
+  },
+  "profileDefault": {
+    "message": "Varsayılan"
+  },
+  "profileFPS": {
+    "message": "FPS / Nişancı"
+  },
+  "profileRacing": {
+    "message": "Yarış"
+  },
+  "newProfile": {
+    "message": "Yeni Profil"
+  },
+  "deleteProfile": {
+    "message": "Profili Sil"
+  },
+  "createProfile": {
+    "message": "Profil Oluştur"
+  },
+  "profileName": {
+    "message": "Profil Adı"
+  },
+  "enterProfileName": {
+    "message": "Profil adı girin..."
+  },
+  "cancel": {
+    "message": "İptal"
+  },
+  "create": {
+    "message": "Oluştur"
+  },
+  "keyBindings": {
+    "message": "Tuş Atamaları"
+  },
+  "resetToDefaults": {
+    "message": "Sıfırla"
+  },
+  "movement": {
+    "message": "Hareket"
+  },
+  "faceButtons": {
+    "message": "Ana Düğmeler"
+  },
+  "bumpersAndTriggers": {
+    "message": "Tamponlar ve Tetikler"
+  },
+  "dPad": {
+    "message": "Yön Tuşları"
+  },
+  "special": {
+    "message": "Özel"
+  },
+  "moveForward": {
+    "message": "İleri"
+  },
+  "moveBackward": {
+    "message": "Geri"
+  },
+  "moveLeft": {
+    "message": "Sol"
+  },
+  "moveRight": {
+    "message": "Sağ"
+  },
+  "actionA": {
+    "message": "A Düğmesi"
+  },
+  "actionB": {
+    "message": "B Düğmesi"
+  },
+  "actionX": {
+    "message": "X Düğmesi"
+  },
+  "actionY": {
+    "message": "Y Düğmesi"
+  },
+  "leftBumper": {
+    "message": "Sol Tampon"
+  },
+  "rightBumper": {
+    "message": "Sağ Tampon"
+  },
+  "leftTrigger": {
+    "message": "Sol Tetik"
+  },
+  "rightTrigger": {
+    "message": "Sağ Tetik"
+  },
+  "dpadUp": {
+    "message": "Yukarı"
+  },
+  "dpadDown": {
+    "message": "Aşağı"
+  },
+  "dpadLeft": {
+    "message": "Sol"
+  },
+  "dpadRight": {
+    "message": "Sağ"
+  },
+  "view": {
+    "message": "Görünüm"
+  },
+  "menu": {
+    "message": "Menü"
+  },
+  "leftStickClick": {
+    "message": "Sol Çubuk Tıklama"
+  },
+  "rightStickClick": {
+    "message": "Sağ Çubuk Tıklama"
+  },
+  "hotkeys": {
+    "message": "Kısayollar"
+  },
+  "toggleControls": {
+    "message": "Kontrolleri Değiştir"
+  },
+  "nextProfile": {
+    "message": "Sonraki Profil"
+  },
+  "pressKey": {
+    "message": "Tuşa basın..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Bir tuşa veya fare düğmesine basın. İptal için Escape."
+  },
+  "keyBindingCancelled": {
+    "message": "Tuş ataması iptal edildi"
+  },
+  "bindingsReset": {
+    "message": "Tüm atamalar sıfırlandı"
+  },
+  "cannotDeleteDefault": {
+    "message": "Varsayılan profil silinemez"
+  },
+  "deleteProfileConfirm": {
+    "message": "\"$PROFILE_NAME$\" profili silinsin mi?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "$PROFILE_NAME$ profili oluşturuldu",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "$PROFILE_NAME$ profili silindi",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "$PROFILE_NAME$ profiline geçildi",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Kontroller etkinleştirildi"
+  },
+  "controlsDisabled": {
+    "message": "Kontroller devre dışı bırakıldı"
+  },
+  "boundTo": {
+    "message": "$ACTION$ $KEY$ tuşuna atandı",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Bu sayfada aktif"
+  },
+  "statusInactive": {
+    "message": "Kullanmak için xbox.com/play adresine gidin"
+  },
+  "changeBinding": {
+    "message": "$ACTION$ atamasını değiştir. Şu an $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Tuş bekleniyor. İptal için Escape."
+  }
+}

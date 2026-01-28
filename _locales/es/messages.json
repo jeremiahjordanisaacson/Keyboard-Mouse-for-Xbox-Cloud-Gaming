@@ -1,0 +1,233 @@
+{
+  "extName": {
+    "message": "Teclado y Ratón para Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Juega Xbox Cloud Gaming (xCloud) con controles de teclado y ratón"
+  },
+  "enableControls": {
+    "message": "Habilitar Controles"
+  },
+  "enabled": {
+    "message": "Habilitado"
+  },
+  "disabled": {
+    "message": "Deshabilitado"
+  },
+  "mouseSensitivity": {
+    "message": "Sensibilidad del Ratón"
+  },
+  "invertYAxis": {
+    "message": "Invertir Eje Y"
+  },
+  "profile": {
+    "message": "Perfil"
+  },
+  "profileDefault": {
+    "message": "Predeterminado"
+  },
+  "profileFPS": {
+    "message": "FPS / Disparos"
+  },
+  "profileRacing": {
+    "message": "Carreras"
+  },
+  "newProfile": {
+    "message": "Nuevo Perfil"
+  },
+  "deleteProfile": {
+    "message": "Eliminar Perfil"
+  },
+  "createProfile": {
+    "message": "Crear Perfil"
+  },
+  "profileName": {
+    "message": "Nombre del Perfil"
+  },
+  "enterProfileName": {
+    "message": "Ingrese nombre del perfil..."
+  },
+  "cancel": {
+    "message": "Cancelar"
+  },
+  "create": {
+    "message": "Crear"
+  },
+  "keyBindings": {
+    "message": "Asignaciones de Teclas"
+  },
+  "resetToDefaults": {
+    "message": "Restablecer Valores"
+  },
+  "movement": {
+    "message": "Movimiento"
+  },
+  "faceButtons": {
+    "message": "Botones Frontales"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumpers y Gatillos"
+  },
+  "dPad": {
+    "message": "Cruceta"
+  },
+  "special": {
+    "message": "Especial"
+  },
+  "moveForward": {
+    "message": "Adelante"
+  },
+  "moveBackward": {
+    "message": "Atrás"
+  },
+  "moveLeft": {
+    "message": "Izquierda"
+  },
+  "moveRight": {
+    "message": "Derecha"
+  },
+  "actionA": {
+    "message": "Botón A"
+  },
+  "actionB": {
+    "message": "Botón B"
+  },
+  "actionX": {
+    "message": "Botón X"
+  },
+  "actionY": {
+    "message": "Botón Y"
+  },
+  "leftBumper": {
+    "message": "Bumper Izquierdo"
+  },
+  "rightBumper": {
+    "message": "Bumper Derecho"
+  },
+  "leftTrigger": {
+    "message": "Gatillo Izquierdo"
+  },
+  "rightTrigger": {
+    "message": "Gatillo Derecho"
+  },
+  "dpadUp": {
+    "message": "Cruceta Arriba"
+  },
+  "dpadDown": {
+    "message": "Cruceta Abajo"
+  },
+  "dpadLeft": {
+    "message": "Cruceta Izquierda"
+  },
+  "dpadRight": {
+    "message": "Cruceta Derecha"
+  },
+  "view": {
+    "message": "Vista"
+  },
+  "menu": {
+    "message": "Menú"
+  },
+  "leftStickClick": {
+    "message": "Clic Stick Izquierdo"
+  },
+  "rightStickClick": {
+    "message": "Clic Stick Derecho"
+  },
+  "hotkeys": {
+    "message": "Atajos de Teclado"
+  },
+  "toggleControls": {
+    "message": "Alternar Controles"
+  },
+  "nextProfile": {
+    "message": "Siguiente Perfil"
+  },
+  "pressKey": {
+    "message": "Presione tecla..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Presione una tecla o botón del ratón. Escape para cancelar."
+  },
+  "keyBindingCancelled": {
+    "message": "Asignación cancelada"
+  },
+  "bindingsReset": {
+    "message": "Todas las asignaciones restablecidas"
+  },
+  "cannotDeleteDefault": {
+    "message": "No se puede eliminar el perfil predeterminado"
+  },
+  "deleteProfileConfirm": {
+    "message": "¿Eliminar perfil \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Perfil $PROFILE_NAME$ creado",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Perfil $PROFILE_NAME$ eliminado",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Cambiado a perfil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Controles habilitados"
+  },
+  "controlsDisabled": {
+    "message": "Controles deshabilitados"
+  },
+  "boundTo": {
+    "message": "$ACTION$ asignado a $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Activo en esta página"
+  },
+  "statusInactive": {
+    "message": "Ve a xbox.com/play para usar"
+  },
+  "changeBinding": {
+    "message": "Cambiar asignación de $ACTION$. Actualmente $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Esperando tecla. Presione Escape para cancelar."
+  },
+  "autoSwitch": {
+    "message": "Cambio Automático"
+  },
+  "autoSwitchEnabled": {
+    "message": "Cambio automático habilitado para este juego"
+  },
+  "autoSwitchDisabled": {
+    "message": "Cambio automático deshabilitado"
+  },
+  "assignToGame": {
+    "message": "Asignar al Juego Actual"
+  },
+  "removeGameAssignment": {
+    "message": "Quitar Asignación de Juego"
+  },
+  "currentGame": {
+    "message": "Juego Actual"
+  },
+  "noGameDetected": {
+    "message": "Ningún juego detectado"
+  },
+  "profileAssignedToGame": {
+    "message": "El perfil $PROFILE_NAME$ cambiará automáticamente al jugar $GAME_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" }, "game_name": { "content": "$2" } }
+  },
+  "gameAssignmentRemoved": {
+    "message": "Cambio automático eliminado para $GAME_NAME$",
+    "placeholders": { "game_name": { "content": "$1" } }
+  },
+  "autoSwitchedToProfile": {
+    "message": "Cambiado automáticamente a $PROFILE_NAME$ para $GAME_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" }, "game_name": { "content": "$2" } }
+  }
+}

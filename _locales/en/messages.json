@@ -1,0 +1,368 @@
+{
+  "extName": {
+    "message": "Keyboard & Mouse for Xbox Cloud Gaming",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Play Xbox Cloud Gaming (xCloud) with keyboard and mouse controls",
+    "description": "Extension description"
+  },
+  "enableControls": {
+    "message": "Enable Controls",
+    "description": "Toggle to enable/disable controls"
+  },
+  "enabled": {
+    "message": "Enabled",
+    "description": "Enabled state"
+  },
+  "disabled": {
+    "message": "Disabled",
+    "description": "Disabled state"
+  },
+  "mouseSensitivity": {
+    "message": "Mouse Sensitivity",
+    "description": "Mouse sensitivity setting"
+  },
+  "invertYAxis": {
+    "message": "Invert Y-Axis",
+    "description": "Invert Y axis setting"
+  },
+  "profile": {
+    "message": "Profile",
+    "description": "Profile section header"
+  },
+  "profileDefault": {
+    "message": "Default",
+    "description": "Default profile name"
+  },
+  "profileFPS": {
+    "message": "FPS / Shooter",
+    "description": "FPS profile name"
+  },
+  "profileRacing": {
+    "message": "Racing",
+    "description": "Racing profile name"
+  },
+  "newProfile": {
+    "message": "New Profile",
+    "description": "New profile button tooltip"
+  },
+  "deleteProfile": {
+    "message": "Delete Profile",
+    "description": "Delete profile button tooltip"
+  },
+  "createProfile": {
+    "message": "Create Profile",
+    "description": "Create profile modal title"
+  },
+  "profileName": {
+    "message": "Profile Name",
+    "description": "Profile name input label"
+  },
+  "enterProfileName": {
+    "message": "Enter profile name...",
+    "description": "Profile name input placeholder"
+  },
+  "cancel": {
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "create": {
+    "message": "Create",
+    "description": "Create button"
+  },
+  "keyBindings": {
+    "message": "Key Bindings",
+    "description": "Key bindings section header"
+  },
+  "resetToDefaults": {
+    "message": "Reset to Defaults",
+    "description": "Reset key bindings button"
+  },
+  "movement": {
+    "message": "Movement",
+    "description": "Movement category"
+  },
+  "faceButtons": {
+    "message": "Face Buttons",
+    "description": "Face buttons category"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumpers & Triggers",
+    "description": "Bumpers and triggers category"
+  },
+  "dPad": {
+    "message": "D-Pad",
+    "description": "D-Pad category"
+  },
+  "special": {
+    "message": "Special",
+    "description": "Special buttons category"
+  },
+  "moveForward": {
+    "message": "Forward",
+    "description": "Move forward action"
+  },
+  "moveBackward": {
+    "message": "Backward",
+    "description": "Move backward action"
+  },
+  "moveLeft": {
+    "message": "Left",
+    "description": "Move left action"
+  },
+  "moveRight": {
+    "message": "Right",
+    "description": "Move right action"
+  },
+  "actionA": {
+    "message": "A Button",
+    "description": "A button action"
+  },
+  "actionB": {
+    "message": "B Button",
+    "description": "B button action"
+  },
+  "actionX": {
+    "message": "X Button",
+    "description": "X button action"
+  },
+  "actionY": {
+    "message": "Y Button",
+    "description": "Y button action"
+  },
+  "leftBumper": {
+    "message": "Left Bumper",
+    "description": "Left bumper action"
+  },
+  "rightBumper": {
+    "message": "Right Bumper",
+    "description": "Right bumper action"
+  },
+  "leftTrigger": {
+    "message": "Left Trigger",
+    "description": "Left trigger action"
+  },
+  "rightTrigger": {
+    "message": "Right Trigger",
+    "description": "Right trigger action"
+  },
+  "dpadUp": {
+    "message": "D-Pad Up",
+    "description": "D-Pad up action"
+  },
+  "dpadDown": {
+    "message": "D-Pad Down",
+    "description": "D-Pad down action"
+  },
+  "dpadLeft": {
+    "message": "D-Pad Left",
+    "description": "D-Pad left action"
+  },
+  "dpadRight": {
+    "message": "D-Pad Right",
+    "description": "D-Pad right action"
+  },
+  "view": {
+    "message": "View",
+    "description": "View button action"
+  },
+  "menu": {
+    "message": "Menu",
+    "description": "Menu button action"
+  },
+  "leftStickClick": {
+    "message": "Left Stick Click",
+    "description": "Left stick click action"
+  },
+  "rightStickClick": {
+    "message": "Right Stick Click",
+    "description": "Right stick click action"
+  },
+  "hotkeys": {
+    "message": "Hotkeys",
+    "description": "Hotkeys section header"
+  },
+  "toggleControls": {
+    "message": "Toggle Controls",
+    "description": "Toggle controls hotkey"
+  },
+  "nextProfile": {
+    "message": "Next Profile",
+    "description": "Next profile hotkey"
+  },
+  "pressKey": {
+    "message": "Press key...",
+    "description": "Listening for key press"
+  },
+  "pressKeyOrMouse": {
+    "message": "Press a key or mouse button to bind. Press Escape to cancel.",
+    "description": "Key binding instruction"
+  },
+  "keyBindingCancelled": {
+    "message": "Key binding cancelled",
+    "description": "Key binding cancelled message"
+  },
+  "bindingsReset": {
+    "message": "All key bindings reset to defaults",
+    "description": "Bindings reset message"
+  },
+  "cannotDeleteDefault": {
+    "message": "Cannot delete the default profile",
+    "description": "Cannot delete default profile message"
+  },
+  "deleteProfileConfirm": {
+    "message": "Delete \"$PROFILE_NAME$\" profile?",
+    "description": "Delete profile confirmation",
+    "placeholders": {
+      "profile_name": {
+        "content": "$1",
+        "example": "My Profile"
+      }
+    }
+  },
+  "profileCreated": {
+    "message": "Created $PROFILE_NAME$ profile",
+    "description": "Profile created message",
+    "placeholders": {
+      "profile_name": {
+        "content": "$1",
+        "example": "My Profile"
+      }
+    }
+  },
+  "profileDeleted": {
+    "message": "Deleted $PROFILE_NAME$ profile",
+    "description": "Profile deleted message",
+    "placeholders": {
+      "profile_name": {
+        "content": "$1",
+        "example": "My Profile"
+      }
+    }
+  },
+  "switchedToProfile": {
+    "message": "Switched to $PROFILE_NAME$ profile",
+    "description": "Switched to profile message",
+    "placeholders": {
+      "profile_name": {
+        "content": "$1",
+        "example": "My Profile"
+      }
+    }
+  },
+  "controlsEnabled": {
+    "message": "Controls enabled",
+    "description": "Controls enabled message"
+  },
+  "controlsDisabled": {
+    "message": "Controls disabled",
+    "description": "Controls disabled message"
+  },
+  "boundTo": {
+    "message": "$ACTION$ bound to $KEY$",
+    "description": "Key bound message",
+    "placeholders": {
+      "action": {
+        "content": "$1",
+        "example": "Jump"
+      },
+      "key": {
+        "content": "$2",
+        "example": "Space"
+      }
+    }
+  },
+  "statusActive": {
+    "message": "Active on this page",
+    "description": "Status when on xCloud page"
+  },
+  "statusInactive": {
+    "message": "Go to xbox.com/play to use",
+    "description": "Status when not on xCloud page"
+  },
+  "changeBinding": {
+    "message": "Change $ACTION$ key binding. Currently $KEY$",
+    "description": "Change key binding aria label",
+    "placeholders": {
+      "action": {
+        "content": "$1",
+        "example": "Jump"
+      },
+      "key": {
+        "content": "$2",
+        "example": "Space"
+      }
+    }
+  },
+  "listeningForKey": {
+    "message": "Listening for key press. Press Escape to cancel.",
+    "description": "Listening for key aria label"
+  },
+  "autoSwitch": {
+    "message": "Auto-Switch",
+    "description": "Auto-switch profile setting"
+  },
+  "autoSwitchEnabled": {
+    "message": "Auto-switch enabled for this game",
+    "description": "Auto-switch enabled message"
+  },
+  "autoSwitchDisabled": {
+    "message": "Auto-switch disabled",
+    "description": "Auto-switch disabled message"
+  },
+  "assignToGame": {
+    "message": "Assign to Current Game",
+    "description": "Assign profile to current game button"
+  },
+  "removeGameAssignment": {
+    "message": "Remove Game Assignment",
+    "description": "Remove game assignment button"
+  },
+  "currentGame": {
+    "message": "Current Game",
+    "description": "Current game label"
+  },
+  "noGameDetected": {
+    "message": "No game detected",
+    "description": "No game detected message"
+  },
+  "profileAssignedToGame": {
+    "message": "$PROFILE_NAME$ profile will auto-switch when playing $GAME_NAME$",
+    "description": "Profile assigned to game message",
+    "placeholders": {
+      "profile_name": {
+        "content": "$1",
+        "example": "FPS"
+      },
+      "game_name": {
+        "content": "$2",
+        "example": "Halo Infinite"
+      }
+    }
+  },
+  "gameAssignmentRemoved": {
+    "message": "Auto-switch removed for $GAME_NAME$",
+    "description": "Game assignment removed message",
+    "placeholders": {
+      "game_name": {
+        "content": "$1",
+        "example": "Halo Infinite"
+      }
+    }
+  },
+  "autoSwitchedToProfile": {
+    "message": "Auto-switched to $PROFILE_NAME$ for $GAME_NAME$",
+    "description": "Auto-switched profile notification",
+    "placeholders": {
+      "profile_name": {
+        "content": "$1",
+        "example": "FPS"
+      },
+      "game_name": {
+        "content": "$2",
+        "example": "Halo Infinite"
+      }
+    }
+  }
+}

@@ -481,6 +481,47 @@
       color: #ff6b6b;
     }
 
+    /* Auto-switch game assignment */
+    .auto-switch-row {
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: #252525;
+      border-radius: 6px;
+    }
+
+    .current-game {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+
+    .game-label {
+      color: #888;
+    }
+
+    .game-name {
+      color: #4fbf4f;
+      font-weight: 500;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .auto-switch-btn {
+      width: 100%;
+      padding: 6px 10px;
+      font-size: 11px;
+    }
+
+    .auto-switch-btn.assigned {
+      background: #1a3a1a;
+      border-color: #107c10;
+      color: #4fbf4f;
+    }
+
     /* Hotkey info */
     .hotkey-info {
       background: #252525;
@@ -714,13 +755,13 @@
   <header>
     <h1>
       <span class="icon" aria-hidden="true">🎮</span>
-      Xbox Cloud KB+M
+      <span data-i18n="extName">Xbox Cloud KB+M</span>
     </h1>
   </header>
 
   <main id="main-controls">
     <div class="toggle-row">
-      <span class="toggle-label" id="enable-label">Enable Controls</span>
+      <span class="toggle-label" id="enable-label" data-i18n="enableControls">Enable Controls</span>
       <label class="toggle">
         <input type="checkbox"
                id="enabled"
@@ -736,23 +777,30 @@
 
     <section class="profile-section" aria-labelledby="profile-heading">
       <div class="section-header">
-        <h2 id="profile-heading">Profile</h2>
+        <h2 id="profile-heading" data-i18n="profile">Profile</h2>
       </div>
       <div class="profile-row">
         <select id="profileSelect" class="profile-select" aria-label="Select game profile">
-          <option value="default">Default</option>
+          <option value="default" data-i18n="profileDefault">Default</option>
         </select>
-        <button type="button" class="profile-btn" id="newProfileBtn" aria-label="Create new profile" title="New Profile">+</button>
-        <button type="button" class="profile-btn danger" id="deleteProfileBtn" aria-label="Delete current profile" title="Delete Profile">×</button>
+        <button type="button" class="profile-btn" id="newProfileBtn" aria-label="Create new profile" data-i18n-title="newProfile" title="New Profile">+</button>
+        <button type="button" class="profile-btn danger" id="deleteProfileBtn" aria-label="Delete current profile" data-i18n-title="deleteProfile" title="Delete Profile">×</button>
+      </div>
+      <div class="auto-switch-row" id="autoSwitchRow" style="display: none;">
+        <div class="current-game">
+          <span class="game-label" data-i18n="currentGame">Current Game:</span>
+          <span class="game-name" id="currentGameName">-</span>
+        </div>
+        <button type="button" class="small-btn auto-switch-btn" id="assignGameBtn" data-i18n="assignToGame">Assign to Game</button>
       </div>
     </section>
 
     <section class="section" aria-labelledby="mouse-settings-heading">
-      <h2 id="mouse-settings-heading">Mouse Settings</h2>
+      <h2 id="mouse-settings-heading" data-i18n="mouseSensitivity">Mouse Settings</h2>
 
       <div class="slider-row">
         <div class="slider-header">
-          <label for="sensitivity" class="slider-label">Sensitivity</label>
+          <label for="sensitivity" class="slider-label" data-i18n="mouseSensitivity">Sensitivity</label>
           <output id="sensitivityValue" class="slider-value" for="sensitivity">5</output>
         </div>
         <input type="range"
@@ -771,7 +819,7 @@
 
       <div class="checkbox-row">
         <input type="checkbox" id="invertY" aria-describedby="invert-help">
-        <label for="invertY">Invert Y Axis</label>
+        <label for="invertY" data-i18n="invertYAxis">Invert Y Axis</label>
         <span id="invert-help" class="visually-hidden">
           When enabled, moving mouse up will look down and vice versa
         </span>
@@ -780,108 +828,108 @@
 
     <section class="section" aria-labelledby="keybindings-heading">
       <div class="section-header">
-        <h2 id="keybindings-heading">Key Bindings</h2>
-        <button type="button" class="reset-btn" id="resetBindings" aria-label="Reset all key bindings to defaults">
+        <h2 id="keybindings-heading" data-i18n="keyBindings">Key Bindings</h2>
+        <button type="button" class="reset-btn" id="resetBindings" aria-label="Reset all key bindings to defaults" data-i18n="resetToDefaults">
           Reset
         </button>
       </div>
       <p class="visually-hidden">Click any key to change its binding. Press Escape to cancel.</p>
       <div class="key-bindings" id="keyBindings" role="region" aria-labelledby="keybindings-heading">
         <!-- Movement -->
-        <div class="binding-category">Movement</div>
+        <div class="binding-category" data-i18n="movement">Movement</div>
         <div class="key-binding-row">
-          <span class="action-name">Move Forward</span>
+          <span class="action-name" data-i18n="moveForward">Move Forward</span>
           <button type="button" class="key-bind-btn" data-action="moveForward" aria-label="Change Move Forward key binding">W</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Move Back</span>
+          <span class="action-name" data-i18n="moveBackward">Move Back</span>
           <button type="button" class="key-bind-btn" data-action="moveBackward" aria-label="Change Move Back key binding">S</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Move Left</span>
+          <span class="action-name" data-i18n="moveLeft">Move Left</span>
           <button type="button" class="key-bind-btn" data-action="moveLeft" aria-label="Change Move Left key binding">A</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Move Right</span>
+          <span class="action-name" data-i18n="moveRight">Move Right</span>
           <button type="button" class="key-bind-btn" data-action="moveRight" aria-label="Change Move Right key binding">D</button>
         </div>
 
         <!-- Face Buttons -->
-        <div class="binding-category">Face Buttons</div>
+        <div class="binding-category" data-i18n="faceButtons">Face Buttons</div>
         <div class="key-binding-row">
-          <span class="action-name">A Button (Jump)</span>
+          <span class="action-name" data-i18n="actionA">A Button</span>
           <button type="button" class="key-bind-btn" data-action="actionA" aria-label="Change A Button key binding">Space</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">B Button (Interact)</span>
+          <span class="action-name" data-i18n="actionB">B Button</span>
           <button type="button" class="key-bind-btn" data-action="actionB" aria-label="Change B Button key binding">E</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">X Button (Action)</span>
+          <span class="action-name" data-i18n="actionX">X Button</span>
           <button type="button" class="key-bind-btn" data-action="actionX" aria-label="Change X Button key binding">Q</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Y Button (Reload)</span>
+          <span class="action-name" data-i18n="actionY">Y Button</span>
           <button type="button" class="key-bind-btn" data-action="actionY" aria-label="Change Y Button key binding">R</button>
         </div>
 
         <!-- Triggers & Bumpers -->
-        <div class="binding-category">Triggers & Bumpers</div>
+        <div class="binding-category" data-i18n="bumpersAndTriggers">Triggers & Bumpers</div>
         <div class="key-binding-row">
-          <span class="action-name">Left Trigger (Aim)</span>
+          <span class="action-name" data-i18n="leftTrigger">Left Trigger</span>
           <button type="button" class="key-bind-btn" data-action="leftTrigger" aria-label="Change Left Trigger key binding">Shift</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Right Trigger (Fire)</span>
+          <span class="action-name" data-i18n="rightTrigger">Right Trigger</span>
           <button type="button" class="key-bind-btn" data-action="rightTrigger" aria-label="Change Right Trigger key binding">Right Click</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Left Bumper</span>
+          <span class="action-name" data-i18n="leftBumper">Left Bumper</span>
           <button type="button" class="key-bind-btn" data-action="leftBumper" aria-label="Change Left Bumper key binding">F</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Right Bumper</span>
+          <span class="action-name" data-i18n="rightBumper">Right Bumper</span>
           <button type="button" class="key-bind-btn" data-action="rightBumper" aria-label="Change Right Bumper key binding">C</button>
         </div>
 
         <!-- Stick Clicks -->
-        <div class="binding-category">Stick Clicks</div>
+        <div class="binding-category" data-i18n="special">Stick Clicks</div>
         <div class="key-binding-row">
-          <span class="action-name">Left Stick Click (Sprint)</span>
+          <span class="action-name" data-i18n="leftStickClick">Left Stick Click</span>
           <button type="button" class="key-bind-btn" data-action="leftStickClick" aria-label="Change Left Stick Click key binding">V</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Right Stick Click (Melee)</span>
+          <span class="action-name" data-i18n="rightStickClick">Right Stick Click</span>
           <button type="button" class="key-bind-btn" data-action="rightStickClick" aria-label="Change Right Stick Click key binding">Middle Click</button>
         </div>
 
         <!-- D-Pad -->
-        <div class="binding-category">D-Pad</div>
+        <div class="binding-category" data-i18n="dPad">D-Pad</div>
         <div class="key-binding-row">
-          <span class="action-name">D-Pad Up</span>
+          <span class="action-name" data-i18n="dpadUp">D-Pad Up</span>
           <button type="button" class="key-bind-btn" data-action="dpadUp" aria-label="Change D-Pad Up key binding">1</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">D-Pad Down</span>
+          <span class="action-name" data-i18n="dpadDown">D-Pad Down</span>
           <button type="button" class="key-bind-btn" data-action="dpadDown" aria-label="Change D-Pad Down key binding">3</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">D-Pad Left</span>
+          <span class="action-name" data-i18n="dpadLeft">D-Pad Left</span>
           <button type="button" class="key-bind-btn" data-action="dpadLeft" aria-label="Change D-Pad Left key binding">4</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">D-Pad Right</span>
+          <span class="action-name" data-i18n="dpadRight">D-Pad Right</span>
           <button type="button" class="key-bind-btn" data-action="dpadRight" aria-label="Change D-Pad Right key binding">2</button>
         </div>
 
         <!-- System -->
-        <div class="binding-category">System</div>
+        <div class="binding-category" data-i18n="special">System</div>
         <div class="key-binding-row">
-          <span class="action-name">View Button</span>
+          <span class="action-name" data-i18n="view">View Button</span>
           <button type="button" class="key-bind-btn" data-action="view" aria-label="Change View Button key binding">Tab</button>
         </div>
         <div class="key-binding-row">
-          <span class="action-name">Menu Button</span>
+          <span class="action-name" data-i18n="menu">Menu Button</span>
           <button type="button" class="key-bind-btn" data-action="menu" aria-label="Change Menu Button key binding">Esc</button>
         </div>
       </div>
@@ -893,21 +941,21 @@
          aria-live="polite"
          aria-atomic="true">
       <span aria-hidden="true" class="status-icon">○</span>
-      Go to xbox.com/play to use
+      <span data-i18n="statusInactive">Go to xbox.com/play to use</span>
     </div>
 
     <footer class="instructions">
-      <strong>Tip:</strong> Click any key binding to change it. Press <kbd>Esc</kbd> to cancel.
+      <strong data-i18n="pressKeyOrMouse">Click any key binding to change it. Press Escape to cancel.</strong>
     </footer>
 
     <div class="hotkey-info">
-      <div class="hotkey-info-title">Keyboard Shortcuts</div>
+      <div class="hotkey-info-title" data-i18n="hotkeys">Keyboard Shortcuts</div>
       <div class="hotkey-row">
-        <span>Toggle Controls</span>
+        <span data-i18n="toggleControls">Toggle Controls</span>
         <kbd>Alt+Shift+X</kbd>
       </div>
       <div class="hotkey-row">
-        <span>Next Profile</span>
+        <span data-i18n="nextProfile">Next Profile</span>
         <kbd>Alt+Shift+P</kbd>
       </div>
     </div>
@@ -916,12 +964,12 @@
   <!-- New Profile Modal -->
   <div class="modal-overlay" id="newProfileModal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
     <div class="modal">
-      <h3 id="modal-title">New Profile</h3>
-      <label for="newProfileName" class="visually-hidden">Profile name</label>
-      <input type="text" id="newProfileName" placeholder="Profile name (e.g., Halo, Forza)" maxlength="30">
+      <h3 id="modal-title" data-i18n="createProfile">New Profile</h3>
+      <label for="newProfileName" class="visually-hidden" data-i18n="profileName">Profile name</label>
+      <input type="text" id="newProfileName" data-i18n-placeholder="enterProfileName" placeholder="Enter profile name..." maxlength="30">
       <div class="modal-buttons">
-        <button type="button" class="modal-btn" id="cancelNewProfile">Cancel</button>
-        <button type="button" class="modal-btn primary" id="createNewProfile">Create</button>
+        <button type="button" class="modal-btn" id="cancelNewProfile" data-i18n="cancel">Cancel</button>
+        <button type="button" class="modal-btn primary" id="createNewProfile" data-i18n="create">Create</button>
       </div>
     </div>
   </div>

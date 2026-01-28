@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Tastatur & Maus für Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Spiele Xbox Cloud Gaming (xCloud) mit Tastatur- und Maussteuerung"
+  },
+  "enableControls": {
+    "message": "Steuerung Aktivieren"
+  },
+  "enabled": {
+    "message": "Aktiviert"
+  },
+  "disabled": {
+    "message": "Deaktiviert"
+  },
+  "mouseSensitivity": {
+    "message": "Mausempfindlichkeit"
+  },
+  "invertYAxis": {
+    "message": "Y-Achse Umkehren"
+  },
+  "profile": {
+    "message": "Profil"
+  },
+  "profileDefault": {
+    "message": "Standard"
+  },
+  "profileFPS": {
+    "message": "FPS / Shooter"
+  },
+  "profileRacing": {
+    "message": "Rennen"
+  },
+  "newProfile": {
+    "message": "Neues Profil"
+  },
+  "deleteProfile": {
+    "message": "Profil Löschen"
+  },
+  "createProfile": {
+    "message": "Profil Erstellen"
+  },
+  "profileName": {
+    "message": "Profilname"
+  },
+  "enterProfileName": {
+    "message": "Profilnamen eingeben..."
+  },
+  "cancel": {
+    "message": "Abbrechen"
+  },
+  "create": {
+    "message": "Erstellen"
+  },
+  "keyBindings": {
+    "message": "Tastenbelegung"
+  },
+  "resetToDefaults": {
+    "message": "Zurücksetzen"
+  },
+  "movement": {
+    "message": "Bewegung"
+  },
+  "faceButtons": {
+    "message": "Aktionstasten"
+  },
+  "bumpersAndTriggers": {
+    "message": "Schultertasten"
+  },
+  "dPad": {
+    "message": "Steuerkreuz"
+  },
+  "special": {
+    "message": "Spezial"
+  },
+  "moveForward": {
+    "message": "Vorwärts"
+  },
+  "moveBackward": {
+    "message": "Rückwärts"
+  },
+  "moveLeft": {
+    "message": "Links"
+  },
+  "moveRight": {
+    "message": "Rechts"
+  },
+  "actionA": {
+    "message": "A-Taste"
+  },
+  "actionB": {
+    "message": "B-Taste"
+  },
+  "actionX": {
+    "message": "X-Taste"
+  },
+  "actionY": {
+    "message": "Y-Taste"
+  },
+  "leftBumper": {
+    "message": "Linke Schultertaste"
+  },
+  "rightBumper": {
+    "message": "Rechte Schultertaste"
+  },
+  "leftTrigger": {
+    "message": "Linker Trigger"
+  },
+  "rightTrigger": {
+    "message": "Rechter Trigger"
+  },
+  "dpadUp": {
+    "message": "Steuerkreuz Oben"
+  },
+  "dpadDown": {
+    "message": "Steuerkreuz Unten"
+  },
+  "dpadLeft": {
+    "message": "Steuerkreuz Links"
+  },
+  "dpadRight": {
+    "message": "Steuerkreuz Rechts"
+  },
+  "view": {
+    "message": "Ansicht"
+  },
+  "menu": {
+    "message": "Menü"
+  },
+  "leftStickClick": {
+    "message": "Linker Stick Klick"
+  },
+  "rightStickClick": {
+    "message": "Rechter Stick Klick"
+  },
+  "hotkeys": {
+    "message": "Tastenkürzel"
+  },
+  "toggleControls": {
+    "message": "Steuerung Umschalten"
+  },
+  "nextProfile": {
+    "message": "Nächstes Profil"
+  },
+  "pressKey": {
+    "message": "Taste drücken..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Taste oder Maustaste drücken. Escape zum Abbrechen."
+  },
+  "keyBindingCancelled": {
+    "message": "Tastenbelegung abgebrochen"
+  },
+  "bindingsReset": {
+    "message": "Alle Tastenbelegungen zurückgesetzt"
+  },
+  "cannotDeleteDefault": {
+    "message": "Standardprofil kann nicht gelöscht werden"
+  },
+  "deleteProfileConfirm": {
+    "message": "Profil \"$PROFILE_NAME$\" löschen?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Profil $PROFILE_NAME$ erstellt",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Profil $PROFILE_NAME$ gelöscht",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Zu Profil $PROFILE_NAME$ gewechselt",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Steuerung aktiviert"
+  },
+  "controlsDisabled": {
+    "message": "Steuerung deaktiviert"
+  },
+  "boundTo": {
+    "message": "$ACTION$ auf $KEY$ belegt",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Aktiv auf dieser Seite"
+  },
+  "statusInactive": {
+    "message": "Gehe zu xbox.com/play"
+  },
+  "changeBinding": {
+    "message": "$ACTION$ Tastenbelegung ändern. Aktuell $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Warte auf Tastendruck. Escape zum Abbrechen."
+  }
+}

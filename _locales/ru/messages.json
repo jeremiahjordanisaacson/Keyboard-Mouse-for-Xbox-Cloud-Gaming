@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Клавиатура и мышь для Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Играйте в Xbox Cloud Gaming (xCloud) с клавиатурой и мышью"
+  },
+  "enableControls": {
+    "message": "Включить управление"
+  },
+  "enabled": {
+    "message": "Включено"
+  },
+  "disabled": {
+    "message": "Отключено"
+  },
+  "mouseSensitivity": {
+    "message": "Чувствительность мыши"
+  },
+  "invertYAxis": {
+    "message": "Инвертировать ось Y"
+  },
+  "profile": {
+    "message": "Профиль"
+  },
+  "profileDefault": {
+    "message": "По умолчанию"
+  },
+  "profileFPS": {
+    "message": "FPS/Шутер"
+  },
+  "profileRacing": {
+    "message": "Гонки"
+  },
+  "newProfile": {
+    "message": "Новый профиль"
+  },
+  "deleteProfile": {
+    "message": "Удалить профиль"
+  },
+  "createProfile": {
+    "message": "Создать профиль"
+  },
+  "profileName": {
+    "message": "Имя профиля"
+  },
+  "enterProfileName": {
+    "message": "Введите имя профиля..."
+  },
+  "cancel": {
+    "message": "Отмена"
+  },
+  "create": {
+    "message": "Создать"
+  },
+  "keyBindings": {
+    "message": "Назначение клавиш"
+  },
+  "resetToDefaults": {
+    "message": "Сбросить"
+  },
+  "movement": {
+    "message": "Движение"
+  },
+  "faceButtons": {
+    "message": "Основные кнопки"
+  },
+  "bumpersAndTriggers": {
+    "message": "Бамперы и триггеры"
+  },
+  "dPad": {
+    "message": "Крестовина"
+  },
+  "special": {
+    "message": "Специальные"
+  },
+  "moveForward": {
+    "message": "Вперёд"
+  },
+  "moveBackward": {
+    "message": "Назад"
+  },
+  "moveLeft": {
+    "message": "Влево"
+  },
+  "moveRight": {
+    "message": "Вправо"
+  },
+  "actionA": {
+    "message": "Кнопка A"
+  },
+  "actionB": {
+    "message": "Кнопка B"
+  },
+  "actionX": {
+    "message": "Кнопка X"
+  },
+  "actionY": {
+    "message": "Кнопка Y"
+  },
+  "leftBumper": {
+    "message": "Левый бампер"
+  },
+  "rightBumper": {
+    "message": "Правый бампер"
+  },
+  "leftTrigger": {
+    "message": "Левый триггер"
+  },
+  "rightTrigger": {
+    "message": "Правый триггер"
+  },
+  "dpadUp": {
+    "message": "Крестовина вверх"
+  },
+  "dpadDown": {
+    "message": "Крестовина вниз"
+  },
+  "dpadLeft": {
+    "message": "Крестовина влево"
+  },
+  "dpadRight": {
+    "message": "Крестовина вправо"
+  },
+  "view": {
+    "message": "Вид"
+  },
+  "menu": {
+    "message": "Меню"
+  },
+  "leftStickClick": {
+    "message": "Нажатие левого стика"
+  },
+  "rightStickClick": {
+    "message": "Нажатие правого стика"
+  },
+  "hotkeys": {
+    "message": "Горячие клавиши"
+  },
+  "toggleControls": {
+    "message": "Переключить управление"
+  },
+  "nextProfile": {
+    "message": "Следующий профиль"
+  },
+  "pressKey": {
+    "message": "Нажмите клавишу..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Нажмите клавишу или кнопку мыши. Escape для отмены."
+  },
+  "keyBindingCancelled": {
+    "message": "Назначение отменено"
+  },
+  "bindingsReset": {
+    "message": "Все назначения сброшены"
+  },
+  "cannotDeleteDefault": {
+    "message": "Нельзя удалить профиль по умолчанию"
+  },
+  "deleteProfileConfirm": {
+    "message": "Удалить профиль \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Создан профиль $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Удалён профиль $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Переключено на профиль $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Управление включено"
+  },
+  "controlsDisabled": {
+    "message": "Управление отключено"
+  },
+  "boundTo": {
+    "message": "$ACTION$ назначено на $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Активно на этой странице"
+  },
+  "statusInactive": {
+    "message": "Перейдите на xbox.com/play"
+  },
+  "changeBinding": {
+    "message": "Изменить назначение $ACTION$. Сейчас $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Ожидание нажатия. Escape для отмены."
+  }
+}

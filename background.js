@@ -163,6 +163,51 @@ function flashBadge(text) {
   }, 1500);
 }
 
+// Handle game changes for auto-profile switching
+async function handleGameChange(gameTitle, tabId) {
+  if (!gameTitle) return;
+
+  const data = await chrome.storage.sync.get(['gameProfiles', 'profiles', 'activeProfileId']);
+  const gameProfiles = data.gameProfiles || {};
+  const profiles = data.profiles || {};
+
+  // Normalize game title for lookup (case-insensitive)
+  const normalizedTitle = gameTitle.toLowerCase().trim();
+
+  // Find matching profile for this game
+  let matchedProfileId = null;
+  for (const [savedGame, profileId] of Object.entries(gameProfiles)) {
+    if (savedGame.toLowerCase() === normalizedTitle) {
+      matchedProfileId = profileId;
+      break;
+    }
+  }
+
+  if (matchedProfileId && matchedProfileId !== data.activeProfileId && profiles[matchedProfileId]) {
+    // Auto-switch to the matched profile
+    await chrome.storage.sync.set({ activeProfileId: matchedProfileId });
+
+    const profile = profiles[matchedProfileId];
+
+    // Notify content script
+    if (tabId) {
+      try {
+        await chrome.tabs.sendMessage(tabId, {
+          type: 'PROFILE_CHANGED',
+          profile,
+          autoSwitched: true,
+          gameName: gameTitle
+        });
+      } catch (e) {}
+    }
+
+    // Flash badge with profile name
+    flashBadge(profile.name.substring(0, 3).toUpperCase());
+
+    console.log(`[XCloud KB+M] Auto-switched to ${profile.name} for ${gameTitle}`);
+  }
+}
+
 // Listen for messages from popup or content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_PROFILES') {
@@ -255,6 +300,58 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     updateBadge(request.enabled);
     sendResponse({ success: true });
     return false;
+  }
+
+  if (request.type === 'GAME_CHANGED') {
+    handleGameChange(request.gameTitle, sender.tab?.id);
+    sendResponse({ success: true });
+    return false;
+  }
+
+  if (request.type === 'ASSIGN_GAME_PROFILE') {
+    chrome.storage.sync.get(['gameProfiles'], (data) => {
+      const gameProfiles = data.gameProfiles || {};
+      gameProfiles[request.gameTitle] = request.profileId;
+      chrome.storage.sync.set({ gameProfiles }, () => {
+        sendResponse({ success: true });
+      });
+    });
+    return true;
+  }
+
+  if (request.type === 'REMOVE_GAME_PROFILE') {
+    chrome.storage.sync.get(['gameProfiles'], (data) => {
+      const gameProfiles = data.gameProfiles || {};
+      delete gameProfiles[request.gameTitle];
+      chrome.storage.sync.set({ gameProfiles }, () => {
+        sendResponse({ success: true });
+      });
+    });
+    return true;
+  }
+
+  if (request.type === 'GET_GAME_PROFILES') {
+    chrome.storage.sync.get(['gameProfiles'], (data) => {
+      sendResponse({ gameProfiles: data.gameProfiles || {} });
+    });
+    return true;
+  }
+
+  if (request.type === 'GET_CURRENT_GAME') {
+    // Query the active xCloud tab for current game
+    chrome.tabs.query({ url: ['*://www.xbox.com/*play*', '*://xbox.com/*play*'], active: true, currentWindow: true }, async (tabs) => {
+      if (tabs.length > 0) {
+        try {
+          const response = await chrome.tabs.sendMessage(tabs[0].id, { type: 'GET_CURRENT_GAME' });
+          sendResponse({ gameTitle: response?.gameTitle || null });
+        } catch (e) {
+          sendResponse({ gameTitle: null });
+        }
+      } else {
+        sendResponse({ gameTitle: null });
+      }
+    });
+    return true;
   }
 });
 

@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "คีย์บอร์ดและเมาส์สำหรับ Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "เล่น Xbox Cloud Gaming (xCloud) ด้วยคีย์บอร์ดและเมาส์"
+  },
+  "enableControls": {
+    "message": "เปิดใช้งานการควบคุม"
+  },
+  "enabled": {
+    "message": "เปิดใช้งาน"
+  },
+  "disabled": {
+    "message": "ปิดใช้งาน"
+  },
+  "mouseSensitivity": {
+    "message": "ความไวเมาส์"
+  },
+  "invertYAxis": {
+    "message": "กลับแกน Y"
+  },
+  "profile": {
+    "message": "โปรไฟล์"
+  },
+  "profileDefault": {
+    "message": "ค่าเริ่มต้น"
+  },
+  "profileFPS": {
+    "message": "FPS / ยิงปืน"
+  },
+  "profileRacing": {
+    "message": "แข่งรถ"
+  },
+  "newProfile": {
+    "message": "โปรไฟล์ใหม่"
+  },
+  "deleteProfile": {
+    "message": "ลบโปรไฟล์"
+  },
+  "createProfile": {
+    "message": "สร้างโปรไฟล์"
+  },
+  "profileName": {
+    "message": "ชื่อโปรไฟล์"
+  },
+  "enterProfileName": {
+    "message": "ป้อนชื่อโปรไฟล์..."
+  },
+  "cancel": {
+    "message": "ยกเลิก"
+  },
+  "create": {
+    "message": "สร้าง"
+  },
+  "keyBindings": {
+    "message": "การกำหนดปุ่ม"
+  },
+  "resetToDefaults": {
+    "message": "รีเซ็ต"
+  },
+  "movement": {
+    "message": "การเคลื่อนที่"
+  },
+  "faceButtons": {
+    "message": "ปุ่มหลัก"
+  },
+  "bumpersAndTriggers": {
+    "message": "บัมเปอร์และทริกเกอร์"
+  },
+  "dPad": {
+    "message": "ปุ่มทิศทาง"
+  },
+  "special": {
+    "message": "พิเศษ"
+  },
+  "moveForward": {
+    "message": "เดินหน้า"
+  },
+  "moveBackward": {
+    "message": "ถอยหลัง"
+  },
+  "moveLeft": {
+    "message": "ซ้าย"
+  },
+  "moveRight": {
+    "message": "ขวา"
+  },
+  "actionA": {
+    "message": "ปุ่ม A"
+  },
+  "actionB": {
+    "message": "ปุ่ม B"
+  },
+  "actionX": {
+    "message": "ปุ่ม X"
+  },
+  "actionY": {
+    "message": "ปุ่ม Y"
+  },
+  "leftBumper": {
+    "message": "บัมเปอร์ซ้าย"
+  },
+  "rightBumper": {
+    "message": "บัมเปอร์ขวา"
+  },
+  "leftTrigger": {
+    "message": "ทริกเกอร์ซ้าย"
+  },
+  "rightTrigger": {
+    "message": "ทริกเกอร์ขวา"
+  },
+  "dpadUp": {
+    "message": "ขึ้น"
+  },
+  "dpadDown": {
+    "message": "ลง"
+  },
+  "dpadLeft": {
+    "message": "ซ้าย"
+  },
+  "dpadRight": {
+    "message": "ขวา"
+  },
+  "view": {
+    "message": "ดู"
+  },
+  "menu": {
+    "message": "เมนู"
+  },
+  "leftStickClick": {
+    "message": "กดสติ๊กซ้าย"
+  },
+  "rightStickClick": {
+    "message": "กดสติ๊กขวา"
+  },
+  "hotkeys": {
+    "message": "ปุ่มลัด"
+  },
+  "toggleControls": {
+    "message": "สลับการควบคุม"
+  },
+  "nextProfile": {
+    "message": "โปรไฟล์ถัดไป"
+  },
+  "pressKey": {
+    "message": "กดปุ่ม..."
+  },
+  "pressKeyOrMouse": {
+    "message": "กดปุ่มคีย์บอร์ดหรือเมาส์ กด Escape เพื่อยกเลิก"
+  },
+  "keyBindingCancelled": {
+    "message": "ยกเลิกการกำหนดปุ่ม"
+  },
+  "bindingsReset": {
+    "message": "รีเซ็ตการกำหนดปุ่มทั้งหมดแล้ว"
+  },
+  "cannotDeleteDefault": {
+    "message": "ไม่สามารถลบโปรไฟล์เริ่มต้นได้"
+  },
+  "deleteProfileConfirm": {
+    "message": "ลบโปรไฟล์ \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "สร้างโปรไฟล์ $PROFILE_NAME$ แล้ว",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "ลบโปรไฟล์ $PROFILE_NAME$ แล้ว",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "เปลี่ยนเป็นโปรไฟล์ $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "เปิดใช้งานการควบคุมแล้ว"
+  },
+  "controlsDisabled": {
+    "message": "ปิดใช้งานการควบคุมแล้ว"
+  },
+  "boundTo": {
+    "message": "กำหนด $ACTION$ เป็น $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "ใช้งานบนหน้านี้"
+  },
+  "statusInactive": {
+    "message": "ไปที่ xbox.com/play เพื่อใช้งาน"
+  },
+  "changeBinding": {
+    "message": "เปลี่ยนการกำหนด $ACTION$ ปัจจุบัน $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "รอการกดปุ่ม กด Escape เพื่อยกเลิก"
+  }
+}

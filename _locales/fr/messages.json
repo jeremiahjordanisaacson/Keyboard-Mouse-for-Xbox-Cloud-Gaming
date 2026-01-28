@@ -1,0 +1,233 @@
+{
+  "extName": {
+    "message": "Clavier et Souris pour Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Jouez à Xbox Cloud Gaming (xCloud) avec les commandes clavier et souris"
+  },
+  "enableControls": {
+    "message": "Activer les Commandes"
+  },
+  "enabled": {
+    "message": "Activé"
+  },
+  "disabled": {
+    "message": "Désactivé"
+  },
+  "mouseSensitivity": {
+    "message": "Sensibilité de la Souris"
+  },
+  "invertYAxis": {
+    "message": "Inverser l'Axe Y"
+  },
+  "profile": {
+    "message": "Profil"
+  },
+  "profileDefault": {
+    "message": "Par Défaut"
+  },
+  "profileFPS": {
+    "message": "FPS / Tir"
+  },
+  "profileRacing": {
+    "message": "Course"
+  },
+  "newProfile": {
+    "message": "Nouveau Profil"
+  },
+  "deleteProfile": {
+    "message": "Supprimer le Profil"
+  },
+  "createProfile": {
+    "message": "Créer un Profil"
+  },
+  "profileName": {
+    "message": "Nom du Profil"
+  },
+  "enterProfileName": {
+    "message": "Entrez le nom du profil..."
+  },
+  "cancel": {
+    "message": "Annuler"
+  },
+  "create": {
+    "message": "Créer"
+  },
+  "keyBindings": {
+    "message": "Raccourcis Clavier"
+  },
+  "resetToDefaults": {
+    "message": "Réinitialiser"
+  },
+  "movement": {
+    "message": "Mouvement"
+  },
+  "faceButtons": {
+    "message": "Boutons Principaux"
+  },
+  "bumpersAndTriggers": {
+    "message": "Gâchettes"
+  },
+  "dPad": {
+    "message": "Croix Directionnelle"
+  },
+  "special": {
+    "message": "Spécial"
+  },
+  "moveForward": {
+    "message": "Avancer"
+  },
+  "moveBackward": {
+    "message": "Reculer"
+  },
+  "moveLeft": {
+    "message": "Gauche"
+  },
+  "moveRight": {
+    "message": "Droite"
+  },
+  "actionA": {
+    "message": "Bouton A"
+  },
+  "actionB": {
+    "message": "Bouton B"
+  },
+  "actionX": {
+    "message": "Bouton X"
+  },
+  "actionY": {
+    "message": "Bouton Y"
+  },
+  "leftBumper": {
+    "message": "Gâchette Gauche Haute"
+  },
+  "rightBumper": {
+    "message": "Gâchette Droite Haute"
+  },
+  "leftTrigger": {
+    "message": "Gâchette Gauche"
+  },
+  "rightTrigger": {
+    "message": "Gâchette Droite"
+  },
+  "dpadUp": {
+    "message": "Croix Haut"
+  },
+  "dpadDown": {
+    "message": "Croix Bas"
+  },
+  "dpadLeft": {
+    "message": "Croix Gauche"
+  },
+  "dpadRight": {
+    "message": "Croix Droite"
+  },
+  "view": {
+    "message": "Vue"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Clic Stick Gauche"
+  },
+  "rightStickClick": {
+    "message": "Clic Stick Droit"
+  },
+  "hotkeys": {
+    "message": "Raccourcis"
+  },
+  "toggleControls": {
+    "message": "Basculer les Commandes"
+  },
+  "nextProfile": {
+    "message": "Profil Suivant"
+  },
+  "pressKey": {
+    "message": "Appuyez..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Appuyez sur une touche ou un bouton de souris. Échap pour annuler."
+  },
+  "keyBindingCancelled": {
+    "message": "Attribution annulée"
+  },
+  "bindingsReset": {
+    "message": "Tous les raccourcis réinitialisés"
+  },
+  "cannotDeleteDefault": {
+    "message": "Impossible de supprimer le profil par défaut"
+  },
+  "deleteProfileConfirm": {
+    "message": "Supprimer le profil \"$PROFILE_NAME$\" ?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Profil $PROFILE_NAME$ créé",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Profil $PROFILE_NAME$ supprimé",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Basculé vers le profil $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Commandes activées"
+  },
+  "controlsDisabled": {
+    "message": "Commandes désactivées"
+  },
+  "boundTo": {
+    "message": "$ACTION$ attribué à $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Actif sur cette page"
+  },
+  "statusInactive": {
+    "message": "Allez sur xbox.com/play pour utiliser"
+  },
+  "changeBinding": {
+    "message": "Changer l'attribution de $ACTION$. Actuellement $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "En attente d'une touche. Échap pour annuler."
+  },
+  "autoSwitch": {
+    "message": "Changement Automatique"
+  },
+  "autoSwitchEnabled": {
+    "message": "Changement automatique activé pour ce jeu"
+  },
+  "autoSwitchDisabled": {
+    "message": "Changement automatique désactivé"
+  },
+  "assignToGame": {
+    "message": "Assigner au Jeu Actuel"
+  },
+  "removeGameAssignment": {
+    "message": "Supprimer l'Assignation de Jeu"
+  },
+  "currentGame": {
+    "message": "Jeu Actuel"
+  },
+  "noGameDetected": {
+    "message": "Aucun jeu détecté"
+  },
+  "profileAssignedToGame": {
+    "message": "Le profil $PROFILE_NAME$ changera automatiquement en jouant à $GAME_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" }, "game_name": { "content": "$2" } }
+  },
+  "gameAssignmentRemoved": {
+    "message": "Changement automatique supprimé pour $GAME_NAME$",
+    "placeholders": { "game_name": { "content": "$1" } }
+  },
+  "autoSwitchedToProfile": {
+    "message": "Changé automatiquement vers $PROFILE_NAME$ pour $GAME_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" }, "game_name": { "content": "$2" } }
+  }
+}

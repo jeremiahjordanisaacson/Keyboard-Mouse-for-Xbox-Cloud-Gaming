@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Bàn Phím & Chuột cho Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Chơi Xbox Cloud Gaming (xCloud) với bàn phím và chuột"
+  },
+  "enableControls": {
+    "message": "Bật Điều Khiển"
+  },
+  "enabled": {
+    "message": "Đã bật"
+  },
+  "disabled": {
+    "message": "Đã tắt"
+  },
+  "mouseSensitivity": {
+    "message": "Độ Nhạy Chuột"
+  },
+  "invertYAxis": {
+    "message": "Đảo Trục Y"
+  },
+  "profile": {
+    "message": "Hồ Sơ"
+  },
+  "profileDefault": {
+    "message": "Mặc định"
+  },
+  "profileFPS": {
+    "message": "FPS / Bắn súng"
+  },
+  "profileRacing": {
+    "message": "Đua xe"
+  },
+  "newProfile": {
+    "message": "Hồ Sơ Mới"
+  },
+  "deleteProfile": {
+    "message": "Xóa Hồ Sơ"
+  },
+  "createProfile": {
+    "message": "Tạo Hồ Sơ"
+  },
+  "profileName": {
+    "message": "Tên Hồ Sơ"
+  },
+  "enterProfileName": {
+    "message": "Nhập tên hồ sơ..."
+  },
+  "cancel": {
+    "message": "Hủy"
+  },
+  "create": {
+    "message": "Tạo"
+  },
+  "keyBindings": {
+    "message": "Gán Phím"
+  },
+  "resetToDefaults": {
+    "message": "Đặt Lại"
+  },
+  "movement": {
+    "message": "Di Chuyển"
+  },
+  "faceButtons": {
+    "message": "Nút Chính"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumper & Cò"
+  },
+  "dPad": {
+    "message": "D-Pad"
+  },
+  "special": {
+    "message": "Đặc Biệt"
+  },
+  "moveForward": {
+    "message": "Tiến"
+  },
+  "moveBackward": {
+    "message": "Lùi"
+  },
+  "moveLeft": {
+    "message": "Trái"
+  },
+  "moveRight": {
+    "message": "Phải"
+  },
+  "actionA": {
+    "message": "Nút A"
+  },
+  "actionB": {
+    "message": "Nút B"
+  },
+  "actionX": {
+    "message": "Nút X"
+  },
+  "actionY": {
+    "message": "Nút Y"
+  },
+  "leftBumper": {
+    "message": "Bumper Trái"
+  },
+  "rightBumper": {
+    "message": "Bumper Phải"
+  },
+  "leftTrigger": {
+    "message": "Cò Trái"
+  },
+  "rightTrigger": {
+    "message": "Cò Phải"
+  },
+  "dpadUp": {
+    "message": "D-Pad Lên"
+  },
+  "dpadDown": {
+    "message": "D-Pad Xuống"
+  },
+  "dpadLeft": {
+    "message": "D-Pad Trái"
+  },
+  "dpadRight": {
+    "message": "D-Pad Phải"
+  },
+  "view": {
+    "message": "Xem"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Nhấn Cần Trái"
+  },
+  "rightStickClick": {
+    "message": "Nhấn Cần Phải"
+  },
+  "hotkeys": {
+    "message": "Phím Tắt"
+  },
+  "toggleControls": {
+    "message": "Bật/Tắt Điều Khiển"
+  },
+  "nextProfile": {
+    "message": "Hồ Sơ Tiếp"
+  },
+  "pressKey": {
+    "message": "Nhấn phím..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Nhấn phím hoặc nút chuột. Escape để hủy."
+  },
+  "keyBindingCancelled": {
+    "message": "Đã hủy gán phím"
+  },
+  "bindingsReset": {
+    "message": "Đã đặt lại tất cả phím"
+  },
+  "cannotDeleteDefault": {
+    "message": "Không thể xóa hồ sơ mặc định"
+  },
+  "deleteProfileConfirm": {
+    "message": "Xóa hồ sơ \"$PROFILE_NAME$\"?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Đã tạo hồ sơ $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Đã xóa hồ sơ $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Đã chuyển sang hồ sơ $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Đã bật điều khiển"
+  },
+  "controlsDisabled": {
+    "message": "Đã tắt điều khiển"
+  },
+  "boundTo": {
+    "message": "$ACTION$ gán cho $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Đang hoạt động trên trang này"
+  },
+  "statusInactive": {
+    "message": "Đi đến xbox.com/play để sử dụng"
+  },
+  "changeBinding": {
+    "message": "Thay đổi gán $ACTION$. Hiện tại $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Đang chờ phím. Escape để hủy."
+  }
+}

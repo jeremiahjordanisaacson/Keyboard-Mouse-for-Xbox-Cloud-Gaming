@@ -14,6 +14,99 @@
 
   console.log('[XCloud KB+M] Content script loaded, injecting gamepad...');
 
+  // Game detection - track current game for auto-profile switching
+  let currentGameTitle = null;
+  let gameDetectionObserver = null;
+
+  function detectCurrentGame() {
+    // Try multiple selectors to find game title on xCloud
+    const selectors = [
+      '[data-testid="gameTitle"]',
+      '.game-title',
+      'h1[class*="GameTitle"]',
+      '[class*="gameTitle"]',
+      '.StreamHUD-module__title',
+      '[class*="StreamHUD"] h1',
+      '[class*="streamhud"] [class*="title"]'
+    ];
+
+    for (const selector of selectors) {
+      const element = document.querySelector(selector);
+      if (element && element.textContent.trim()) {
+        return element.textContent.trim();
+      }
+    }
+
+    // Try to get from page title when streaming
+    const pageTitle = document.title;
+    if (pageTitle && pageTitle.includes('|')) {
+      const parts = pageTitle.split('|');
+      if (parts.length > 0 && parts[0].trim() !== 'Xbox Cloud Gaming') {
+        return parts[0].trim();
+      }
+    }
+
+    // Try URL-based detection
+    const url = window.location.href;
+    const playMatch = url.match(/\/play\/games\/([^/?]+)/i);
+    if (playMatch) {
+      // Convert URL slug to readable name
+      return playMatch[1].replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    return null;
+  }
+
+  function onGameChange(newGameTitle) {
+    if (newGameTitle === currentGameTitle) return;
+
+    const previousGame = currentGameTitle;
+    currentGameTitle = newGameTitle;
+
+    console.log('[XCloud KB+M] Game detected:', newGameTitle || 'None');
+
+    // Notify background script of game change
+    chrome.runtime.sendMessage({
+      type: 'GAME_CHANGED',
+      gameTitle: newGameTitle,
+      previousGame: previousGame
+    }).catch(() => {});
+  }
+
+  function startGameDetection() {
+    // Initial detection
+    onGameChange(detectCurrentGame());
+
+    // Watch for DOM changes that might indicate game title change
+    gameDetectionObserver = new MutationObserver(() => {
+      const detected = detectCurrentGame();
+      if (detected !== currentGameTitle) {
+        onGameChange(detected);
+      }
+    });
+
+    gameDetectionObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+
+    // Also check periodically in case mutations are missed
+    setInterval(() => {
+      const detected = detectCurrentGame();
+      if (detected !== currentGameTitle) {
+        onGameChange(detected);
+      }
+    }, 3000);
+  }
+
+  // Start game detection when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startGameDetection);
+  } else {
+    startGameDetection();
+  }
+
   // Listen for messages from the injected script
   window.addEventListener('message', function(event) {
     if (event.source !== window) return;
@@ -40,6 +133,11 @@
 
   // Listen for messages from popup and background script
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.type === 'GET_CURRENT_GAME') {
+      sendResponse({ gameTitle: currentGameTitle });
+      return false;
+    }
+
     if (request.type === 'CONFIG_UPDATE') {
       // Forward config update to injected script
       window.postMessage({

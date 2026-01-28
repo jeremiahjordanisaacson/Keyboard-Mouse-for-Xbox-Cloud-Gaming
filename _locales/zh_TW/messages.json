@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Xbox雲端遊戲鍵盤滑鼠控制"
+  },
+  "extDescription": {
+    "message": "使用鍵盤和滑鼠玩Xbox雲端遊戲（xCloud）"
+  },
+  "enableControls": {
+    "message": "啟用控制"
+  },
+  "enabled": {
+    "message": "已啟用"
+  },
+  "disabled": {
+    "message": "已停用"
+  },
+  "mouseSensitivity": {
+    "message": "滑鼠靈敏度"
+  },
+  "invertYAxis": {
+    "message": "反轉Y軸"
+  },
+  "profile": {
+    "message": "設定檔"
+  },
+  "profileDefault": {
+    "message": "預設"
+  },
+  "profileFPS": {
+    "message": "FPS/射擊"
+  },
+  "profileRacing": {
+    "message": "賽車"
+  },
+  "newProfile": {
+    "message": "新增設定檔"
+  },
+  "deleteProfile": {
+    "message": "刪除設定檔"
+  },
+  "createProfile": {
+    "message": "建立設定檔"
+  },
+  "profileName": {
+    "message": "設定檔名稱"
+  },
+  "enterProfileName": {
+    "message": "輸入設定檔名稱..."
+  },
+  "cancel": {
+    "message": "取消"
+  },
+  "create": {
+    "message": "建立"
+  },
+  "keyBindings": {
+    "message": "按鍵綁定"
+  },
+  "resetToDefaults": {
+    "message": "重設為預設"
+  },
+  "movement": {
+    "message": "移動"
+  },
+  "faceButtons": {
+    "message": "功能按鈕"
+  },
+  "bumpersAndTriggers": {
+    "message": "肩鍵和扳機"
+  },
+  "dPad": {
+    "message": "方向鍵"
+  },
+  "special": {
+    "message": "特殊"
+  },
+  "moveForward": {
+    "message": "前進"
+  },
+  "moveBackward": {
+    "message": "後退"
+  },
+  "moveLeft": {
+    "message": "左移"
+  },
+  "moveRight": {
+    "message": "右移"
+  },
+  "actionA": {
+    "message": "A按鈕"
+  },
+  "actionB": {
+    "message": "B按鈕"
+  },
+  "actionX": {
+    "message": "X按鈕"
+  },
+  "actionY": {
+    "message": "Y按鈕"
+  },
+  "leftBumper": {
+    "message": "左肩鍵"
+  },
+  "rightBumper": {
+    "message": "右肩鍵"
+  },
+  "leftTrigger": {
+    "message": "左扳機"
+  },
+  "rightTrigger": {
+    "message": "右扳機"
+  },
+  "dpadUp": {
+    "message": "方向鍵上"
+  },
+  "dpadDown": {
+    "message": "方向鍵下"
+  },
+  "dpadLeft": {
+    "message": "方向鍵左"
+  },
+  "dpadRight": {
+    "message": "方向鍵右"
+  },
+  "view": {
+    "message": "檢視"
+  },
+  "menu": {
+    "message": "選單"
+  },
+  "leftStickClick": {
+    "message": "左搖桿點擊"
+  },
+  "rightStickClick": {
+    "message": "右搖桿點擊"
+  },
+  "hotkeys": {
+    "message": "快捷鍵"
+  },
+  "toggleControls": {
+    "message": "切換控制"
+  },
+  "nextProfile": {
+    "message": "下一設定檔"
+  },
+  "pressKey": {
+    "message": "按下按鍵..."
+  },
+  "pressKeyOrMouse": {
+    "message": "按下鍵盤或滑鼠按鈕。按Escape取消。"
+  },
+  "keyBindingCancelled": {
+    "message": "按鍵綁定已取消"
+  },
+  "bindingsReset": {
+    "message": "所有按鍵綁定已重設"
+  },
+  "cannotDeleteDefault": {
+    "message": "無法刪除預設設定檔"
+  },
+  "deleteProfileConfirm": {
+    "message": "刪除設定檔\"$PROFILE_NAME$\"？",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "已建立設定檔 $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "已刪除設定檔 $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "已切換到設定檔 $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "控制已啟用"
+  },
+  "controlsDisabled": {
+    "message": "控制已停用"
+  },
+  "boundTo": {
+    "message": "$ACTION$ 綁定到 $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "在此頁面上啟用"
+  },
+  "statusInactive": {
+    "message": "前往 xbox.com/play 使用"
+  },
+  "changeBinding": {
+    "message": "變更 $ACTION$ 按鍵綁定。目前為 $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "等待按鍵輸入。按Escape取消。"
+  }
+}

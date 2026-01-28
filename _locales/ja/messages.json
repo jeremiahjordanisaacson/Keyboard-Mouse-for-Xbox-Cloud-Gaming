@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Xbox Cloud Gaming キーボード＆マウス"
+  },
+  "extDescription": {
+    "message": "キーボードとマウスでXbox Cloud Gaming（xCloud）をプレイ"
+  },
+  "enableControls": {
+    "message": "コントロールを有効にする"
+  },
+  "enabled": {
+    "message": "有効"
+  },
+  "disabled": {
+    "message": "無効"
+  },
+  "mouseSensitivity": {
+    "message": "マウス感度"
+  },
+  "invertYAxis": {
+    "message": "Y軸を反転"
+  },
+  "profile": {
+    "message": "プロファイル"
+  },
+  "profileDefault": {
+    "message": "デフォルト"
+  },
+  "profileFPS": {
+    "message": "FPS/シューター"
+  },
+  "profileRacing": {
+    "message": "レース"
+  },
+  "newProfile": {
+    "message": "新規プロファイル"
+  },
+  "deleteProfile": {
+    "message": "プロファイルを削除"
+  },
+  "createProfile": {
+    "message": "プロファイルを作成"
+  },
+  "profileName": {
+    "message": "プロファイル名"
+  },
+  "enterProfileName": {
+    "message": "プロファイル名を入力..."
+  },
+  "cancel": {
+    "message": "キャンセル"
+  },
+  "create": {
+    "message": "作成"
+  },
+  "keyBindings": {
+    "message": "キー割り当て"
+  },
+  "resetToDefaults": {
+    "message": "デフォルトに戻す"
+  },
+  "movement": {
+    "message": "移動"
+  },
+  "faceButtons": {
+    "message": "フェイスボタン"
+  },
+  "bumpersAndTriggers": {
+    "message": "バンパー＆トリガー"
+  },
+  "dPad": {
+    "message": "方向パッド"
+  },
+  "special": {
+    "message": "特殊"
+  },
+  "moveForward": {
+    "message": "前進"
+  },
+  "moveBackward": {
+    "message": "後退"
+  },
+  "moveLeft": {
+    "message": "左移動"
+  },
+  "moveRight": {
+    "message": "右移動"
+  },
+  "actionA": {
+    "message": "Aボタン"
+  },
+  "actionB": {
+    "message": "Bボタン"
+  },
+  "actionX": {
+    "message": "Xボタン"
+  },
+  "actionY": {
+    "message": "Yボタン"
+  },
+  "leftBumper": {
+    "message": "LBボタン"
+  },
+  "rightBumper": {
+    "message": "RBボタン"
+  },
+  "leftTrigger": {
+    "message": "LTボタン"
+  },
+  "rightTrigger": {
+    "message": "RTボタン"
+  },
+  "dpadUp": {
+    "message": "十字キー上"
+  },
+  "dpadDown": {
+    "message": "十字キー下"
+  },
+  "dpadLeft": {
+    "message": "十字キー左"
+  },
+  "dpadRight": {
+    "message": "十字キー右"
+  },
+  "view": {
+    "message": "ビュー"
+  },
+  "menu": {
+    "message": "メニュー"
+  },
+  "leftStickClick": {
+    "message": "左スティック押し込み"
+  },
+  "rightStickClick": {
+    "message": "右スティック押し込み"
+  },
+  "hotkeys": {
+    "message": "ホットキー"
+  },
+  "toggleControls": {
+    "message": "コントロール切り替え"
+  },
+  "nextProfile": {
+    "message": "次のプロファイル"
+  },
+  "pressKey": {
+    "message": "キーを押してください..."
+  },
+  "pressKeyOrMouse": {
+    "message": "キーまたはマウスボタンを押してください。Escでキャンセル。"
+  },
+  "keyBindingCancelled": {
+    "message": "キー割り当てをキャンセルしました"
+  },
+  "bindingsReset": {
+    "message": "すべてのキー割り当てをリセットしました"
+  },
+  "cannotDeleteDefault": {
+    "message": "デフォルトプロファイルは削除できません"
+  },
+  "deleteProfileConfirm": {
+    "message": "プロファイル \"$PROFILE_NAME$\" を削除しますか？",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "プロファイル $PROFILE_NAME$ を作成しました",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "プロファイル $PROFILE_NAME$ を削除しました",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "プロファイル $PROFILE_NAME$ に切り替えました",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "コントロールが有効になりました"
+  },
+  "controlsDisabled": {
+    "message": "コントロールが無効になりました"
+  },
+  "boundTo": {
+    "message": "$ACTION$ を $KEY$ に割り当てました",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "このページでアクティブ"
+  },
+  "statusInactive": {
+    "message": "xbox.com/play に移動してください"
+  },
+  "changeBinding": {
+    "message": "$ACTION$ のキー割り当てを変更。現在 $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "キー入力を待機中。Escでキャンセル。"
+  }
+}

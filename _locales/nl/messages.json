@@ -1,0 +1,200 @@
+{
+  "extName": {
+    "message": "Toetsenbord & Muis voor Xbox Cloud Gaming"
+  },
+  "extDescription": {
+    "message": "Speel Xbox Cloud Gaming (xCloud) met toetsenbord en muis"
+  },
+  "enableControls": {
+    "message": "Besturing Inschakelen"
+  },
+  "enabled": {
+    "message": "Ingeschakeld"
+  },
+  "disabled": {
+    "message": "Uitgeschakeld"
+  },
+  "mouseSensitivity": {
+    "message": "Muisgevoeligheid"
+  },
+  "invertYAxis": {
+    "message": "Y-as Omkeren"
+  },
+  "profile": {
+    "message": "Profiel"
+  },
+  "profileDefault": {
+    "message": "Standaard"
+  },
+  "profileFPS": {
+    "message": "FPS / Shooter"
+  },
+  "profileRacing": {
+    "message": "Racen"
+  },
+  "newProfile": {
+    "message": "Nieuw Profiel"
+  },
+  "deleteProfile": {
+    "message": "Profiel Verwijderen"
+  },
+  "createProfile": {
+    "message": "Profiel Aanmaken"
+  },
+  "profileName": {
+    "message": "Profielnaam"
+  },
+  "enterProfileName": {
+    "message": "Voer profielnaam in..."
+  },
+  "cancel": {
+    "message": "Annuleren"
+  },
+  "create": {
+    "message": "Aanmaken"
+  },
+  "keyBindings": {
+    "message": "Toetsinstellingen"
+  },
+  "resetToDefaults": {
+    "message": "Herstellen"
+  },
+  "movement": {
+    "message": "Beweging"
+  },
+  "faceButtons": {
+    "message": "Actieknoppen"
+  },
+  "bumpersAndTriggers": {
+    "message": "Bumpers & Triggers"
+  },
+  "dPad": {
+    "message": "D-Pad"
+  },
+  "special": {
+    "message": "Speciaal"
+  },
+  "moveForward": {
+    "message": "Vooruit"
+  },
+  "moveBackward": {
+    "message": "Achteruit"
+  },
+  "moveLeft": {
+    "message": "Links"
+  },
+  "moveRight": {
+    "message": "Rechts"
+  },
+  "actionA": {
+    "message": "A-knop"
+  },
+  "actionB": {
+    "message": "B-knop"
+  },
+  "actionX": {
+    "message": "X-knop"
+  },
+  "actionY": {
+    "message": "Y-knop"
+  },
+  "leftBumper": {
+    "message": "Linker Bumper"
+  },
+  "rightBumper": {
+    "message": "Rechter Bumper"
+  },
+  "leftTrigger": {
+    "message": "Linker Trigger"
+  },
+  "rightTrigger": {
+    "message": "Rechter Trigger"
+  },
+  "dpadUp": {
+    "message": "D-Pad Omhoog"
+  },
+  "dpadDown": {
+    "message": "D-Pad Omlaag"
+  },
+  "dpadLeft": {
+    "message": "D-Pad Links"
+  },
+  "dpadRight": {
+    "message": "D-Pad Rechts"
+  },
+  "view": {
+    "message": "Weergave"
+  },
+  "menu": {
+    "message": "Menu"
+  },
+  "leftStickClick": {
+    "message": "Linker Stick Klik"
+  },
+  "rightStickClick": {
+    "message": "Rechter Stick Klik"
+  },
+  "hotkeys": {
+    "message": "Sneltoetsen"
+  },
+  "toggleControls": {
+    "message": "Besturing Wisselen"
+  },
+  "nextProfile": {
+    "message": "Volgend Profiel"
+  },
+  "pressKey": {
+    "message": "Druk toets..."
+  },
+  "pressKeyOrMouse": {
+    "message": "Druk een toets of muisknop. Escape om te annuleren."
+  },
+  "keyBindingCancelled": {
+    "message": "Toetsinstelling geannuleerd"
+  },
+  "bindingsReset": {
+    "message": "Alle instellingen hersteld"
+  },
+  "cannotDeleteDefault": {
+    "message": "Standaardprofiel kan niet worden verwijderd"
+  },
+  "deleteProfileConfirm": {
+    "message": "Profiel \"$PROFILE_NAME$\" verwijderen?",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileCreated": {
+    "message": "Profiel $PROFILE_NAME$ aangemaakt",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "profileDeleted": {
+    "message": "Profiel $PROFILE_NAME$ verwijderd",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "switchedToProfile": {
+    "message": "Gewisseld naar profiel $PROFILE_NAME$",
+    "placeholders": { "profile_name": { "content": "$1" } }
+  },
+  "controlsEnabled": {
+    "message": "Besturing ingeschakeld"
+  },
+  "controlsDisabled": {
+    "message": "Besturing uitgeschakeld"
+  },
+  "boundTo": {
+    "message": "$ACTION$ toegewezen aan $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "statusActive": {
+    "message": "Actief op deze pagina"
+  },
+  "statusInactive": {
+    "message": "Ga naar xbox.com/play om te gebruiken"
+  },
+  "changeBinding": {
+    "message": "$ACTION$ toetsinstelling wijzigen. Momenteel $KEY$",
+    "placeholders": { "action": { "content": "$1" }, "key": { "content": "$2" } }
+  },
+  "listeningForKey": {
+    "message": "Wacht op toets. Escape om te annuleren."
+  }
+}
