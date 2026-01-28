@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Keyboard & Mouse for Xbox Cloud Gaming",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Play Xbox Cloud Gaming (xCloud) with keyboard and mouse! Use WASD for movement, mouse for camera, and customizable key bindings for all controller buttons.",
   "permissions": [
     "storage",
