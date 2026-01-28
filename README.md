@@ -6,6 +6,7 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Chrome%20%7C%20Edge%20%7C%20Firefox%20%7C%20Opera%20%7C%20Brave-blue)
+[![Latest Release](https://img.shields.io/github/v/release/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming)](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest)
 
 ## ✨ Features
 
@@ -42,24 +43,41 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 
 ## 📦 Installation
 
-### Chrome / Edge / Brave / Opera (Manual)
+### Download
 
-1. Download or clone this repository
-2. Open your browser's extension page:
+**[📥 Download Latest Release](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest)**
+
+Download the zip file for your browser. Each release includes SHA256 checksums to verify your download.
+
+| Browser | Download |
+|---------|----------|
+| Google Chrome | `Xbox-Cloud-Gaming-KBM-Chrome-v*.zip` |
+| Microsoft Edge | `Xbox-Cloud-Gaming-KBM-Edge-v*.zip` |
+| Mozilla Firefox | `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip` |
+| Brave | `Xbox-Cloud-Gaming-KBM-Brave-v*.zip` |
+| Opera | `Xbox-Cloud-Gaming-KBM-Opera-v*.zip` |
+| Vivaldi | `Xbox-Cloud-Gaming-KBM-Vivaldi-v*.zip` |
+
+### Install on Chrome / Edge / Brave / Opera / Vivaldi
+
+1. Download the zip for your browser from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
+2. Extract the zip file to a folder on your computer
+3. Open your browser's extension page:
    - Chrome: `chrome://extensions`
    - Edge: `edge://extensions`
    - Brave: `brave://extensions`
    - Opera: `opera://extensions`
-3. Enable **Developer Mode**
-4. Click **Load unpacked**
-5. Select the repository folder (containing `manifest.json`)
+   - Vivaldi: `vivaldi://extensions`
+4. Enable **Developer Mode** (toggle in top-right or sidebar)
+5. Click **Load unpacked**
+6. Select the extracted folder
 
-### Firefox (Manual)
+### Install on Firefox
 
-1. Download or clone this repository
-2. Go to `about:debugging#/runtime/this-firefox`
+1. Download `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip` from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
+2. Open Firefox and go to `about:debugging#/runtime/this-firefox`
 3. Click **Load Temporary Add-on**
-4. Select the `firefox/manifest.json` file
+4. Select the downloaded zip file (no need to extract)
 
 ### From Browser Stores
 
@@ -67,7 +85,6 @@ Coming soon to:
 - Chrome Web Store
 - Edge Add-ons
 - Firefox Add-ons
-- Opera Add-ons
 
 ## 🎮 How to Use
 
