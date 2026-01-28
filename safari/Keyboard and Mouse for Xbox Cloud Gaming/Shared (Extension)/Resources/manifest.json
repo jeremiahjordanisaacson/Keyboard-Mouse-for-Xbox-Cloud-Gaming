@@ -1,0 +1,68 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "version": "1.3.1",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "https://www.xbox.com/*",
+    "https://xbox.com/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "commands": {
+    "toggle-controls": {
+      "suggested_key": {
+        "default": "Alt+Shift+X",
+        "mac": "MacCtrl+Shift+X"
+      },
+      "description": "Toggle keyboard/mouse controls on/off"
+    },
+    "next-profile": {
+      "suggested_key": {
+        "default": "Alt+Shift+P",
+        "mac": "MacCtrl+Shift+P"
+      },
+      "description": "Switch to next game profile"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.xbox.com/*/play*",
+        "https://www.xbox.com/play*",
+        "https://xbox.com/*/play*",
+        "https://xbox.com/play*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Xbox Cloud Gaming KB+M",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png",
+    "256": "images/icon-256.png",
+    "512": "images/icon-512.png"
+  },
+  "web_accessible_resources": [
+    "injected.js"
+  ]
+}

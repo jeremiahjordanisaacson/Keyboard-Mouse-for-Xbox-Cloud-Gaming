@@ -75,6 +75,11 @@ Download the zip file for your browser. Each release includes SHA256 checksums t
 | Mozilla Firefox | `Xbox-Cloud-Gaming-KBM-Firefox-v*.zip` |
 | Pale Moon | `Xbox-Cloud-Gaming-KBM-PaleMoon-v*.zip` |
 
+#### Safari (macOS)
+| Browser | Instructions |
+|---------|--------------|
+| Safari | Requires building with Xcode - see [Safari build guide](safari/README.md) |
+
 ### Install on Chromium-Based Browsers
 
 1. Download the zip for your browser from the [Releases](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest) page
@@ -105,12 +110,26 @@ Download the zip file for your browser. Each release includes SHA256 checksums t
 3. Click **Load Temporary Add-on**
 4. Select the downloaded zip file (no need to extract)
 
+### Install on Safari (macOS)
+
+Safari requires building the extension with Xcode. See the detailed [Safari build guide](safari/README.md).
+
+**Quick overview:**
+1. Install Xcode from the Mac App Store (free)
+2. Clone this repository
+3. Run the setup script: `cd safari && ./setup.sh`
+4. Open Xcode and create a new Safari Extension App project
+5. Copy the files from `safari/Keyboard and Mouse for Xbox Cloud Gaming/Shared (Extension)/Resources/`
+6. Build and run
+7. Enable the extension in Safari Settings → Extensions
+
 ### Browser Compatibility
 
 | Status | Browsers |
 |--------|----------|
-| ✅ Supported | Chrome, Edge, Firefox, Brave, Opera, Vivaldi, Yandex, Whale, Cốc Cốc, 360 Safe, QQ, Sogou, Ecosia, Pale Moon |
-| ❌ Not Supported | Safari (requires different format), Internet Explorer (deprecated), Edge Legacy (deprecated) |
+| ✅ Supported | Chrome, Edge, Firefox, Safari*, Brave, Opera, Vivaldi, Yandex, Whale, Cốc Cốc, 360 Safe, QQ, Sogou, Ecosia, Pale Moon |
+| ⚠️ Build Required | Safari (*requires Xcode on macOS - see [build guide](safari/README.md)) |
+| ❌ Not Supported | Internet Explorer (deprecated), Edge Legacy (deprecated) |
 | ⚠️ Not Applicable | Mobile browsers - Xbox Cloud Gaming on mobile uses touch controls |
 
 ### From Browser Stores
@@ -188,6 +207,9 @@ When playing a game on xCloud, the extension detects which game you're playing:
 ├── icons/             # Extension icons
 ├── firefox/           # Firefox-specific files
 │   └── manifest.json  # Firefox manifest (Manifest V2)
+├── safari/            # Safari-specific files and build guide
+│   ├── README.md      # Safari build instructions
+│   └── setup.sh       # Setup script for Safari extension
 └── docs/              # Documentation
     ├── PRIVACY_POLICY.md
     └── STORE_SUBMISSION.md
