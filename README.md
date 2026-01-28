@@ -14,7 +14,9 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 - **All Buttons Mapped** - Every Xbox controller button accessible via keyboard
 - **Custom Key Bindings** - Rebind any action to your preferred keys or mouse buttons
 - **Game Profiles** - Save different configurations for different games (FPS, Racing, etc.)
+- **Auto-Profile Switching** - Automatically switch profiles when launching specific games
 - **Quick Toggle Hotkeys** - Instantly toggle controls or switch profiles with keyboard shortcuts
+- **50+ Languages** - Full localization support for worldwide users
 - **Customizable** - Adjust sensitivity and invert Y-axis per profile
 - **Lightweight** - No performance impact
 - **Privacy Focused** - No data collection, no tracking, no ads
@@ -154,6 +156,12 @@ Click the extension icon in your browser toolbar to:
 
 Each profile saves its own key bindings, sensitivity, and invert Y setting.
 
+### Auto-Profile Switching
+When playing a game on xCloud, the extension detects which game you're playing:
+- **Assign to Game** - Click to link the current profile to the detected game
+- **Remove Assignment** - Click again to unlink the profile from the game
+- The extension automatically switches to the assigned profile when you launch that game
+
 ### Custom Key Bindings
 - Click any key binding button to rebind it
 - Press the new key or mouse button you want to use
@@ -165,10 +173,18 @@ Each profile saves its own key bindings, sensitivity, and invert Y setting.
 ```
 ├── manifest.json      # Extension manifest (Chrome/Edge/Opera/Brave)
 ├── background.js      # Service worker - handles hotkeys & profile management
-├── content.js         # Content script - loads injected code
+├── content.js         # Content script - loads injected code & game detection
 ├── injected.js        # Main logic - virtual gamepad & input handling
 ├── popup.html         # Settings popup UI
 ├── popup.js           # Settings logic & profile management
+├── _locales/          # Internationalization (50+ languages)
+│   ├── en/            # English (default)
+│   ├── es/            # Spanish
+│   ├── fr/            # French
+│   ├── de/            # German
+│   ├── ja/            # Japanese
+│   ├── zh_CN/         # Chinese (Simplified)
+│   └── ...            # And 45+ more languages
 ├── icons/             # Extension icons
 ├── firefox/           # Firefox-specific files
 │   └── manifest.json  # Firefox manifest (Manifest V2)
@@ -177,15 +193,31 @@ Each profile saves its own key bindings, sensitivity, and invert Y setting.
     └── STORE_SUBMISSION.md
 ```
 
+## 🌍 Supported Languages
+
+The extension UI is fully translated into 50+ languages:
+
+| Region | Languages |
+|--------|-----------|
+| **Americas** | English, Spanish, Portuguese (Brazil & Portugal) |
+| **Europe** | French, German, Italian, Dutch, Polish, Russian, Ukrainian, Swedish, Danish, Norwegian, Finnish, Czech, Slovak, Hungarian, Romanian, Greek, Bulgarian, Croatian, Slovenian, Serbian, Lithuanian, Latvian, Catalan |
+| **Asia** | Chinese (Simplified & Traditional), Japanese, Korean, Thai, Vietnamese, Indonesian, Malay, Hindi, Bengali, Tamil, Telugu, Kannada, Malayalam, Marathi, Gujarati, Punjabi, Burmese, Nepali |
+| **Middle East** | Arabic, Hebrew, Persian, Turkish, Urdu |
+| **Africa** | Swahili |
+| **Other** | Filipino, Kazakh |
+
+The extension automatically displays in your browser's language. If your language isn't available, it defaults to English.
+
 ## 🔧 How It Works
 
-1. **Background Script** (`background.js`) runs persistently to handle global hotkeys and profile management
-2. **Content Script** (`content.js`) runs when you visit xbox.com/play
+1. **Background Script** (`background.js`) runs persistently to handle global hotkeys, profile management, and auto-switching
+2. **Content Script** (`content.js`) runs when you visit xbox.com/play and detects which game you're playing
 3. **Injected Script** (`injected.js`) is injected into the page context
 4. **Virtual Gamepad** overrides `navigator.getGamepads()` to return a simulated Xbox 360 controller
 5. **Input Capture** listens for keyboard and mouse events
 6. **Gamepad State** is updated 60 times per second based on your inputs
-7. **xCloud** detects the virtual controller and accepts input
+7. **Game Detection** monitors the page to identify the current game for auto-profile switching
+8. **xCloud** detects the virtual controller and accepts input
 
 ## 🤝 Contributing
 
