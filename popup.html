@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xbox Cloud Gaming KB+M</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 320px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 16px;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #107c10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h1::before {
+      content: '🎮';
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #3d3d3d;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #107c10;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+
+    .slider-value {
+      color: #107c10;
+      font-weight: 600;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #3d3d3d;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #107c10;
+      cursor: pointer;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-row input {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .checkbox-row label {
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .key-bindings {
+      max-height: 200px;
+      overflow-y: auto;
+      background: #2d2d2d;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .key-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      border-bottom: 1px solid #3d3d3d;
+      font-size: 12px;
+    }
+
+    .key-row:last-child {
+      border-bottom: none;
+    }
+
+    .key-name {
+      color: #ccc;
+    }
+
+    kbd {
+      background: #3d3d3d;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+      color: #107c10;
+    }
+
+    .status {
+      text-align: center;
+      padding: 12px;
+      background: #2d2d2d;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #888;
+      margin-top: 12px;
+    }
+
+    .status.active {
+      color: #107c10;
+    }
+
+    .instructions {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #3d3d3d;
+    }
+
+    .instructions strong {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Xbox Cloud KB+M</h1>
+
+  <div class="toggle-row">
+    <span class="toggle-label">Enable Controls</span>
+    <label class="toggle">
+      <input type="checkbox" id="enabled" checked>
+      <span class="toggle-slider"></span>
+    </label>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Mouse Settings</div>
+    <div class="slider-row">
+      <div class="slider-label">
+        <span>Sensitivity</span>
+        <span class="slider-value" id="sensitivityValue">5</span>
+      </div>
+      <input type="range" id="sensitivity" min="1" max="20" value="5">
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="invertY">
+      <label for="invertY">Invert Y Axis</label>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Key Bindings</div>
+    <div class="key-bindings">
+      <div class="key-row"><span class="key-name">Move Forward</span><kbd>W</kbd></div>
+      <div class="key-row"><span class="key-name">Move Back</span><kbd>S</kbd></div>
+      <div class="key-row"><span class="key-name">Move Left</span><kbd>A</kbd></div>
+      <div class="key-row"><span class="key-name">Move Right</span><kbd>D</kbd></div>
+      <div class="key-row"><span class="key-name">Jump (A)</span><kbd>Space</kbd></div>
+      <div class="key-row"><span class="key-name">Interact (B)</span><kbd>E</kbd></div>
+      <div class="key-row"><span class="key-name">Action (X)</span><kbd>Q</kbd></div>
+      <div class="key-row"><span class="key-name">Action (Y)</span><kbd>R</kbd></div>
+      <div class="key-row"><span class="key-name">Aim (LT)</span><kbd>Shift</kbd></div>
+      <div class="key-row"><span class="key-name">Fire (RT)</span><kbd>Right Click</kbd></div>
+      <div class="key-row"><span class="key-name">LB</span><kbd>F</kbd></div>
+      <div class="key-row"><span class="key-name">RB</span><kbd>C</kbd></div>
+      <div class="key-row"><span class="key-name">Sprint (LS)</span><kbd>V</kbd></div>
+      <div class="key-row"><span class="key-name">Melee (RS)</span><kbd>Middle Click</kbd></div>
+    </div>
+  </div>
+
+  <div class="status" id="status">
+    Go to xbox.com/play to use
+  </div>
+
+  <div class="instructions">
+    <strong>How to use:</strong> Go to xbox.com/play, start a game, then click on the game stream to lock your mouse for camera control. Press Escape to unlock.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

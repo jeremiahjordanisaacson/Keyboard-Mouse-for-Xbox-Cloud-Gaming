@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Keyboard & Mouse for Xbox Cloud Gaming",
+  "version": "1.0.0",
+  "description": "Play Xbox Cloud Gaming (xCloud) with keyboard and mouse controls",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.xbox.com/*",
+    "https://xbox.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.xbox.com/*/play*",
+        "https://www.xbox.com/play*",
+        "https://xbox.com/*/play*",
+        "https://xbox.com/play*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Xbox Cloud Gaming KB+M"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://www.xbox.com/*", "https://xbox.com/*"]
+    }
+  ]
+}
