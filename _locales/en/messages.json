@@ -278,8 +278,8 @@
     "description": "Status when on xCloud page"
   },
   "statusInactive": {
-    "message": "Go to xbox.com/play to use",
-    "description": "Status when not on xCloud page"
+    "message": "Click to open Xbox Cloud Gaming",
+    "description": "Status when not on xCloud page - clickable to open xCloud"
   },
   "changeBinding": {
     "message": "Change $ACTION$ key binding. Currently $KEY$",
@@ -364,5 +364,45 @@
         "example": "Halo Infinite"
       }
     }
+  },
+  "sensitivityCurve": {
+    "message": "Response Curve",
+    "description": "Sensitivity curve setting label"
+  },
+  "curveLinear": {
+    "message": "Linear",
+    "description": "Linear sensitivity curve"
+  },
+  "curveExponential": {
+    "message": "Exponential",
+    "description": "Exponential sensitivity curve"
+  },
+  "curveSCurve": {
+    "message": "S-Curve",
+    "description": "S-Curve sensitivity curve"
+  },
+  "deadzone": {
+    "message": "Deadzone",
+    "description": "Stick deadzone setting"
+  },
+  "importProfile": {
+    "message": "Import",
+    "description": "Import profile button"
+  },
+  "exportProfile": {
+    "message": "Export",
+    "description": "Export profile button"
+  },
+  "profileImported": {
+    "message": "Profile imported successfully",
+    "description": "Profile import success message"
+  },
+  "profileExported": {
+    "message": "Profile exported to clipboard",
+    "description": "Profile export success message"
+  },
+  "invalidProfileData": {
+    "message": "Invalid profile data",
+    "description": "Invalid profile import error"
   }
 }

@@ -42,7 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const sensitivitySlider = document.getElementById('sensitivity');
   const sensitivityValue = document.getElementById('sensitivityValue');
   const invertYCheckbox = document.getElementById('invertY');
+  const sensitivityCurveSelect = document.getElementById('sensitivityCurve');
+  const deadzoneSlider = document.getElementById('deadzone');
+  const deadzoneValue = document.getElementById('deadzoneValue');
   const statusEl = document.getElementById('status');
+  const statusLink = document.getElementById('statusLink');
   const resetBindingsBtn = document.getElementById('resetBindings');
   const keyBindButtons = document.querySelectorAll('.key-bind-btn');
 
@@ -50,6 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const profileSelect = document.getElementById('profileSelect');
   const newProfileBtn = document.getElementById('newProfileBtn');
   const deleteProfileBtn = document.getElementById('deleteProfileBtn');
+  const exportProfileBtn = document.getElementById('exportProfileBtn');
+  const importProfileBtn = document.getElementById('importProfileBtn');
   const newProfileModal = document.getElementById('newProfileModal');
   const newProfileName = document.getElementById('newProfileName');
   const cancelNewProfile = document.getElementById('cancelNewProfile');
@@ -223,6 +229,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (profile.invertY !== undefined) {
       invertYCheckbox.checked = profile.invertY;
     }
+
+    if (profile.sensitivityCurve !== undefined && sensitivityCurveSelect) {
+      sensitivityCurveSelect.value = profile.sensitivityCurve;
+    }
+
+    if (profile.deadzone !== undefined && deadzoneSlider) {
+      deadzoneSlider.value = profile.deadzone;
+      deadzoneValue.textContent = profile.deadzone + '%';
+      deadzoneSlider.setAttribute('aria-valuenow', profile.deadzone);
+    }
   }
 
   // Load all data from storage
@@ -259,6 +275,8 @@ document.addEventListener('DOMContentLoaded', function() {
     profiles[activeProfileId].keyBindings = { ...currentBindings };
     profiles[activeProfileId].mouseSensitivity = parseInt(sensitivitySlider.value);
     profiles[activeProfileId].invertY = invertYCheckbox.checked;
+    profiles[activeProfileId].sensitivityCurve = sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear';
+    profiles[activeProfileId].deadzone = deadzoneSlider ? parseInt(deadzoneSlider.value) : 5;
 
     chrome.storage.sync.set({ profiles }, function() {
       console.log('Profile saved:', activeProfileId);
@@ -268,7 +286,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const config = {
       enabled: enabledCheckbox.checked,
       mouseSensitivity: parseInt(sensitivitySlider.value),
-      invertY: invertYCheckbox.checked
+      invertY: invertYCheckbox.checked,
+      sensitivityCurve: sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear',
+      deadzone: deadzoneSlider ? parseInt(deadzoneSlider.value) : 5
     };
 
     chrome.storage.sync.set({ config, keyBindings: currentBindings }, function() {
@@ -300,8 +320,22 @@ document.addEventListener('DOMContentLoaded', function() {
   // Update status
   function updateStatus(isActive, message) {
     const icon = isActive ? '●' : '○';
-    statusEl.innerHTML = `<span aria-hidden="true" class="status-icon">${icon}</span>${message}`;
+    const iconSpan = statusEl.querySelector('.status-icon');
+    if (iconSpan) iconSpan.textContent = icon;
+    if (statusLink) {
+      statusLink.textContent = message;
+      statusLink.style.pointerEvents = isActive ? 'none' : 'auto';
+    }
     statusEl.className = isActive ? 'status active' : 'status';
+  }
+
+  // Handle status link click - open xCloud
+  if (statusLink) {
+    statusLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Open xCloud in new tab
+      chrome.tabs.create({ url: 'https://www.xbox.com/play' });
+    });
   }
 
   // Load initial data
@@ -344,6 +378,27 @@ document.addEventListener('DOMContentLoaded', function() {
     saveCurrentProfile();
     announceToScreenReader(`Invert Y axis ${this.checked ? 'enabled' : 'disabled'}`);
   });
+
+  // Sensitivity curve change
+  if (sensitivityCurveSelect) {
+    sensitivityCurveSelect.addEventListener('change', function() {
+      saveCurrentProfile();
+      announceToScreenReader(`Response curve set to ${this.value}`);
+    });
+  }
+
+  // Deadzone slider
+  if (deadzoneSlider) {
+    deadzoneSlider.addEventListener('input', function() {
+      deadzoneValue.textContent = this.value + '%';
+      this.setAttribute('aria-valuenow', this.value);
+    });
+
+    deadzoneSlider.addEventListener('change', function() {
+      saveCurrentProfile();
+      announceToScreenReader(`Deadzone set to ${this.value}%`);
+    });
+  }
 
   // Profile selection
   profileSelect.addEventListener('change', function() {
@@ -437,6 +492,77 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     }
+  });
+
+  // Export profile
+  exportProfileBtn.addEventListener('click', function() {
+    const profile = profiles[activeProfileId];
+    if (!profile) return;
+
+    // Create export data (exclude internal id)
+    const exportData = {
+      name: profile.name,
+      keyBindings: profile.keyBindings,
+      mouseSensitivity: profile.mouseSensitivity,
+      invertY: profile.invertY,
+      sensitivityCurve: profile.sensitivityCurve || 'linear',
+      deadzone: profile.deadzone || 5
+    };
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(JSON.stringify(exportData, null, 2)).then(() => {
+      announceToScreenReader(getMessage('profileExported'));
+    }).catch(err => {
+      console.error('Failed to copy profile:', err);
+    });
+  });
+
+  // Import profile
+  importProfileBtn.addEventListener('click', function() {
+    // Read from clipboard
+    navigator.clipboard.readText().then(text => {
+      try {
+        const importData = JSON.parse(text);
+
+        // Validate imported data
+        if (!importData.name || typeof importData.name !== 'string') {
+          throw new Error('Invalid profile name');
+        }
+
+        // Create new profile with imported data
+        const profileId = 'imported_' + Date.now();
+        const newProfile = {
+          id: profileId,
+          name: importData.name,
+          keyBindings: { ...DEFAULT_BINDINGS, ...(importData.keyBindings || {}) },
+          mouseSensitivity: importData.mouseSensitivity || 5,
+          invertY: importData.invertY || false,
+          sensitivityCurve: importData.sensitivityCurve || 'linear',
+          deadzone: importData.deadzone || 5
+        };
+
+        profiles[profileId] = newProfile;
+        activeProfileId = profileId;
+
+        chrome.storage.sync.set({ profiles, activeProfileId }, function() {
+          updateProfileDropdown();
+          loadProfileIntoUI(profiles[activeProfileId]);
+          announceToScreenReader(getMessage('profileImported'));
+
+          // Notify background to update content scripts
+          chrome.runtime.sendMessage({
+            type: 'SET_ACTIVE_PROFILE',
+            profileId: activeProfileId
+          });
+        });
+      } catch (err) {
+        console.error('Failed to import profile:', err);
+        announceToScreenReader(getMessage('invalidProfileData'));
+      }
+    }).catch(err => {
+      console.error('Failed to read clipboard:', err);
+      announceToScreenReader(getMessage('invalidProfileData'));
+    });
   });
 
   // Assign/remove game profile

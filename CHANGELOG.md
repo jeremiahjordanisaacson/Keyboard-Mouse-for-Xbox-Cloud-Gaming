@@ -8,11 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Sensitivity curves (linear, exponential, S-curve)
-- Deadzone settings for analog sticks
-- Import/Export profiles as JSON
 - On-screen overlay showing current profile
 - Turbo mode for rapid-fire buttons
+- Macro recording
+
+---
+
+## [1.5.0] - 2025-01-28
+
+### Added
+- **Sensitivity response curves** - Fine-tune mouse input behavior
+  - Linear (default) - Direct 1:1 mouse mapping
+  - Exponential - More precision at low speeds, faster at high speeds
+  - S-Curve - Smooth acceleration with soft start/stop
+- **Deadzone settings** - Adjustable deadzone (0-30%) for the right stick
+  - Helps eliminate mouse drift
+  - Configurable per profile
+- **Profile import/export** - Share configurations
+  - Export profile to clipboard as JSON
+  - Import profile from clipboard
+  - Import/Export buttons in profile row
+- **Clickable status link** - Status bar now opens xbox.com/play when clicked
+
+### Changed
+- Updated popup UI with Response Curve dropdown and Deadzone slider
+- All new features are saved per-profile
+- Added localization for new features (EN, FR, ES)
 
 ---
 
@@ -167,6 +188,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.5.0 | 2025-01-28 | Sensitivity curves, deadzone, import/export |
 | 1.4.1 | 2025-01-28 | Fix release packaging |
 | 1.4.0 | 2025-01-28 | Android mobile support |
 | 1.3.2 | 2025-01-28 | Safari/macOS support |
@@ -179,7 +201,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.3.2...v1.4.0
 [1.3.2]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.3.1...v1.3.2

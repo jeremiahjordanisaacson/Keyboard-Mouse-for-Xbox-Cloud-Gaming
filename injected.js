@@ -13,6 +13,8 @@
     enabled: true,
     mouseSensitivity: 5,
     invertY: false,
+    sensitivityCurve: 'linear',
+    deadzone: 5,
     keyBindings: {
       moveForward: 'KeyW',
       moveBackward: 'KeyS',
@@ -36,6 +38,51 @@
       rightStickClick: 'MouseMiddle'
     }
   };
+
+  // ============================================
+  // SENSITIVITY CURVES
+  // ============================================
+  // Apply sensitivity curve to input value (-1 to 1)
+  function applySensitivityCurve(value, curveType) {
+    const sign = value < 0 ? -1 : 1;
+    const absValue = Math.abs(value);
+
+    switch (curveType) {
+      case 'exponential':
+        // Quadratic curve - more precision at low speeds
+        return sign * (absValue * absValue);
+
+      case 'sCurve':
+        // S-curve (smoothstep) - smooth acceleration/deceleration
+        // Uses smoothstep formula: 3x^2 - 2x^3
+        return sign * (absValue * absValue * (3 - 2 * absValue));
+
+      case 'linear':
+      default:
+        // Linear - direct 1:1 mapping
+        return value;
+    }
+  }
+
+  // Apply deadzone to stick input
+  function applyDeadzone(x, y, deadzonePercent) {
+    const deadzone = deadzonePercent / 100;
+    const magnitude = Math.sqrt(x * x + y * y);
+
+    if (magnitude < deadzone) {
+      return { x: 0, y: 0 };
+    }
+
+    // Rescale from deadzone to 1.0
+    const scale = (magnitude - deadzone) / (1 - deadzone);
+    const normalizedX = x / magnitude;
+    const normalizedY = y / magnitude;
+
+    return {
+      x: normalizedX * scale,
+      y: normalizedY * scale
+    };
+  }
 
   let config = { ...DEFAULT_CONFIG };
 
@@ -181,8 +228,15 @@
     if (!config.enabled || !mouseState.locked) return;
 
     const sensitivity = config.mouseSensitivity * 0.002;
-    mouseState.x += e.movementX * sensitivity;
-    mouseState.y += e.movementY * sensitivity * (config.invertY ? -1 : 1);
+    let deltaX = e.movementX * sensitivity;
+    let deltaY = e.movementY * sensitivity * (config.invertY ? -1 : 1);
+
+    // Apply sensitivity curve to mouse deltas
+    deltaX = applySensitivityCurve(deltaX, config.sensitivityCurve);
+    deltaY = applySensitivityCurve(deltaY, config.sensitivityCurve);
+
+    mouseState.x += deltaX;
+    mouseState.y += deltaY;
 
     // Clamp to -1 to 1
     mouseState.x = Math.max(-1, Math.min(1, mouseState.x));
@@ -325,9 +379,10 @@
     virtualGamepad.axes[0] = leftX;
     virtualGamepad.axes[1] = leftY;
 
-    // Update right stick (mouse)
-    virtualGamepad.axes[2] = mouseState.x;
-    virtualGamepad.axes[3] = mouseState.y;
+    // Update right stick (mouse) with deadzone applied
+    const rightStick = applyDeadzone(mouseState.x, mouseState.y, config.deadzone);
+    virtualGamepad.axes[2] = rightStick.x;
+    virtualGamepad.axes[3] = rightStick.y;
 
     // Decay mouse position when not moving
     if (!mouseState.locked) {

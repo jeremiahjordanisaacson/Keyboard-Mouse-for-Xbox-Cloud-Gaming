@@ -188,7 +188,7 @@
     "message": "Actif sur cette page"
   },
   "statusInactive": {
-    "message": "Allez sur xbox.com/play pour utiliser"
+    "message": "Cliquez pour ouvrir Xbox Cloud Gaming"
   },
   "changeBinding": {
     "message": "Changer l'attribution de $ACTION$. Actuellement $KEY$",
@@ -229,5 +229,35 @@
   "autoSwitchedToProfile": {
     "message": "Changé automatiquement vers $PROFILE_NAME$ pour $GAME_NAME$",
     "placeholders": { "profile_name": { "content": "$1" }, "game_name": { "content": "$2" } }
+  },
+  "sensitivityCurve": {
+    "message": "Courbe de Réponse"
+  },
+  "curveLinear": {
+    "message": "Linéaire"
+  },
+  "curveExponential": {
+    "message": "Exponentielle"
+  },
+  "curveSCurve": {
+    "message": "Courbe en S"
+  },
+  "deadzone": {
+    "message": "Zone Morte"
+  },
+  "importProfile": {
+    "message": "Importer"
+  },
+  "exportProfile": {
+    "message": "Exporter"
+  },
+  "profileImported": {
+    "message": "Profil importé avec succès"
+  },
+  "profileExported": {
+    "message": "Profil exporté dans le presse-papiers"
+  },
+  "invalidProfileData": {
+    "message": "Données de profil invalides"
   }
 }
