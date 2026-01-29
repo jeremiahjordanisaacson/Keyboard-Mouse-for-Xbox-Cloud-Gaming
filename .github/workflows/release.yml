@@ -43,7 +43,7 @@ jobs:
           mkdir -p dist
 
           # Files to include in Chromium-based builds
-          CHROMIUM_FILES="manifest.json content.js injected.js popup.html popup.js icons/"
+          CHROMIUM_FILES="manifest.json background.js content.js injected.js popup.html popup.js icons/ _locales/"
 
           # Chromium-based browsers (all use the same extension format)
           CHROMIUM_BROWSERS="Chrome Edge Brave Opera Vivaldi Yandex Whale CocCoc 360Browser QQBrowser SogouExplorer Ecosia"
@@ -54,8 +54,9 @@ jobs:
 
           # Firefox-based browsers
           mkdir -p firefox-build
-          cp content.js injected.js popup.html popup.js firefox-build/
+          cp background.js content.js injected.js popup.html popup.js firefox-build/
           cp -r icons firefox-build/
+          cp -r _locales firefox-build/
           cp firefox/manifest.json firefox-build/manifest.json
           cd firefox-build
 
