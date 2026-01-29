@@ -8,9 +8,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- On-screen overlay showing current profile
 - Turbo mode for rapid-fire buttons
 - Macro recording
+- Analog WASD (gradual stick input)
+
+---
+
+## [1.6.0] - 2025-01-28
+
+### Added
+- **On-screen overlay** - Draggable status widget showing:
+  - Enabled/disabled state with color indicator
+  - Current profile name
+  - Detected game title
+  - Mouse lock status
+- **Overlay hotkey** - `Alt+Shift+O` to toggle overlay visibility
+- **Show Overlay setting** - Toggle in popup to enable/disable overlay
+- Overlay can be minimized or closed via buttons
+- Overlay position persists during session
+
+### Fixed
+- **Profile switching bug** - Key bindings now properly update when switching profiles
+- Profiles without keyBindings (legacy data) are now auto-fixed on load
+- Profile data is now reloaded from storage when switching to ensure freshness
 
 ---
 
@@ -188,6 +208,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.6.0 | 2025-01-28 | On-screen overlay, profile switch fix |
 | 1.5.0 | 2025-01-28 | Sensitivity curves, deadzone, import/export |
 | 1.4.1 | 2025-01-28 | Fix release packaging |
 | 1.4.0 | 2025-01-28 | Android mobile support |
@@ -201,7 +222,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.3.2...v1.4.0

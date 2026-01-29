@@ -162,33 +162,77 @@
         type: 'XCLOUD_KBM_UPDATE_CONFIG',
         config: {
           mouseSensitivity: profile.mouseSensitivity,
-          invertY: profile.invertY
+          invertY: profile.invertY,
+          sensitivityCurve: profile.sensitivityCurve,
+          deadzone: profile.deadzone
         },
-        keyBindings: profile.keyBindings
+        keyBindings: profile.keyBindings,
+        profileName: profile.name
+      }, '*');
+    }
+
+    if (request.type === 'TOGGLE_OVERLAY') {
+      // Forward overlay toggle to injected script
+      window.postMessage({
+        type: 'XCLOUD_KBM_TOGGLE_OVERLAY'
       }, '*');
     }
   });
 
   // Send config when injected script is ready
   chrome.storage.sync.get(['config', 'keyBindings', 'profiles', 'activeProfileId'], function(result) {
-    let config = result.config || null;
+    let config = result.config || {};
     let keyBindings = result.keyBindings || null;
+    let profileName = 'Default';
 
     // If profiles exist, use active profile settings
     if (result.profiles && result.activeProfileId) {
       const activeProfile = result.profiles[result.activeProfileId];
       if (activeProfile) {
         keyBindings = activeProfile.keyBindings || keyBindings;
-        config = config || {};
         config.mouseSensitivity = activeProfile.mouseSensitivity;
         config.invertY = activeProfile.invertY;
+        config.sensitivityCurve = activeProfile.sensitivityCurve;
+        config.deadzone = activeProfile.deadzone;
+        profileName = activeProfile.name;
       }
     }
 
     window.postMessage({
       type: 'XCLOUD_KBM_CONFIG',
       config: config,
-      keyBindings: keyBindings
+      keyBindings: keyBindings,
+      profileName: profileName,
+      showOverlay: config.showOverlay !== false
     }, '*');
   });
+
+  // Also send game detection to overlay when game changes
+  function notifyOverlayOfGame(gameName) {
+    window.postMessage({
+      type: 'XCLOUD_KBM_GAME_DETECTED',
+      gameName: gameName
+    }, '*');
+  }
+
+  // Override onGameChange to also notify overlay
+  const originalOnGameChange = onGameChange;
+  onGameChange = function(newGameTitle) {
+    if (newGameTitle === currentGameTitle) return;
+
+    const previousGame = currentGameTitle;
+    currentGameTitle = newGameTitle;
+
+    console.log('[XCloud KB+M] Game detected:', newGameTitle || 'None');
+
+    // Notify background script of game change
+    chrome.runtime.sendMessage({
+      type: 'GAME_CHANGED',
+      gameTitle: newGameTitle,
+      previousGame: previousGame
+    }).catch(() => {});
+
+    // Notify overlay
+    notifyOverlayOfGame(newGameTitle);
+  };
 })();

@@ -872,6 +872,14 @@
         </span>
       </div>
 
+      <div class="checkbox-row">
+        <input type="checkbox" id="showOverlay" checked aria-describedby="overlay-help">
+        <label for="showOverlay" data-i18n="showOverlay">Show Overlay</label>
+        <span id="overlay-help" class="visually-hidden">
+          Show on-screen overlay with status and profile info
+        </span>
+      </div>
+
       <div class="select-row">
         <label for="sensitivityCurve" class="select-label" data-i18n="sensitivityCurve">Response Curve</label>
         <select id="sensitivityCurve" class="curve-select">
@@ -1028,6 +1036,10 @@
       <div class="hotkey-row">
         <span data-i18n="nextProfile">Next Profile</span>
         <kbd>Alt+Shift+P</kbd>
+      </div>
+      <div class="hotkey-row">
+        <span data-i18n="toggleOverlay">Toggle Overlay</span>
+        <kbd>Alt+Shift+O</kbd>
       </div>
     </div>
   </main>

@@ -77,8 +77,25 @@ chrome.commands.onCommand.addListener(async (command) => {
     await toggleControls();
   } else if (command === 'next-profile') {
     await switchToNextProfile();
+  } else if (command === 'toggle-overlay') {
+    await toggleOverlay();
   }
 });
+
+// Toggle overlay visibility
+async function toggleOverlay() {
+  // Notify all xCloud tabs to toggle overlay
+  const tabs = await chrome.tabs.query({ url: ['*://www.xbox.com/*play*', '*://xbox.com/*play*'] });
+  for (const tab of tabs) {
+    try {
+      await chrome.tabs.sendMessage(tab.id, {
+        type: 'TOGGLE_OVERLAY'
+      });
+    } catch (e) {
+      // Tab might not have content script
+    }
+  }
+}
 
 // Toggle controls on/off
 async function toggleControls() {

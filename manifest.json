@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
   "permissions": [
@@ -29,6 +29,12 @@
         "default": "Alt+Shift+P"
       },
       "description": "Switch to next game profile"
+    },
+    "toggle-overlay": {
+      "suggested_key": {
+        "default": "Alt+Shift+O"
+      },
+      "description": "Toggle on-screen overlay"
     }
   },
   "content_scripts": [

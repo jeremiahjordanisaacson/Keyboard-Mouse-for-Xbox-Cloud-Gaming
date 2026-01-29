@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const sensitivitySlider = document.getElementById('sensitivity');
   const sensitivityValue = document.getElementById('sensitivityValue');
   const invertYCheckbox = document.getElementById('invertY');
+  const showOverlayCheckbox = document.getElementById('showOverlay');
   const sensitivityCurveSelect = document.getElementById('sensitivityCurve');
   const deadzoneSlider = document.getElementById('deadzone');
   const deadzoneValue = document.getElementById('deadzoneValue');
@@ -249,6 +250,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if (config.enabled !== undefined) {
         enabledCheckbox.checked = config.enabled;
       }
+      if (config.showOverlay !== undefined && showOverlayCheckbox) {
+        showOverlayCheckbox.checked = config.showOverlay;
+      }
 
       // Load profiles
       profiles = result.profiles || {
@@ -260,6 +264,13 @@ document.addEventListener('DOMContentLoaded', function() {
           invertY: false
         }
       };
+
+      // Ensure all profiles have keyBindings (fix for legacy data)
+      for (const profileId of Object.keys(profiles)) {
+        if (!profiles[profileId].keyBindings) {
+          profiles[profileId].keyBindings = { ...DEFAULT_BINDINGS };
+        }
+      }
 
       activeProfileId = result.activeProfileId || 'default';
 
@@ -379,6 +390,26 @@ document.addEventListener('DOMContentLoaded', function() {
     announceToScreenReader(`Invert Y axis ${this.checked ? 'enabled' : 'disabled'}`);
   });
 
+  // Overlay toggle
+  if (showOverlayCheckbox) {
+    showOverlayCheckbox.addEventListener('change', function() {
+      const config = { showOverlay: this.checked };
+      chrome.storage.sync.set({ config: { ...config } });
+
+      // Notify content script to toggle overlay
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'CONFIG_UPDATE',
+            config: { showOverlay: showOverlayCheckbox.checked }
+          }).catch(() => {});
+        }
+      });
+
+      announceToScreenReader(`Overlay ${this.checked ? 'shown' : 'hidden'}`);
+    });
+  }
+
   // Sensitivity curve change
   if (sensitivityCurveSelect) {
     sensitivityCurveSelect.addEventListener('change', function() {
@@ -402,17 +433,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Profile selection
   profileSelect.addEventListener('change', function() {
-    activeProfileId = this.value;
-    chrome.storage.sync.set({ activeProfileId });
-    loadProfileIntoUI(profiles[activeProfileId]);
+    const newProfileId = this.value;
 
-    // Notify background to update content scripts
-    chrome.runtime.sendMessage({
-      type: 'SET_ACTIVE_PROFILE',
-      profileId: activeProfileId
+    // Reload profiles from storage to ensure we have latest data
+    chrome.storage.sync.get(['profiles'], function(result) {
+      if (result.profiles) {
+        profiles = result.profiles;
+      }
+
+      activeProfileId = newProfileId;
+      chrome.storage.sync.set({ activeProfileId });
+
+      // Ensure profile has keyBindings (fix for legacy data)
+      if (profiles[activeProfileId] && !profiles[activeProfileId].keyBindings) {
+        profiles[activeProfileId].keyBindings = { ...DEFAULT_BINDINGS };
+      }
+
+      loadProfileIntoUI(profiles[activeProfileId]);
+
+      // Notify background to update content scripts
+      chrome.runtime.sendMessage({
+        type: 'SET_ACTIVE_PROFILE',
+        profileId: activeProfileId
+      });
+
+      announceToScreenReader(getMessage('switchedToProfile', [profiles[activeProfileId].name]));
     });
-
-    announceToScreenReader(getMessage('switchedToProfile', [profiles[activeProfileId].name]));
   });
 
   // New profile button

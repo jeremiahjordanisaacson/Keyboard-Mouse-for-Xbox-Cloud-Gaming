@@ -424,7 +424,264 @@
   requestAnimationFrame(updateGamepad);
 
   // ============================================
-  // CONFIG MANAGEMENT
+  // ON-SCREEN OVERLAY
+  // ============================================
+  let overlayState = {
+    visible: true,
+    minimized: false,
+    profileName: 'Default',
+    gameName: null,
+    position: { x: 20, y: 20 }
+  };
+
+  // Create overlay element
+  function createOverlay() {
+    const overlay = document.createElement('div');
+    overlay.id = 'xcloud-kbm-overlay';
+    overlay.innerHTML = `
+      <div class="xcloud-kbm-overlay-header">
+        <span class="xcloud-kbm-overlay-title">KB+M</span>
+        <div class="xcloud-kbm-overlay-controls">
+          <button class="xcloud-kbm-overlay-btn minimize" title="Minimize">−</button>
+          <button class="xcloud-kbm-overlay-btn close" title="Hide (Alt+Shift+O)">×</button>
+        </div>
+      </div>
+      <div class="xcloud-kbm-overlay-content">
+        <div class="xcloud-kbm-overlay-row status-row">
+          <span class="xcloud-kbm-overlay-indicator"></span>
+          <span class="xcloud-kbm-overlay-status">Enabled</span>
+        </div>
+        <div class="xcloud-kbm-overlay-row profile-row">
+          <span class="xcloud-kbm-overlay-label">Profile:</span>
+          <span class="xcloud-kbm-overlay-value profile-name">Default</span>
+        </div>
+        <div class="xcloud-kbm-overlay-row game-row" style="display:none;">
+          <span class="xcloud-kbm-overlay-label">Game:</span>
+          <span class="xcloud-kbm-overlay-value game-name"></span>
+        </div>
+        <div class="xcloud-kbm-overlay-row mouse-row">
+          <span class="xcloud-kbm-overlay-label">Mouse:</span>
+          <span class="xcloud-kbm-overlay-value mouse-status">Click to lock</span>
+        </div>
+      </div>
+    `;
+
+    // Add styles
+    const styles = document.createElement('style');
+    styles.textContent = `
+      #xcloud-kbm-overlay {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: rgba(16, 124, 16, 0.95);
+        border: 2px solid #4fbf4f;
+        border-radius: 8px;
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 12px;
+        color: #fff;
+        z-index: 999999;
+        min-width: 140px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        user-select: none;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      #xcloud-kbm-overlay.hidden {
+        display: none !important;
+      }
+      #xcloud-kbm-overlay.minimized .xcloud-kbm-overlay-content {
+        display: none;
+      }
+      #xcloud-kbm-overlay.minimized {
+        min-width: auto;
+      }
+      #xcloud-kbm-overlay.disabled {
+        background: rgba(80, 80, 80, 0.95);
+        border-color: #666;
+      }
+      #xcloud-kbm-overlay.dragging {
+        opacity: 0.8;
+        cursor: grabbing;
+      }
+      .xcloud-kbm-overlay-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 10px;
+        cursor: grab;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+      }
+      #xcloud-kbm-overlay.minimized .xcloud-kbm-overlay-header {
+        border-bottom: none;
+      }
+      .xcloud-kbm-overlay-title {
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .xcloud-kbm-overlay-controls {
+        display: flex;
+        gap: 4px;
+      }
+      .xcloud-kbm-overlay-btn {
+        background: rgba(255,255,255,0.1);
+        border: none;
+        color: #fff;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .xcloud-kbm-overlay-btn:hover {
+        background: rgba(255,255,255,0.25);
+      }
+      .xcloud-kbm-overlay-content {
+        padding: 8px 10px;
+      }
+      .xcloud-kbm-overlay-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+      .xcloud-kbm-overlay-row:last-child {
+        margin-bottom: 0;
+      }
+      .xcloud-kbm-overlay-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #4fbf4f;
+        box-shadow: 0 0 6px #4fbf4f;
+      }
+      #xcloud-kbm-overlay.disabled .xcloud-kbm-overlay-indicator {
+        background: #ff6b6b;
+        box-shadow: 0 0 6px #ff6b6b;
+      }
+      .xcloud-kbm-overlay-status {
+        font-weight: 500;
+      }
+      .xcloud-kbm-overlay-label {
+        color: rgba(255,255,255,0.7);
+        font-size: 11px;
+      }
+      .xcloud-kbm-overlay-value {
+        font-weight: 500;
+        font-size: 11px;
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .xcloud-kbm-overlay-row.mouse-row .xcloud-kbm-overlay-value {
+        color: #ffd700;
+      }
+      .xcloud-kbm-overlay-row.mouse-row.locked .xcloud-kbm-overlay-value {
+        color: #4fbf4f;
+      }
+    `;
+    document.head.appendChild(styles);
+    document.body.appendChild(overlay);
+
+    // Make draggable
+    let isDragging = false;
+    let dragOffset = { x: 0, y: 0 };
+
+    const header = overlay.querySelector('.xcloud-kbm-overlay-header');
+    header.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('xcloud-kbm-overlay-btn')) return;
+      isDragging = true;
+      overlay.classList.add('dragging');
+      dragOffset.x = e.clientX - overlay.offsetLeft;
+      dragOffset.y = e.clientY - overlay.offsetTop;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const x = Math.max(0, Math.min(window.innerWidth - overlay.offsetWidth, e.clientX - dragOffset.x));
+      const y = Math.max(0, Math.min(window.innerHeight - overlay.offsetHeight, e.clientY - dragOffset.y));
+      overlay.style.left = x + 'px';
+      overlay.style.top = y + 'px';
+      overlayState.position = { x, y };
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      overlay.classList.remove('dragging');
+    });
+
+    // Minimize button
+    overlay.querySelector('.minimize').addEventListener('click', () => {
+      overlayState.minimized = !overlayState.minimized;
+      overlay.classList.toggle('minimized', overlayState.minimized);
+      overlay.querySelector('.minimize').textContent = overlayState.minimized ? '+' : '−';
+    });
+
+    // Close button
+    overlay.querySelector('.close').addEventListener('click', () => {
+      overlayState.visible = false;
+      overlay.classList.add('hidden');
+    });
+
+    return overlay;
+  }
+
+  // Update overlay content
+  function updateOverlay() {
+    const overlay = document.getElementById('xcloud-kbm-overlay');
+    if (!overlay) return;
+
+    // Update enabled state
+    overlay.classList.toggle('disabled', !config.enabled);
+    overlay.querySelector('.xcloud-kbm-overlay-status').textContent = config.enabled ? 'Enabled' : 'Disabled';
+
+    // Update profile name
+    overlay.querySelector('.profile-name').textContent = overlayState.profileName;
+
+    // Update game name
+    const gameRow = overlay.querySelector('.game-row');
+    if (overlayState.gameName) {
+      gameRow.style.display = 'flex';
+      overlay.querySelector('.game-name').textContent = overlayState.gameName;
+    } else {
+      gameRow.style.display = 'none';
+    }
+
+    // Update mouse state
+    const mouseRow = overlay.querySelector('.mouse-row');
+    mouseRow.classList.toggle('locked', mouseState.locked);
+    overlay.querySelector('.mouse-status').textContent = mouseState.locked ? 'Locked' : 'Click to lock';
+  }
+
+  // Initialize overlay after DOM is ready
+  function initOverlay() {
+    if (document.body) {
+      createOverlay();
+      // Update overlay periodically
+      setInterval(updateOverlay, 100);
+    } else {
+      setTimeout(initOverlay, 100);
+    }
+  }
+
+  // Toggle overlay visibility (for hotkey)
+  function toggleOverlay() {
+    const overlay = document.getElementById('xcloud-kbm-overlay');
+    if (!overlay) return;
+    overlayState.visible = !overlayState.visible;
+    overlay.classList.toggle('hidden', !overlayState.visible);
+  }
+
+  initOverlay();
+
+  // ============================================
+  // CONFIG MANAGEMENT (UPDATED FOR OVERLAY)
   // ============================================
   window.addEventListener('message', function(event) {
     if (event.source !== window) return;
@@ -436,7 +693,16 @@
       if (event.data.keyBindings) {
         config.keyBindings = { ...DEFAULT_CONFIG.keyBindings, ...event.data.keyBindings };
       }
+      if (event.data.profileName) {
+        overlayState.profileName = event.data.profileName;
+      }
+      if (event.data.showOverlay !== undefined) {
+        overlayState.visible = event.data.showOverlay;
+        const overlay = document.getElementById('xcloud-kbm-overlay');
+        if (overlay) overlay.classList.toggle('hidden', !overlayState.visible);
+      }
       console.log('[XCloud KB+M] Config loaded:', config);
+      updateOverlay();
     }
 
     if (event.data.type === 'XCLOUD_KBM_UPDATE_CONFIG') {
@@ -446,13 +712,31 @@
       if (event.data.keyBindings) {
         config.keyBindings = { ...DEFAULT_CONFIG.keyBindings, ...event.data.keyBindings };
       }
+      if (event.data.profileName) {
+        overlayState.profileName = event.data.profileName;
+      }
+      if (event.data.showOverlay !== undefined) {
+        overlayState.visible = event.data.showOverlay;
+        const overlay = document.getElementById('xcloud-kbm-overlay');
+        if (overlay) overlay.classList.toggle('hidden', !overlayState.visible);
+      }
       console.log('[XCloud KB+M] Config updated:', config);
+      updateOverlay();
     }
 
     if (event.data.type === 'XCLOUD_KBM_TOGGLE') {
-      // Use explicit enabled value if provided, otherwise toggle
       config.enabled = event.data.enabled !== undefined ? event.data.enabled : !config.enabled;
       console.log('[XCloud KB+M] Controls', config.enabled ? 'ENABLED' : 'DISABLED');
+      updateOverlay();
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_TOGGLE_OVERLAY') {
+      toggleOverlay();
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_GAME_DETECTED') {
+      overlayState.gameName = event.data.gameName;
+      updateOverlay();
     }
   });
 
@@ -465,9 +749,11 @@
   window.__xcloudKBM = {
     getGamepad: () => createGamepadSnapshot(),
     getConfig: () => config,
-    setEnabled: (enabled) => { config.enabled = enabled; },
+    setEnabled: (enabled) => { config.enabled = enabled; updateOverlay(); },
     getMouseState: () => mouseState,
-    getKeyState: () => keyState
+    getKeyState: () => keyState,
+    toggleOverlay: toggleOverlay,
+    getOverlayState: () => overlayState
   };
 
   console.log('[XCloud KB+M] Virtual gamepad ready!');

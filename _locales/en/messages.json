@@ -404,5 +404,13 @@
   "invalidProfileData": {
     "message": "Invalid profile data",
     "description": "Invalid profile import error"
+  },
+  "showOverlay": {
+    "message": "Show Overlay",
+    "description": "Show on-screen overlay setting"
+  },
+  "toggleOverlay": {
+    "message": "Toggle Overlay",
+    "description": "Toggle overlay hotkey"
   }
 }
