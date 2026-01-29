@@ -412,5 +412,79 @@
   "toggleOverlay": {
     "message": "Toggle Overlay",
     "description": "Toggle overlay hotkey"
+  },
+  "macros": {
+    "message": "Macros",
+    "description": "Macros section header"
+  },
+  "newMacro": {
+    "message": "New Macro",
+    "description": "New macro button"
+  },
+  "noMacros": {
+    "message": "No macros recorded",
+    "description": "Empty macro list message"
+  },
+  "macroName": {
+    "message": "Macro Name",
+    "description": "Macro name label"
+  },
+  "enterMacroName": {
+    "message": "Enter macro name...",
+    "description": "Macro name placeholder"
+  },
+  "startRecording": {
+    "message": "Start Recording",
+    "description": "Start recording button"
+  },
+  "stopRecording": {
+    "message": "Stop & Save",
+    "description": "Stop recording button"
+  },
+  "recordingMacro": {
+    "message": "Recording... Press buttons to record",
+    "description": "Recording indicator text"
+  },
+  "macroInstructions": {
+    "message": "Press your game buttons in sequence. Timing is recorded.",
+    "description": "Macro recording instructions"
+  },
+  "assignTriggerKey": {
+    "message": "Press a key to trigger this macro:",
+    "description": "Assign trigger key prompt"
+  },
+  "changeTrigger": {
+    "message": "Change trigger key",
+    "description": "Change trigger key tooltip"
+  },
+  "playMacro": {
+    "message": "Play macro",
+    "description": "Play macro tooltip"
+  },
+  "deleteMacro": {
+    "message": "Delete macro",
+    "description": "Delete macro tooltip"
+  },
+  "deleteMacroConfirm": {
+    "message": "Delete macro \"$MACRO_NAME$\"?",
+    "description": "Delete macro confirmation",
+    "placeholders": {
+      "macro_name": {
+        "content": "$1",
+        "example": "Combo Attack"
+      }
+    }
+  },
+  "macroSaved": {
+    "message": "Macro saved",
+    "description": "Macro saved message"
+  },
+  "macroDeleted": {
+    "message": "Macro deleted",
+    "description": "Macro deleted message"
+  },
+  "macroPlaying": {
+    "message": "Playing macro",
+    "description": "Macro playing message"
   }
 }

@@ -792,6 +792,133 @@
       white-space: nowrap;
       border: 0;
     }
+
+    /* Macro section */
+    .macro-list {
+      background: #2d2d2d;
+      border-radius: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .macro-empty {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+    }
+
+    .macro-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      border-bottom: 1px solid #3d3d3d;
+    }
+
+    .macro-item:last-child {
+      border-bottom: none;
+    }
+
+    .macro-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .macro-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: #e0e0e0;
+      margin-bottom: 2px;
+    }
+
+    .macro-details {
+      font-size: 10px;
+      color: #888;
+    }
+
+    .macro-trigger {
+      background: #3d3d3d;
+      border: 1px solid #4a4a4a;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-family: 'Consolas', monospace;
+      font-size: 10px;
+      color: #4fbf4f;
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    .macro-trigger:hover {
+      background: #4a4a4a;
+    }
+
+    .macro-trigger.listening {
+      background: #107c10;
+      color: #fff;
+      animation: pulse 1s infinite;
+    }
+
+    .macro-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .macro-btn {
+      background: #3d3d3d;
+      border: 1px solid #4a4a4a;
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      font-size: 12px;
+      color: #999;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .macro-btn:hover {
+      background: #4a4a4a;
+      color: #fff;
+    }
+
+    .macro-btn.danger:hover {
+      background: #5a2a2a;
+      color: #ff6b6b;
+    }
+
+    .macro-btn.recording {
+      background: #ff4444;
+      border-color: #ff4444;
+      color: #fff;
+      animation: pulse 1s infinite;
+    }
+
+    /* Recording modal */
+    .recording-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: #3d2020;
+      border: 1px solid #ff4444;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .recording-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff4444;
+      animation: pulse 1s infinite;
+    }
+
+    .recording-text {
+      font-size: 12px;
+      color: #ff8888;
+    }
   </style>
 </head>
 <body>
@@ -1014,6 +1141,16 @@
       </div>
     </section>
 
+    <section class="section" aria-labelledby="macros-heading">
+      <div class="section-header">
+        <h2 id="macros-heading" data-i18n="macros">Macros</h2>
+        <button type="button" class="small-btn" id="newMacroBtn" data-i18n="newMacro">+ New</button>
+      </div>
+      <div class="macro-list" id="macroList">
+        <div class="macro-empty" id="macroEmpty" data-i18n="noMacros">No macros recorded</div>
+      </div>
+    </section>
+
     <div class="status"
          id="status"
          role="status"
@@ -1053,6 +1190,47 @@
       <div class="modal-buttons">
         <button type="button" class="modal-btn" id="cancelNewProfile" data-i18n="cancel">Cancel</button>
         <button type="button" class="modal-btn primary" id="createNewProfile" data-i18n="create">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Macro Recording Modal -->
+  <div class="modal-overlay" id="macroModal" role="dialog" aria-labelledby="macro-modal-title" aria-modal="true">
+    <div class="modal">
+      <h3 id="macro-modal-title" data-i18n="newMacro">New Macro</h3>
+
+      <!-- Step 1: Name -->
+      <div id="macroStep1">
+        <label for="macroName" class="visually-hidden" data-i18n="macroName">Macro name</label>
+        <input type="text" id="macroName" data-i18n-placeholder="enterMacroName" placeholder="Enter macro name..." maxlength="20">
+        <div class="modal-buttons">
+          <button type="button" class="modal-btn" id="cancelMacro" data-i18n="cancel">Cancel</button>
+          <button type="button" class="modal-btn primary" id="startRecordingBtn" data-i18n="startRecording">Start Recording</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Recording -->
+      <div id="macroStep2" style="display:none;">
+        <div class="recording-indicator">
+          <span class="recording-dot"></span>
+          <span class="recording-text" data-i18n="recordingMacro">Recording... Press buttons to record</span>
+        </div>
+        <p style="font-size:11px; color:#888; margin-bottom:12px;" data-i18n="macroInstructions">Press your game buttons in sequence. Timing is recorded.</p>
+        <div class="modal-buttons">
+          <button type="button" class="modal-btn" id="cancelRecordingBtn" data-i18n="cancel">Cancel</button>
+          <button type="button" class="modal-btn primary" id="stopRecordingBtn" data-i18n="stopRecording">Stop & Save</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Assign Trigger -->
+      <div id="macroStep3" style="display:none;">
+        <p style="font-size:12px; color:#e0e0e0; margin-bottom:12px;" data-i18n="assignTriggerKey">Press a key to trigger this macro:</p>
+        <div style="text-align:center; padding:16px;">
+          <span id="triggerKeyDisplay" class="macro-trigger listening" data-i18n="pressKey">Press key...</span>
+        </div>
+        <div class="modal-buttons">
+          <button type="button" class="modal-btn" id="cancelTriggerBtn" data-i18n="cancel">Cancel</button>
+        </div>
       </div>
     </div>
   </div>

@@ -67,6 +67,22 @@ document.addEventListener('DOMContentLoaded', function() {
   const currentGameNameEl = document.getElementById('currentGameName');
   const assignGameBtn = document.getElementById('assignGameBtn');
 
+  // Macro elements
+  const macroList = document.getElementById('macroList');
+  const macroEmpty = document.getElementById('macroEmpty');
+  const newMacroBtn = document.getElementById('newMacroBtn');
+  const macroModal = document.getElementById('macroModal');
+  const macroName = document.getElementById('macroName');
+  const macroStep1 = document.getElementById('macroStep1');
+  const macroStep2 = document.getElementById('macroStep2');
+  const macroStep3 = document.getElementById('macroStep3');
+  const cancelMacro = document.getElementById('cancelMacro');
+  const startRecordingBtn = document.getElementById('startRecordingBtn');
+  const cancelRecordingBtn = document.getElementById('cancelRecordingBtn');
+  const stopRecordingBtn = document.getElementById('stopRecordingBtn');
+  const cancelTriggerBtn = document.getElementById('cancelTriggerBtn');
+  const triggerKeyDisplay = document.getElementById('triggerKeyDisplay');
+
   // Default key bindings
   const DEFAULT_BINDINGS = {
     moveForward: 'KeyW',
@@ -97,6 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentBindings = { ...DEFAULT_BINDINGS };
   let listeningButton = null;
   let gameProfiles = {};
+  let macros = {};
+  let currentMacroId = null;
+  let waitingForTriggerKey = false;
   let currentGameTitle = null;
 
   // Convert key code to display name
@@ -769,4 +788,366 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // ============================================
+  // MACRO FUNCTIONALITY
+  // ============================================
+
+  // Update macro list display
+  function updateMacroList() {
+    const macroIds = Object.keys(macros);
+
+    if (macroIds.length === 0) {
+      macroEmpty.style.display = 'block';
+      // Clear any existing macro items
+      const existingItems = macroList.querySelectorAll('.macro-item');
+      existingItems.forEach(item => item.remove());
+      return;
+    }
+
+    macroEmpty.style.display = 'none';
+
+    // Clear and rebuild
+    const existingItems = macroList.querySelectorAll('.macro-item');
+    existingItems.forEach(item => item.remove());
+
+    for (const macro of Object.values(macros)) {
+      const item = document.createElement('div');
+      item.className = 'macro-item';
+      item.dataset.macroId = macro.id;
+
+      const actionCount = macro.actions ? macro.actions.length : 0;
+      const duration = macro.actions && macro.actions.length > 0
+        ? Math.round(macro.actions[macro.actions.length - 1].delay / 100) / 10
+        : 0;
+
+      item.innerHTML = `
+        <div class="macro-info">
+          <div class="macro-name">${escapeHtml(macro.name)}</div>
+          <div class="macro-details">${actionCount} actions, ${duration}s</div>
+        </div>
+        <button class="macro-trigger" data-macro-id="${macro.id}" title="${getMessage('changeTrigger')}">${keyCodeToDisplayName(macro.triggerKey) || '?'}</button>
+        <div class="macro-actions">
+          <button class="macro-btn play-btn" data-macro-id="${macro.id}" title="${getMessage('playMacro')}">▶</button>
+          <button class="macro-btn danger delete-btn" data-macro-id="${macro.id}" title="${getMessage('deleteMacro')}">×</button>
+        </div>
+      `;
+
+      macroList.appendChild(item);
+    }
+
+    // Add event listeners to new buttons
+    macroList.querySelectorAll('.play-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const macroId = this.dataset.macroId;
+        playMacro(macroId);
+      });
+    });
+
+    macroList.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const macroId = this.dataset.macroId;
+        deleteMacro(macroId);
+      });
+    });
+
+    macroList.querySelectorAll('.macro-trigger').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const macroId = this.dataset.macroId;
+        reassignTriggerKey(macroId, this);
+      });
+    });
+  }
+
+  // Escape HTML to prevent XSS
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Load macros from storage
+  function loadMacros() {
+    chrome.storage.sync.get(['macros'], function(result) {
+      macros = result.macros || {};
+      updateMacroList();
+
+      // Send macros to content script
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'LOAD_MACROS',
+            macros: macros
+          }).catch(() => {});
+        }
+      });
+    });
+  }
+
+  // Save macros to storage
+  function saveMacros() {
+    chrome.storage.sync.set({ macros }, function() {
+      console.log('Macros saved:', Object.keys(macros).length);
+    });
+  }
+
+  // Play macro via content script
+  function playMacro(macroId) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: 'PLAY_MACRO',
+          macroId: macroId
+        }).catch(() => {});
+      }
+    });
+    announceToScreenReader(getMessage('macroPlaying'));
+  }
+
+  // Delete macro
+  function deleteMacro(macroId) {
+    const macro = macros[macroId];
+    if (!macro) return;
+
+    if (confirm(getMessage('deleteMacroConfirm', [macro.name]))) {
+      delete macros[macroId];
+      saveMacros();
+      updateMacroList();
+
+      // Notify content script
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'DELETE_MACRO',
+            macroId: macroId
+          }).catch(() => {});
+        }
+      });
+
+      announceToScreenReader(getMessage('macroDeleted'));
+    }
+  }
+
+  // Reassign trigger key for existing macro
+  let reassigningMacroId = null;
+  let reassigningButton = null;
+
+  function reassignTriggerKey(macroId, button) {
+    reassigningMacroId = macroId;
+    reassigningButton = button;
+    button.classList.add('listening');
+    button.textContent = getMessage('pressKey');
+  }
+
+  // New macro button
+  if (newMacroBtn) {
+    newMacroBtn.addEventListener('click', function() {
+      macroModal.classList.add('active');
+      macroStep1.style.display = 'block';
+      macroStep2.style.display = 'none';
+      macroStep3.style.display = 'none';
+      macroName.value = '';
+      macroName.focus();
+    });
+  }
+
+  // Cancel macro creation
+  if (cancelMacro) {
+    cancelMacro.addEventListener('click', function() {
+      macroModal.classList.remove('active');
+    });
+  }
+
+  // Start recording
+  if (startRecordingBtn) {
+    startRecordingBtn.addEventListener('click', function() {
+      const name = macroName.value.trim();
+      if (!name) {
+        macroName.focus();
+        return;
+      }
+
+      currentMacroId = 'macro_' + Date.now();
+
+      // Show step 2
+      macroStep1.style.display = 'none';
+      macroStep2.style.display = 'block';
+
+      // Tell content script to start recording
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'START_MACRO_RECORDING',
+            macroId: currentMacroId,
+            name: name
+          }).catch(() => {});
+        }
+      });
+    });
+  }
+
+  // Cancel recording
+  if (cancelRecordingBtn) {
+    cancelRecordingBtn.addEventListener('click', function() {
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'CANCEL_MACRO_RECORDING'
+          }).catch(() => {});
+        }
+      });
+      macroModal.classList.remove('active');
+      currentMacroId = null;
+    });
+  }
+
+  // Stop recording
+  if (stopRecordingBtn) {
+    stopRecordingBtn.addEventListener('click', function() {
+      // Show step 3 to assign trigger key
+      macroStep2.style.display = 'none';
+      macroStep3.style.display = 'block';
+      waitingForTriggerKey = true;
+      triggerKeyDisplay.textContent = getMessage('pressKey');
+    });
+  }
+
+  // Cancel trigger assignment
+  if (cancelTriggerBtn) {
+    cancelTriggerBtn.addEventListener('click', function() {
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'CANCEL_MACRO_RECORDING'
+          }).catch(() => {});
+        }
+      });
+      macroModal.classList.remove('active');
+      waitingForTriggerKey = false;
+      currentMacroId = null;
+    });
+  }
+
+  // Listen for trigger key assignment
+  document.addEventListener('keydown', function(e) {
+    // Handle reassigning existing macro trigger
+    if (reassigningMacroId && reassigningButton) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (e.code === 'Escape') {
+        reassigningButton.classList.remove('listening');
+        reassigningButton.textContent = keyCodeToDisplayName(macros[reassigningMacroId].triggerKey);
+        reassigningMacroId = null;
+        reassigningButton = null;
+        return;
+      }
+
+      macros[reassigningMacroId].triggerKey = e.code;
+      saveMacros();
+      updateMacroList();
+
+      // Notify content script
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'LOAD_MACROS',
+            macros: macros
+          }).catch(() => {});
+        }
+      });
+
+      reassigningMacroId = null;
+      reassigningButton = null;
+      return;
+    }
+
+    // Handle new macro trigger assignment
+    if (!waitingForTriggerKey) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.code === 'Escape') {
+      // Cancel
+      chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+        if (tabs[0]?.id) {
+          chrome.tabs.sendMessage(tabs[0].id, {
+            type: 'CANCEL_MACRO_RECORDING'
+          }).catch(() => {});
+        }
+      });
+      macroModal.classList.remove('active');
+      waitingForTriggerKey = false;
+      currentMacroId = null;
+      return;
+    }
+
+    // Assign trigger key and save
+    triggerKeyDisplay.textContent = keyCodeToDisplayName(e.code);
+    waitingForTriggerKey = false;
+
+    // Stop recording with trigger key
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: 'STOP_MACRO_RECORDING',
+          triggerKey: e.code
+        }).catch(() => {});
+      }
+    });
+  }, true);
+
+  // Listen for storage changes to detect when macro is recorded
+  chrome.storage.onChanged.addListener(function(changes, area) {
+    if (area === 'sync' && changes.lastRecordedMacroId) {
+      // A new macro was recorded
+      const macroId = changes.lastRecordedMacroId.newValue;
+      if (macroId && changes.macros && changes.macros.newValue[macroId]) {
+        macros = changes.macros.newValue;
+        updateMacroList();
+        macroModal.classList.remove('active');
+        currentMacroId = null;
+        waitingForTriggerKey = false;
+        announceToScreenReader(getMessage('macroSaved'));
+
+        // Clear the lastRecordedMacroId flag
+        chrome.storage.sync.remove('lastRecordedMacroId');
+      }
+    }
+  });
+
+  // Click outside macro modal to close
+  if (macroModal) {
+    macroModal.addEventListener('click', function(e) {
+      if (e.target === macroModal) {
+        if (currentMacroId) {
+          chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            if (tabs[0]?.id) {
+              chrome.tabs.sendMessage(tabs[0].id, {
+                type: 'CANCEL_MACRO_RECORDING'
+              }).catch(() => {});
+            }
+          });
+        }
+        macroModal.classList.remove('active');
+        waitingForTriggerKey = false;
+        currentMacroId = null;
+      }
+    });
+  }
+
+  // Enter key in macro name input
+  if (macroName) {
+    macroName.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        startRecordingBtn.click();
+      } else if (e.key === 'Escape') {
+        macroModal.classList.remove('active');
+      }
+    });
+  }
+
+  // Load macros on startup
+  loadMacros();
 });

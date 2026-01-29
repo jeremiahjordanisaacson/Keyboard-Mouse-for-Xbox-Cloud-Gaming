@@ -129,6 +129,15 @@
         keyBindings: event.data.keyBindings
       });
     }
+
+    // Save recorded macro to storage so popup can pick it up
+    if (event.data.type === 'XCLOUD_KBM_MACRO_RECORDED' && event.data.macro) {
+      chrome.storage.sync.get(['macros'], function(result) {
+        const macros = result.macros || {};
+        macros[event.data.macro.id] = event.data.macro;
+        chrome.storage.sync.set({ macros, lastRecordedMacroId: event.data.macro.id });
+      });
+    }
   });
 
   // Listen for messages from popup and background script
@@ -175,6 +184,49 @@
       // Forward overlay toggle to injected script
       window.postMessage({
         type: 'XCLOUD_KBM_TOGGLE_OVERLAY'
+      }, '*');
+    }
+
+    // Macro commands
+    if (request.type === 'START_MACRO_RECORDING') {
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_START_RECORDING',
+        macroId: request.macroId,
+        name: request.name
+      }, '*');
+    }
+
+    if (request.type === 'STOP_MACRO_RECORDING') {
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_STOP_RECORDING',
+        triggerKey: request.triggerKey
+      }, '*');
+    }
+
+    if (request.type === 'CANCEL_MACRO_RECORDING') {
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_CANCEL_RECORDING'
+      }, '*');
+    }
+
+    if (request.type === 'PLAY_MACRO') {
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_PLAY',
+        macroId: request.macroId
+      }, '*');
+    }
+
+    if (request.type === 'DELETE_MACRO') {
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_DELETE',
+        macroId: request.macroId
+      }, '*');
+    }
+
+    if (request.type === 'LOAD_MACROS') {
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_LOAD',
+        macros: request.macros
       }, '*');
     }
   });

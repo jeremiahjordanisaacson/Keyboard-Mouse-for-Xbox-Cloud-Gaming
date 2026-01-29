@@ -265,5 +265,57 @@
   },
   "toggleOverlay": {
     "message": "Basculer la Superposition"
+  },
+  "macros": {
+    "message": "Macros"
+  },
+  "newMacro": {
+    "message": "Nouvelle Macro"
+  },
+  "noMacros": {
+    "message": "Aucune macro enregistrée"
+  },
+  "macroName": {
+    "message": "Nom de la Macro"
+  },
+  "enterMacroName": {
+    "message": "Entrez le nom de la macro..."
+  },
+  "startRecording": {
+    "message": "Commencer l'Enregistrement"
+  },
+  "stopRecording": {
+    "message": "Arrêter et Sauvegarder"
+  },
+  "recordingMacro": {
+    "message": "Enregistrement... Appuyez sur les boutons"
+  },
+  "macroInstructions": {
+    "message": "Appuyez sur vos boutons de jeu en séquence. Le timing est enregistré."
+  },
+  "assignTriggerKey": {
+    "message": "Appuyez sur une touche pour déclencher cette macro :"
+  },
+  "changeTrigger": {
+    "message": "Changer la touche de déclenchement"
+  },
+  "playMacro": {
+    "message": "Jouer la macro"
+  },
+  "deleteMacro": {
+    "message": "Supprimer la macro"
+  },
+  "deleteMacroConfirm": {
+    "message": "Supprimer la macro \"$MACRO_NAME$\" ?",
+    "placeholders": { "macro_name": { "content": "$1" } }
+  },
+  "macroSaved": {
+    "message": "Macro sauvegardée"
+  },
+  "macroDeleted": {
+    "message": "Macro supprimée"
+  },
+  "macroPlaying": {
+    "message": "Lecture de la macro"
   }
 }

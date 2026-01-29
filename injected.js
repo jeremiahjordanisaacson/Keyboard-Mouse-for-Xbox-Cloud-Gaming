@@ -87,6 +87,169 @@
   let config = { ...DEFAULT_CONFIG };
 
   // ============================================
+  // MACRO SYSTEM
+  // ============================================
+  const macroState = {
+    recording: false,
+    recordingMacroId: null,
+    recordingStartTime: 0,
+    recordingActions: [],
+    playing: false,
+    playingMacroId: null,
+    macros: {}  // { macroId: { name, triggerKey, actions: [{ type, button, delay }] } }
+  };
+
+  // Button name to index mapping for macros
+  const BUTTON_NAMES = {
+    'A': 0, 'B': 1, 'X': 2, 'Y': 3,
+    'LB': 4, 'RB': 5, 'LT': 6, 'RT': 7,
+    'View': 8, 'Menu': 9,
+    'LS': 10, 'RS': 11,
+    'DPadUp': 12, 'DPadDown': 13, 'DPadLeft': 14, 'DPadRight': 15
+  };
+
+  // Action name to button name mapping
+  const ACTION_TO_BUTTON = {
+    'actionA': 'A', 'actionB': 'B', 'actionX': 'X', 'actionY': 'Y',
+    'leftBumper': 'LB', 'rightBumper': 'RB',
+    'leftTrigger': 'LT', 'rightTrigger': 'RT',
+    'view': 'View', 'menu': 'Menu',
+    'leftStickClick': 'LS', 'rightStickClick': 'RS',
+    'dpadUp': 'DPadUp', 'dpadDown': 'DPadDown',
+    'dpadLeft': 'DPadLeft', 'dpadRight': 'DPadRight'
+  };
+
+  // Start recording a macro
+  function startMacroRecording(macroId, name) {
+    macroState.recording = true;
+    macroState.recordingMacroId = macroId;
+    macroState.recordingStartTime = performance.now();
+    macroState.recordingActions = [];
+    console.log('[XCloud KB+M] Macro recording started:', name);
+
+    // Notify overlay
+    updateOverlay();
+  }
+
+  // Stop recording and save macro
+  function stopMacroRecording(triggerKey) {
+    if (!macroState.recording) return null;
+
+    const macroId = macroState.recordingMacroId;
+    const actions = macroState.recordingActions;
+
+    macroState.recording = false;
+    macroState.recordingMacroId = null;
+    macroState.recordingActions = [];
+
+    if (actions.length === 0) {
+      console.log('[XCloud KB+M] Macro recording cancelled - no actions');
+      return null;
+    }
+
+    // Normalize delays (make first action delay 0)
+    if (actions.length > 0) {
+      const firstDelay = actions[0].delay;
+      actions.forEach(a => a.delay -= firstDelay);
+    }
+
+    const macro = {
+      id: macroId,
+      name: macroState.macros[macroId]?.name || 'Macro',
+      triggerKey: triggerKey,
+      actions: actions
+    };
+
+    macroState.macros[macroId] = macro;
+    console.log('[XCloud KB+M] Macro saved:', macro.name, 'with', actions.length, 'actions');
+
+    updateOverlay();
+    return macro;
+  }
+
+  // Cancel recording without saving
+  function cancelMacroRecording() {
+    macroState.recording = false;
+    macroState.recordingMacroId = null;
+    macroState.recordingActions = [];
+    console.log('[XCloud KB+M] Macro recording cancelled');
+    updateOverlay();
+  }
+
+  // Record a button action during recording
+  function recordMacroAction(actionType, buttonName) {
+    if (!macroState.recording) return;
+
+    const delay = performance.now() - macroState.recordingStartTime;
+    macroState.recordingActions.push({
+      type: actionType,  // 'press' or 'release'
+      button: buttonName,
+      delay: Math.round(delay)
+    });
+  }
+
+  // Play a macro
+  function playMacro(macroId) {
+    const macro = macroState.macros[macroId];
+    if (!macro || macroState.playing) return;
+
+    macroState.playing = true;
+    macroState.playingMacroId = macroId;
+    console.log('[XCloud KB+M] Playing macro:', macro.name);
+
+    // Schedule all actions
+    macro.actions.forEach(action => {
+      setTimeout(() => {
+        if (!macroState.playing) return;  // Macro was cancelled
+
+        const buttonIndex = BUTTON_NAMES[action.button];
+        if (buttonIndex !== undefined) {
+          if (action.type === 'press') {
+            virtualGamepad.buttons[buttonIndex].pressed = true;
+            virtualGamepad.buttons[buttonIndex].touched = true;
+            virtualGamepad.buttons[buttonIndex].value = 1;
+          } else {
+            virtualGamepad.buttons[buttonIndex].pressed = false;
+            virtualGamepad.buttons[buttonIndex].touched = false;
+            virtualGamepad.buttons[buttonIndex].value = 0;
+          }
+        }
+      }, action.delay);
+    });
+
+    // End playback after last action + small buffer
+    const lastDelay = macro.actions.length > 0 ? macro.actions[macro.actions.length - 1].delay : 0;
+    setTimeout(() => {
+      macroState.playing = false;
+      macroState.playingMacroId = null;
+      console.log('[XCloud KB+M] Macro playback complete');
+    }, lastDelay + 50);
+  }
+
+  // Stop macro playback
+  function stopMacroPlayback() {
+    macroState.playing = false;
+    macroState.playingMacroId = null;
+  }
+
+  // Check if a key triggers a macro
+  function checkMacroTrigger(keyCode) {
+    for (const macro of Object.values(macroState.macros)) {
+      if (macro.triggerKey === keyCode) {
+        playMacro(macro.id);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Delete a macro
+  function deleteMacro(macroId) {
+    delete macroState.macros[macroId];
+    console.log('[XCloud KB+M] Macro deleted:', macroId);
+  }
+
+  // ============================================
   // VIRTUAL GAMEPAD
   // ============================================
   const virtualGamepad = {
@@ -190,6 +353,15 @@
     const key = e.code;
     const bindings = config.keyBindings;
 
+    // Check if this key triggers a macro (unless recording)
+    if (!macroState.recording && !isTypingInInput(e.target)) {
+      if (checkMacroTrigger(key)) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    }
+
     // Check if this key is bound
     const isBound = Object.values(bindings).includes(key);
     if (isBound && !isTypingInInput(e.target)) {
@@ -199,6 +371,17 @@
 
     if (keyState[key]) return; // Already pressed
     keyState[key] = true;
+
+    // Record macro action if recording
+    if (macroState.recording) {
+      // Find which action this key is bound to
+      for (const [action, boundKey] of Object.entries(bindings)) {
+        if (boundKey === key && ACTION_TO_BUTTON[action]) {
+          recordMacroAction('press', ACTION_TO_BUTTON[action]);
+          break;
+        }
+      }
+    }
   }
 
   function handleKeyUp(e) {
@@ -214,6 +397,17 @@
     }
 
     keyState[key] = false;
+
+    // Record macro action if recording
+    if (macroState.recording) {
+      // Find which action this key is bound to
+      for (const [action, boundKey] of Object.entries(bindings)) {
+        if (boundKey === key && ACTION_TO_BUTTON[action]) {
+          recordMacroAction('release', ACTION_TO_BUTTON[action]);
+          break;
+        }
+      }
+    }
   }
 
   function isTypingInInput(element) {
@@ -463,6 +657,10 @@
           <span class="xcloud-kbm-overlay-label">Mouse:</span>
           <span class="xcloud-kbm-overlay-value mouse-status">Click to lock</span>
         </div>
+        <div class="xcloud-kbm-overlay-row macro-row" style="display:none;">
+          <span class="xcloud-kbm-overlay-indicator recording"></span>
+          <span class="xcloud-kbm-overlay-value macro-status">Recording...</span>
+        </div>
       </div>
     `;
 
@@ -584,6 +782,19 @@
       .xcloud-kbm-overlay-row.mouse-row.locked .xcloud-kbm-overlay-value {
         color: #4fbf4f;
       }
+      .xcloud-kbm-overlay-indicator.recording {
+        background: #ff4444;
+        box-shadow: 0 0 6px #ff4444;
+        animation: pulse-recording 1s infinite;
+      }
+      @keyframes pulse-recording {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      .xcloud-kbm-overlay-row.macro-row .xcloud-kbm-overlay-value {
+        color: #ff4444;
+        font-weight: 600;
+      }
     `;
     document.head.appendChild(styles);
     document.body.appendChild(overlay);
@@ -657,6 +868,16 @@
     const mouseRow = overlay.querySelector('.mouse-row');
     mouseRow.classList.toggle('locked', mouseState.locked);
     overlay.querySelector('.mouse-status').textContent = mouseState.locked ? 'Locked' : 'Click to lock';
+
+    // Update macro recording state
+    const macroRow = overlay.querySelector('.macro-row');
+    if (macroState.recording) {
+      macroRow.style.display = 'flex';
+      const actionCount = macroState.recordingActions.length;
+      overlay.querySelector('.macro-status').textContent = `Recording (${actionCount} actions)`;
+    } else {
+      macroRow.style.display = 'none';
+    }
   }
 
   // Initialize overlay after DOM is ready
@@ -738,6 +959,53 @@
       overlayState.gameName = event.data.gameName;
       updateOverlay();
     }
+
+    // Macro commands
+    if (event.data.type === 'XCLOUD_KBM_MACRO_START_RECORDING') {
+      const { macroId, name } = event.data;
+      macroState.macros[macroId] = { id: macroId, name: name, triggerKey: null, actions: [] };
+      startMacroRecording(macroId, name);
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_MACRO_STOP_RECORDING') {
+      const { triggerKey } = event.data;
+      const macro = stopMacroRecording(triggerKey);
+      // Send back the recorded macro
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_RECORDED',
+        macro: macro
+      }, '*');
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_MACRO_CANCEL_RECORDING') {
+      cancelMacroRecording();
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_MACRO_PLAY') {
+      playMacro(event.data.macroId);
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_MACRO_DELETE') {
+      deleteMacro(event.data.macroId);
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_MACRO_LOAD') {
+      // Load macros from storage
+      if (event.data.macros) {
+        macroState.macros = event.data.macros;
+        console.log('[XCloud KB+M] Macros loaded:', Object.keys(macroState.macros).length);
+      }
+    }
+
+    if (event.data.type === 'XCLOUD_KBM_MACRO_GET_ALL') {
+      // Return all macros
+      window.postMessage({
+        type: 'XCLOUD_KBM_MACRO_LIST',
+        macros: macroState.macros,
+        recording: macroState.recording,
+        playing: macroState.playing
+      }, '*');
+    }
   });
 
   // Request initial config
@@ -753,7 +1021,13 @@
     getMouseState: () => mouseState,
     getKeyState: () => keyState,
     toggleOverlay: toggleOverlay,
-    getOverlayState: () => overlayState
+    getOverlayState: () => overlayState,
+    // Macro debugging
+    getMacros: () => macroState.macros,
+    getMacroState: () => macroState,
+    startRecording: (id, name) => startMacroRecording(id, name),
+    stopRecording: (key) => stopMacroRecording(key),
+    playMacro: (id) => playMacro(id)
   };
 
   console.log('[XCloud KB+M] Virtual gamepad ready!');

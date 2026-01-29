@@ -265,5 +265,57 @@
   },
   "toggleOverlay": {
     "message": "Alternar Superposición"
+  },
+  "macros": {
+    "message": "Macros"
+  },
+  "newMacro": {
+    "message": "Nueva Macro"
+  },
+  "noMacros": {
+    "message": "No hay macros grabadas"
+  },
+  "macroName": {
+    "message": "Nombre de la Macro"
+  },
+  "enterMacroName": {
+    "message": "Ingrese nombre de la macro..."
+  },
+  "startRecording": {
+    "message": "Iniciar Grabación"
+  },
+  "stopRecording": {
+    "message": "Detener y Guardar"
+  },
+  "recordingMacro": {
+    "message": "Grabando... Presione los botones"
+  },
+  "macroInstructions": {
+    "message": "Presione los botones del juego en secuencia. El tiempo se graba."
+  },
+  "assignTriggerKey": {
+    "message": "Presione una tecla para activar esta macro:"
+  },
+  "changeTrigger": {
+    "message": "Cambiar tecla de activación"
+  },
+  "playMacro": {
+    "message": "Reproducir macro"
+  },
+  "deleteMacro": {
+    "message": "Eliminar macro"
+  },
+  "deleteMacroConfirm": {
+    "message": "¿Eliminar macro \"$MACRO_NAME$\"?",
+    "placeholders": { "macro_name": { "content": "$1" } }
+  },
+  "macroSaved": {
+    "message": "Macro guardada"
+  },
+  "macroDeleted": {
+    "message": "Macro eliminada"
+  },
+  "macroPlaying": {
+    "message": "Reproduciendo macro"
   }
 }

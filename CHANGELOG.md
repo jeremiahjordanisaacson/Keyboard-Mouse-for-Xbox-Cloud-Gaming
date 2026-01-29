@@ -9,8 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Planned
 - Turbo mode for rapid-fire buttons
-- Macro recording
 - Analog WASD (gradual stick input)
+
+---
+
+## [1.7.0] - 2025-01-28
+
+### Added
+- **Macro recording** - Record button sequences and replay with one key
+  - Record any sequence of controller button presses
+  - Timing between button presses is preserved
+  - Assign any keyboard key as trigger
+  - Macros stored per-profile
+- **Macro UI in popup** - Full macro management
+  - Create new macros with custom names
+  - Visual recording indicator with step counter
+  - Play, delete, and reassign trigger keys
+  - List of all saved macros with trigger key display
+- **Recording overlay indicator** - Pulsing red dot shows when recording
+- Localization for macros in all supported languages
 
 ---
 
@@ -208,6 +225,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.7.0 | 2025-01-28 | Macro recording |
 | 1.6.0 | 2025-01-28 | On-screen overlay, profile switch fix |
 | 1.5.0 | 2025-01-28 | Sensitivity curves, deadzone, import/export |
 | 1.4.1 | 2025-01-28 | Fix release packaging |
@@ -222,7 +240,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.0...v1.4.1
