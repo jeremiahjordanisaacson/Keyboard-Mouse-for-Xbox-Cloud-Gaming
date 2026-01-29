@@ -6,6 +6,7 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 
 ![License](https://img.shields.io/badge/license-MIT-green)
 [![Latest Release](https://img.shields.io/github/v/release/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming)](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest)
+[![Changelog](https://img.shields.io/badge/changelog-view-blue)](CHANGELOG.md)
 
 ## ✨ Features
 
