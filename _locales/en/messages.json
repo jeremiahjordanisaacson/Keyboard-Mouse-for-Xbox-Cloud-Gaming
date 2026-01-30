@@ -413,6 +413,14 @@
     "message": "Toggle Overlay",
     "description": "Toggle overlay hotkey"
   },
+  "reportBug": {
+    "message": "Report a Bug",
+    "description": "Bug report button text"
+  },
+  "reportBugTooltip": {
+    "message": "Report a bug or request a feature",
+    "description": "Bug report button tooltip"
+  },
   "macros": {
     "message": "Macros",
     "description": "Macros section header"

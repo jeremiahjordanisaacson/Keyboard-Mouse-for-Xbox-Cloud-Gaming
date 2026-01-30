@@ -729,6 +729,35 @@
       color: #c0c0c0;
     }
 
+    /* Bug report button */
+    .bug-report-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: #2d2d2d;
+      border: 1px solid #3d3d3d;
+      border-radius: 6px;
+      color: #a0a0a0;
+      text-decoration: none;
+      font-size: 12px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .bug-report-link:hover,
+    .bug-report-link:focus {
+      background: #3d3d3d;
+      color: #e0e0e0;
+      border-color: #4fbf4f;
+      outline: none;
+    }
+
+    .bug-report-link .bug-icon {
+      font-size: 14px;
+    }
+
     /* High contrast mode support */
     @media (prefers-contrast: high) {
       body {
@@ -1179,6 +1208,16 @@
         <kbd>Alt+Shift+O</kbd>
       </div>
     </div>
+
+    <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/issues/new"
+       class="bug-report-link"
+       target="_blank"
+       rel="noopener noreferrer"
+       data-i18n-title="reportBugTooltip"
+       title="Report a bug or request a feature">
+      <span class="bug-icon" aria-hidden="true">🐛</span>
+      <span data-i18n="reportBug">Report a Bug</span>
+    </a>
   </main>
 
   <!-- New Profile Modal -->
