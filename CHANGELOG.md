@@ -13,6 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.7.1] - 2026-01-30
+
+### Added
+- **Bug report button** - Easy access to report issues or request features
+  - Links directly to GitHub issues page
+  - Located at bottom of popup UI
+
+---
+
 ## [1.7.0] - 2025-01-28
 
 ### Added
@@ -225,6 +234,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.7.1 | 2026-01-30 | Bug report button |
 | 1.7.0 | 2025-01-28 | Macro recording |
 | 1.6.0 | 2025-01-28 | On-screen overlay, profile switch fix |
 | 1.5.0 | 2025-01-28 | Sensitivity curves, deadzone, import/export |
@@ -240,7 +250,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.1...HEAD
+[1.7.1]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.0...v1.7.1
 [1.7.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.4.1...v1.5.0
