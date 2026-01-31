@@ -1,33 +1,51 @@
 // Background service worker - handles global commands and badge updates
 
-// Default profile structure
+// Default profile structure (using arrays for multi-key support)
 const DEFAULT_PROFILE = {
   name: 'Default',
   keyBindings: {
-    moveForward: 'KeyW',
-    moveBackward: 'KeyS',
-    moveLeft: 'KeyA',
-    moveRight: 'KeyD',
-    actionA: 'Space',
-    actionB: 'KeyE',
-    actionX: 'KeyQ',
-    actionY: 'KeyR',
-    leftBumper: 'KeyF',
-    rightBumper: 'KeyC',
-    leftTrigger: 'ShiftLeft',
-    rightTrigger: 'MouseRight',
-    dpadUp: 'Digit1',
-    dpadRight: 'Digit2',
-    dpadDown: 'Digit3',
-    dpadLeft: 'Digit4',
-    view: 'Tab',
-    menu: 'Escape',
-    leftStickClick: 'KeyV',
-    rightStickClick: 'MouseMiddle'
+    moveForward: ['KeyW'],
+    moveBackward: ['KeyS'],
+    moveLeft: ['KeyA'],
+    moveRight: ['KeyD'],
+    actionA: ['Space'],
+    actionB: ['KeyE'],
+    actionX: ['KeyQ'],
+    actionY: ['KeyR'],
+    leftBumper: ['KeyF'],
+    rightBumper: ['KeyC'],
+    leftTrigger: ['ShiftLeft'],
+    rightTrigger: ['MouseRight'],
+    dpadUp: ['Digit1'],
+    dpadRight: ['Digit2'],
+    dpadDown: ['Digit3'],
+    dpadLeft: ['Digit4'],
+    view: ['Tab'],
+    menu: ['Escape'],
+    leftStickClick: ['KeyV'],
+    rightStickClick: ['MouseMiddle']
   },
   mouseSensitivity: 5,
-  invertY: false
+  invertY: false,
+  sensitivityCurve: 'linear',
+  deadzone: 5
 };
+
+// Normalize binding to array format (backwards compatibility)
+function normalizeBinding(binding) {
+  if (Array.isArray(binding)) return binding;
+  if (typeof binding === 'string') return [binding];
+  return [];
+}
+
+// Normalize all bindings in an object
+function normalizeBindings(bindings) {
+  const result = {};
+  for (const [action, val] of Object.entries(bindings)) {
+    result[action] = normalizeBinding(val);
+  }
+  return result;
+}
 
 // Initialize storage with defaults if needed
 chrome.runtime.onInstalled.addListener(async () => {
@@ -302,9 +320,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       profiles[id] = {
         id,
         name: request.name,
-        keyBindings: { ...DEFAULT_PROFILE.keyBindings },
+        keyBindings: normalizeBindings({ ...DEFAULT_PROFILE.keyBindings }),
         mouseSensitivity: 5,
-        invertY: false
+        invertY: false,
+        sensitivityCurve: 'linear',
+        deadzone: 5
       };
       chrome.storage.sync.set({ profiles }, () => {
         sendResponse({ success: true, profileId: id });
@@ -377,5 +397,80 @@ chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'sync' && changes.config) {
     const newConfig = changes.config.newValue || {};
     updateBadge(newConfig.enabled !== false);
+  }
+});
+
+// ============================================
+// EXTERNAL MESSAGE HANDLER (for preset library website)
+// ============================================
+chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) => {
+  // Check if extension is installed
+  if (request.type === 'CHECK_INSTALLED') {
+    sendResponse({
+      installed: true,
+      version: chrome.runtime.getManifest().version
+    });
+    return false;
+  }
+
+  // Install a preset from the website
+  if (request.type === 'INSTALL_PRESET') {
+    const preset = request.preset;
+    if (!preset || !preset.name || !preset.profile) {
+      sendResponse({ success: false, error: 'Invalid preset data' });
+      return false;
+    }
+
+    chrome.storage.sync.get(['profiles'], async (data) => {
+      const profiles = data.profiles || {};
+      const id = 'preset_' + Date.now();
+
+      // Normalize bindings from the preset
+      const presetBindings = preset.profile.keyBindings || {};
+      const newProfile = {
+        id,
+        name: preset.name,
+        keyBindings: normalizeBindings({ ...DEFAULT_PROFILE.keyBindings, ...presetBindings }),
+        mouseSensitivity: preset.profile.mouseSensitivity || 5,
+        invertY: preset.profile.invertY || false,
+        sensitivityCurve: preset.profile.sensitivityCurve || 'linear',
+        deadzone: preset.profile.deadzone || 5
+      };
+
+      profiles[id] = newProfile;
+
+      // Save and switch to the new profile
+      await chrome.storage.sync.set({ profiles, activeProfileId: id });
+
+      // Notify content scripts about the profile change
+      const tabs = await chrome.tabs.query({ url: ['*://www.xbox.com/*play*', '*://xbox.com/*play*'] });
+      for (const tab of tabs) {
+        try {
+          await chrome.tabs.sendMessage(tab.id, {
+            type: 'PROFILE_CHANGED',
+            profile: newProfile
+          });
+        } catch (e) {}
+      }
+
+      // Flash badge
+      flashBadge(newProfile.name.substring(0, 3).toUpperCase());
+
+      console.log(`[XCloud KB+M] Preset installed: ${preset.name}`);
+      sendResponse({ success: true, profileId: id });
+    });
+
+    return true; // Keep channel open for async response
+  }
+
+  // Get list of installed profiles (for website to check)
+  if (request.type === 'GET_PROFILES') {
+    chrome.storage.sync.get(['profiles', 'activeProfileId'], (data) => {
+      sendResponse({
+        profiles: Object.values(data.profiles || {}).map(p => ({ id: p.id, name: p.name })),
+        activeProfileId: data.activeProfileId
+      });
+    });
+    return true;
   }
 });

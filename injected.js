@@ -16,28 +16,52 @@
     sensitivityCurve: 'linear',
     deadzone: 5,
     keyBindings: {
-      moveForward: 'KeyW',
-      moveBackward: 'KeyS',
-      moveLeft: 'KeyA',
-      moveRight: 'KeyD',
-      actionA: 'Space',
-      actionB: 'KeyE',
-      actionX: 'KeyQ',
-      actionY: 'KeyR',
-      leftBumper: 'KeyF',
-      rightBumper: 'KeyC',
-      leftTrigger: 'ShiftLeft',
-      rightTrigger: 'MouseRight',
-      dpadUp: 'Digit1',
-      dpadRight: 'Digit2',
-      dpadDown: 'Digit3',
-      dpadLeft: 'Digit4',
-      view: 'Tab',
-      menu: 'Escape',
-      leftStickClick: 'KeyV',
-      rightStickClick: 'MouseMiddle'
+      moveForward: ['KeyW'],
+      moveBackward: ['KeyS'],
+      moveLeft: ['KeyA'],
+      moveRight: ['KeyD'],
+      actionA: ['Space'],
+      actionB: ['KeyE'],
+      actionX: ['KeyQ'],
+      actionY: ['KeyR'],
+      leftBumper: ['KeyF'],
+      rightBumper: ['KeyC'],
+      leftTrigger: ['ShiftLeft'],
+      rightTrigger: ['MouseRight'],
+      dpadUp: ['Digit1'],
+      dpadRight: ['Digit2'],
+      dpadDown: ['Digit3'],
+      dpadLeft: ['Digit4'],
+      view: ['Tab'],
+      menu: ['Escape'],
+      leftStickClick: ['KeyV'],
+      rightStickClick: ['MouseMiddle']
     }
   };
+
+  // ============================================
+  // MULTI-KEY BINDING HELPERS
+  // ============================================
+  // Normalize binding to array format (backwards compatibility)
+  function normalizeBinding(binding) {
+    if (Array.isArray(binding)) return binding;
+    if (typeof binding === 'string') return [binding];
+    return [];
+  }
+
+  // Check if a key is bound to any action
+  function isKeyBound(bindings, key) {
+    return Object.values(bindings).some(val => {
+      const keys = normalizeBinding(val);
+      return keys.includes(key);
+    });
+  }
+
+  // Check if any key in a binding is pressed
+  function isBindingPressed(binding, keyState) {
+    const keys = normalizeBinding(binding);
+    return keys.some(k => keyState[k]);
+  }
 
   // ============================================
   // SENSITIVITY CURVES
@@ -363,7 +387,7 @@
     }
 
     // Check if this key is bound
-    const isBound = Object.values(bindings).includes(key);
+    const isBound = isKeyBound(bindings, key);
     if (isBound && !isTypingInInput(e.target)) {
       e.preventDefault();
       e.stopPropagation();
@@ -375,8 +399,9 @@
     // Record macro action if recording
     if (macroState.recording) {
       // Find which action this key is bound to
-      for (const [action, boundKey] of Object.entries(bindings)) {
-        if (boundKey === key && ACTION_TO_BUTTON[action]) {
+      for (const [action, boundKeys] of Object.entries(bindings)) {
+        const keys = normalizeBinding(boundKeys);
+        if (keys.includes(key) && ACTION_TO_BUTTON[action]) {
           recordMacroAction('press', ACTION_TO_BUTTON[action]);
           break;
         }
@@ -390,7 +415,7 @@
     const key = e.code;
     const bindings = config.keyBindings;
 
-    const isBound = Object.values(bindings).includes(key);
+    const isBound = isKeyBound(bindings, key);
     if (isBound && !isTypingInInput(e.target)) {
       e.preventDefault();
       e.stopPropagation();
@@ -401,8 +426,9 @@
     // Record macro action if recording
     if (macroState.recording) {
       // Find which action this key is bound to
-      for (const [action, boundKey] of Object.entries(bindings)) {
-        if (boundKey === key && ACTION_TO_BUTTON[action]) {
+      for (const [action, boundKeys] of Object.entries(bindings)) {
+        const keys = normalizeBinding(boundKeys);
+        if (keys.includes(key) && ACTION_TO_BUTTON[action]) {
           recordMacroAction('release', ACTION_TO_BUTTON[action]);
           break;
         }
@@ -516,8 +542,11 @@
 
   // Prevent context menu
   function handleContextMenu(e) {
-    if (config.enabled && config.keyBindings.rightTrigger === 'MouseRight') {
-      e.preventDefault();
+    if (config.enabled) {
+      const rtKeys = normalizeBinding(config.keyBindings.rightTrigger);
+      if (rtKeys.includes('MouseRight')) {
+        e.preventDefault();
+      }
     }
   }
 
@@ -532,36 +561,39 @@
 
     const bindings = config.keyBindings;
 
+    // Helper to check if any bound key is pressed
+    const isPressed = (binding) => isBindingPressed(binding, keyState);
+
     // Update face buttons
-    setButton(BUTTONS.A, keyState[bindings.actionA]);
-    setButton(BUTTONS.B, keyState[bindings.actionB]);
-    setButton(BUTTONS.X, keyState[bindings.actionX]);
-    setButton(BUTTONS.Y, keyState[bindings.actionY]);
+    setButton(BUTTONS.A, isPressed(bindings.actionA));
+    setButton(BUTTONS.B, isPressed(bindings.actionB));
+    setButton(BUTTONS.X, isPressed(bindings.actionX));
+    setButton(BUTTONS.Y, isPressed(bindings.actionY));
 
     // Update bumpers and triggers
-    setButton(BUTTONS.LB, keyState[bindings.leftBumper]);
-    setButton(BUTTONS.RB, keyState[bindings.rightBumper]);
-    setButton(BUTTONS.LT, keyState[bindings.leftTrigger]);
-    setButton(BUTTONS.RT, keyState[bindings.rightTrigger]);
+    setButton(BUTTONS.LB, isPressed(bindings.leftBumper));
+    setButton(BUTTONS.RB, isPressed(bindings.rightBumper));
+    setButton(BUTTONS.LT, isPressed(bindings.leftTrigger));
+    setButton(BUTTONS.RT, isPressed(bindings.rightTrigger));
 
     // Update special buttons
-    setButton(BUTTONS.VIEW, keyState[bindings.view]);
-    setButton(BUTTONS.MENU, keyState[bindings.menu]);
-    setButton(BUTTONS.LS, keyState[bindings.leftStickClick]);
-    setButton(BUTTONS.RS, keyState[bindings.rightStickClick]);
+    setButton(BUTTONS.VIEW, isPressed(bindings.view));
+    setButton(BUTTONS.MENU, isPressed(bindings.menu));
+    setButton(BUTTONS.LS, isPressed(bindings.leftStickClick));
+    setButton(BUTTONS.RS, isPressed(bindings.rightStickClick));
 
     // Update D-pad
-    setButton(BUTTONS.DPAD_UP, keyState[bindings.dpadUp]);
-    setButton(BUTTONS.DPAD_DOWN, keyState[bindings.dpadDown]);
-    setButton(BUTTONS.DPAD_LEFT, keyState[bindings.dpadLeft]);
-    setButton(BUTTONS.DPAD_RIGHT, keyState[bindings.dpadRight]);
+    setButton(BUTTONS.DPAD_UP, isPressed(bindings.dpadUp));
+    setButton(BUTTONS.DPAD_DOWN, isPressed(bindings.dpadDown));
+    setButton(BUTTONS.DPAD_LEFT, isPressed(bindings.dpadLeft));
+    setButton(BUTTONS.DPAD_RIGHT, isPressed(bindings.dpadRight));
 
-    // Update left stick (WASD)
+    // Update left stick (WASD) - check all bound keys
     let leftX = 0, leftY = 0;
-    if (keyState[bindings.moveLeft]) leftX -= 1;
-    if (keyState[bindings.moveRight]) leftX += 1;
-    if (keyState[bindings.moveForward]) leftY -= 1;
-    if (keyState[bindings.moveBackward]) leftY += 1;
+    if (isPressed(bindings.moveLeft)) leftX -= 1;
+    if (isPressed(bindings.moveRight)) leftX += 1;
+    if (isPressed(bindings.moveForward)) leftY -= 1;
+    if (isPressed(bindings.moveBackward)) leftY += 1;
 
     // Normalize diagonal movement
     const magnitude = Math.sqrt(leftX * leftX + leftY * leftY);

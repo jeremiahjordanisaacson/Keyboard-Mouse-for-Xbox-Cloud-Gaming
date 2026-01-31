@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preset Library - Xbox Cloud Gaming KB+M</title>
+  <meta name="description" content="Browse and install community-created keyboard and mouse presets for Xbox Cloud Gaming games.">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="presets-page">
+  <nav class="nav">
+    <div class="nav-content">
+      <a href="../" class="nav-logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="6" fill="#107c10"/>
+          <path d="M8 12h4v8H8v-8zm6 0h4v8h-4v-8zm6 0h4v8h-4v-8z" fill="white"/>
+        </svg>
+        <span>Xbox Cloud KB+M</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="../#features">Features</a></li>
+        <li><a href="./" class="active">Preset Library</a></li>
+        <li><a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="presets-header">
+      <h1>Preset Library</h1>
+      <p>Community-created keyboard and mouse profiles for popular games. Click install to add directly to your extension.</p>
+    </header>
+
+    <div id="extensionNotice" class="container" style="display: none;">
+      <div class="install-notice">
+        <p>Install the extension to enable one-click preset installation.</p>
+        <a href="https://chrome.google.com/webstore/detail/TODO" class="btn btn-primary btn-small" target="_blank" rel="noopener">
+          Install Extension
+        </a>
+      </div>
+    </div>
+
+    <div class="presets-toolbar">
+      <div class="toolbar-row">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search presets..." aria-label="Search presets">
+        </div>
+        <div class="filter-buttons" id="filterButtons">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="fps">FPS</button>
+          <button class="filter-btn" data-category="racing">Racing</button>
+          <button class="filter-btn" data-category="rpg">RPG</button>
+          <button class="filter-btn" data-category="sports">Sports</button>
+          <button class="filter-btn" data-category="universal">Universal</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="presetsGrid" class="presets-grid">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading presets...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Preset Detail Modal -->
+  <div class="modal-overlay" id="presetModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle">Preset Name</h2>
+          <div class="preset-meta">
+            <span class="preset-author" id="modalAuthor">by Author</span>
+            <span class="preset-category" id="modalCategory">fps</span>
+          </div>
+        </div>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>Description</h3>
+          <p id="modalDescription">Description goes here.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Settings</h3>
+          <table class="bindings-table">
+            <tbody id="modalSettings">
+              <tr>
+                <td>Mouse Sensitivity</td>
+                <td id="modalSensitivity">5</td>
+              </tr>
+              <tr>
+                <td>Response Curve</td>
+                <td id="modalCurve">Linear</td>
+              </tr>
+              <tr>
+                <td>Deadzone</td>
+                <td id="modalDeadzone">5%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-section">
+          <h3>Key Bindings</h3>
+          <table class="bindings-table">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Keys</th>
+              </tr>
+            </thead>
+            <tbody id="modalBindings">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="modalInstallBtn">Install Preset</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/issues" target="_blank" rel="noopener">Contribute a Preset</a>
+        <a href="../">Home</a>
+      </div>
+      <p>Open-source project. Not affiliated with Microsoft or Xbox.</p>
+    </div>
+  </footer>
+
+  <script src="../js/presets.js"></script>
+</body>
+</html>

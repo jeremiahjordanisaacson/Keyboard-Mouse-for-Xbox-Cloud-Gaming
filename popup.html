@@ -375,9 +375,66 @@
       animation: pulse 1s infinite;
     }
 
+    .key-bind-btn.listening .listening-text {
+      color: #fff;
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.7; }
+    }
+
+    /* Multi-key binding chips */
+    .key-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #3d3d3d;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin: 1px;
+      font-size: 10px;
+      color: #4fbf4f;
+      white-space: nowrap;
+    }
+
+    .key-chip .remove-key {
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      padding: 0 2px;
+      margin-left: 2px;
+      transition: color 0.15s;
+    }
+
+    .key-chip .remove-key:hover {
+      color: #ff6b6b;
+    }
+
+    .add-key {
+      color: #4fbf4f;
+      cursor: pointer;
+      padding: 2px 6px;
+      font-size: 12px;
+      font-weight: bold;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+    }
+
+    .add-key:hover {
+      opacity: 1;
+    }
+
+    .key-bind-btn {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 2px;
+      min-height: 28px;
     }
 
     /* Small buttons (reset, delete, etc.) */

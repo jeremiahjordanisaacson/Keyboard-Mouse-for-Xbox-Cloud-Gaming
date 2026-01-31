@@ -83,35 +83,59 @@ document.addEventListener('DOMContentLoaded', function() {
   const cancelTriggerBtn = document.getElementById('cancelTriggerBtn');
   const triggerKeyDisplay = document.getElementById('triggerKeyDisplay');
 
-  // Default key bindings
+  // Default key bindings (now arrays for multi-key support)
   const DEFAULT_BINDINGS = {
-    moveForward: 'KeyW',
-    moveBackward: 'KeyS',
-    moveLeft: 'KeyA',
-    moveRight: 'KeyD',
-    actionA: 'Space',
-    actionB: 'KeyE',
-    actionX: 'KeyQ',
-    actionY: 'KeyR',
-    leftBumper: 'KeyF',
-    rightBumper: 'KeyC',
-    leftTrigger: 'ShiftLeft',
-    rightTrigger: 'MouseRight',
-    dpadUp: 'Digit1',
-    dpadRight: 'Digit2',
-    dpadDown: 'Digit3',
-    dpadLeft: 'Digit4',
-    view: 'Tab',
-    menu: 'Escape',
-    leftStickClick: 'KeyV',
-    rightStickClick: 'MouseMiddle'
+    moveForward: ['KeyW'],
+    moveBackward: ['KeyS'],
+    moveLeft: ['KeyA'],
+    moveRight: ['KeyD'],
+    actionA: ['Space'],
+    actionB: ['KeyE'],
+    actionX: ['KeyQ'],
+    actionY: ['KeyR'],
+    leftBumper: ['KeyF'],
+    rightBumper: ['KeyC'],
+    leftTrigger: ['ShiftLeft'],
+    rightTrigger: ['MouseRight'],
+    dpadUp: ['Digit1'],
+    dpadRight: ['Digit2'],
+    dpadDown: ['Digit3'],
+    dpadLeft: ['Digit4'],
+    view: ['Tab'],
+    menu: ['Escape'],
+    leftStickClick: ['KeyV'],
+    rightStickClick: ['MouseMiddle']
   };
+
+  // Normalize binding to array format (backwards compatibility)
+  function normalizeBinding(binding) {
+    if (Array.isArray(binding)) return binding;
+    if (typeof binding === 'string') return [binding];
+    return [];
+  }
+
+  // Normalize all bindings in an object
+  function normalizeBindings(bindings) {
+    const result = {};
+    for (const [action, val] of Object.entries(bindings)) {
+      result[action] = normalizeBinding(val);
+    }
+    return result;
+  }
+
+  // Escape HTML to prevent XSS
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
 
   // State
   let profiles = {};
   let activeProfileId = 'default';
-  let currentBindings = { ...DEFAULT_BINDINGS };
+  let currentBindings = normalizeBindings({ ...DEFAULT_BINDINGS });
   let listeningButton = null;
+  let listeningMode = null; // 'replace' or 'add'
   let gameProfiles = {};
   let macros = {};
   let currentMacroId = null;
@@ -168,10 +192,47 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateBindingDisplays() {
     keyBindButtons.forEach(btn => {
       const action = btn.dataset.action;
-      if (currentBindings[action]) {
-        btn.textContent = keyCodeToDisplayName(currentBindings[action]);
+      const binding = currentBindings[action];
+      if (binding) {
+        const keys = normalizeBinding(binding);
+        if (keys.length === 0) {
+          btn.innerHTML = '<span class="add-key">+ Add</span>';
+        } else {
+          btn.innerHTML = keys.map(k =>
+            `<span class="key-chip">${escapeHtml(keyCodeToDisplayName(k))}<button type="button" class="remove-key" data-key="${escapeHtml(k)}" data-action="${action}" title="Remove this key">&times;</button></span>`
+          ).join('') + '<span class="add-key" data-action="' + action + '" title="Add another key">+</span>';
+        }
       }
     });
+
+    // Add event listeners for remove buttons
+    document.querySelectorAll('.key-bind-btn .remove-key').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const action = this.dataset.action;
+        const keyToRemove = this.dataset.key;
+        removeKeyFromBinding(action, keyToRemove);
+      });
+    });
+
+    // Add event listeners for add buttons
+    document.querySelectorAll('.key-bind-btn .add-key').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const action = this.closest('.key-bind-btn').dataset.action;
+        startListening(this.closest('.key-bind-btn'), 'add');
+      });
+    });
+  }
+
+  // Remove a specific key from a binding
+  function removeKeyFromBinding(action, keyToRemove) {
+    const keys = normalizeBinding(currentBindings[action]);
+    const newKeys = keys.filter(k => k !== keyToRemove);
+    currentBindings[action] = newKeys.length > 0 ? newKeys : [];
+    updateBindingDisplays();
+    saveCurrentProfile();
+    announceToScreenReader(`Removed ${keyCodeToDisplayName(keyToRemove)} from ${getMessage(action) || action}`);
   }
 
   // Update profile dropdown
@@ -237,7 +298,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function loadProfileIntoUI(profile) {
     if (!profile) return;
 
-    currentBindings = { ...DEFAULT_BINDINGS, ...profile.keyBindings };
+    // Normalize bindings to array format for backwards compatibility
+    const profileBindings = profile.keyBindings || {};
+    currentBindings = normalizeBindings({ ...DEFAULT_BINDINGS, ...profileBindings });
     updateBindingDisplays();
 
     if (profile.mouseSensitivity !== undefined) {
@@ -594,12 +657,13 @@ document.addEventListener('DOMContentLoaded', function() {
           throw new Error('Invalid profile name');
         }
 
-        // Create new profile with imported data
+        // Create new profile with imported data (normalize bindings for backwards compatibility)
         const profileId = 'imported_' + Date.now();
+        const importedBindings = importData.keyBindings || {};
         const newProfile = {
           id: profileId,
           name: importData.name,
-          keyBindings: { ...DEFAULT_BINDINGS, ...(importData.keyBindings || {}) },
+          keyBindings: normalizeBindings({ ...DEFAULT_BINDINGS, ...importedBindings }),
           mouseSensitivity: importData.mouseSensitivity || 5,
           invertY: importData.invertY || false,
           sensitivityCurve: importData.sensitivityCurve || 'linear',
@@ -666,15 +730,16 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Key binding functionality
-  function startListening(button) {
+  function startListening(button, mode = 'replace') {
     if (listeningButton) {
       listeningButton.classList.remove('listening');
-      listeningButton.textContent = keyCodeToDisplayName(currentBindings[listeningButton.dataset.action]);
+      updateBindingDisplays();
     }
 
     listeningButton = button;
+    listeningMode = mode;
     button.classList.add('listening');
-    button.textContent = getMessage('pressKey');
+    button.innerHTML = `<span class="listening-text">${getMessage('pressKey')}</span>`;
     button.setAttribute('aria-label', getMessage('listeningForKey'));
     announceToScreenReader(getMessage('pressKeyOrMouse'));
   }
@@ -686,23 +751,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const actionName = getMessage(action) || action;
 
     if (newCode) {
-      currentBindings[action] = newCode;
+      const currentKeys = normalizeBinding(currentBindings[action]);
+
+      if (listeningMode === 'add') {
+        // Add key if not already bound to this action
+        if (!currentKeys.includes(newCode)) {
+          currentBindings[action] = [...currentKeys, newCode];
+          announceToScreenReader(`Added ${keyCodeToDisplayName(newCode)} to ${actionName}`);
+        }
+      } else {
+        // Replace mode - set only this key
+        currentBindings[action] = [newCode];
+        announceToScreenReader(getMessage('boundTo', [actionName, keyCodeToDisplayName(newCode)]));
+      }
       saveCurrentProfile();
-      announceToScreenReader(getMessage('boundTo', [actionName, keyCodeToDisplayName(newCode)]));
     }
 
     listeningButton.classList.remove('listening');
-    listeningButton.textContent = keyCodeToDisplayName(currentBindings[action]);
-    listeningButton.setAttribute('aria-label', getMessage('changeBinding', [actionName, keyCodeToDisplayName(currentBindings[action])]));
     listeningButton = null;
+    listeningMode = null;
+    updateBindingDisplays();
   }
 
   keyBindButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+      // Don't start listening if clicking on remove or add buttons (handled separately)
+      if (e.target.classList.contains('remove-key') || e.target.classList.contains('add-key')) {
+        return;
+      }
       if (listeningButton === this) {
         stopListening();
       } else {
-        startListening(this);
+        // Clicking on a key-chip or the button starts replace mode
+        startListening(this, 'replace');
       }
     });
   });
@@ -750,7 +831,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Reset bindings
   resetBindingsBtn.addEventListener('click', function() {
-    currentBindings = { ...DEFAULT_BINDINGS };
+    currentBindings = normalizeBindings({ ...DEFAULT_BINDINGS });
     updateBindingDisplays();
     saveCurrentProfile();
     announceToScreenReader(getMessage('bindingsReset'));
@@ -857,13 +938,6 @@ document.addEventListener('DOMContentLoaded', function() {
         reassignTriggerKey(macroId, this);
       });
     });
-  }
-
-  // Escape HTML to prevent XSS
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
   }
 
   // Load macros from storage
