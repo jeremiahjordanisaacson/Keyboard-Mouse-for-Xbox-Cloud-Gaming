@@ -438,23 +438,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Event listeners
   enabledCheckbox.addEventListener('change', function() {
-    const config = { enabled: this.checked };
-    chrome.storage.sync.set({ config: { ...config, mouseSensitivity: parseInt(sensitivitySlider.value), invertY: invertYCheckbox.checked } });
+    const enabledValue = this.checked;
+
+    // Read existing config first to preserve all values
+    chrome.storage.sync.get(['config'], function(result) {
+      const config = result.config || {};
+      config.enabled = enabledValue;
+      config.mouseSensitivity = parseInt(sensitivitySlider.value);
+      config.invertY = invertYCheckbox.checked;
+      config.sensitivityCurve = sensitivityCurveSelect ? sensitivityCurveSelect.value : (config.sensitivityCurve || 'linear');
+      config.deadzone = deadzoneSlider ? parseInt(deadzoneSlider.value) : (config.deadzone || 5);
+      // Preserve showOverlay if it exists
+      if (config.showOverlay === undefined && showOverlayCheckbox) {
+        config.showOverlay = showOverlayCheckbox.checked;
+      }
+      chrome.storage.sync.set({ config });
+    });
 
     // Update badge
-    chrome.runtime.sendMessage({ type: 'UPDATE_BADGE', enabled: this.checked });
+    chrome.runtime.sendMessage({ type: 'UPDATE_BADGE', enabled: enabledValue });
 
     // Notify content script
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
       if (tabs[0]?.id) {
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'TOGGLE_CONTROLS',
-          enabled: enabledCheckbox.checked
+          enabled: enabledValue
         }).catch(() => {});
       }
     });
 
-    announceToScreenReader(this.checked ? getMessage('controlsEnabled') : getMessage('controlsDisabled'));
+    announceToScreenReader(enabledValue ? getMessage('controlsEnabled') : getMessage('controlsDisabled'));
   });
 
   sensitivitySlider.addEventListener('input', function() {
@@ -475,15 +489,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Overlay toggle
   if (showOverlayCheckbox) {
     showOverlayCheckbox.addEventListener('change', function() {
-      const config = { showOverlay: this.checked };
-      chrome.storage.sync.set({ config: { ...config } });
+      const showOverlayValue = this.checked;
+
+      // Read existing config first to avoid overwriting other values
+      chrome.storage.sync.get(['config'], function(result) {
+        const config = result.config || {};
+        config.showOverlay = showOverlayValue;
+        chrome.storage.sync.set({ config });
+      });
 
       // Notify content script to toggle overlay
       chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         if (tabs[0]?.id) {
           chrome.tabs.sendMessage(tabs[0].id, {
             type: 'CONFIG_UPDATE',
-            config: { showOverlay: showOverlayCheckbox.checked }
+            config: { showOverlay: showOverlayValue }
           }).catch(() => {});
         }
       });

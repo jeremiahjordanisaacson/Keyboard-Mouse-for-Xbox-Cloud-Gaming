@@ -301,6 +301,22 @@ a:hover {
   height: 48px;
 }
 
+.browser-item i {
+  font-size: 48px;
+}
+
+.browser-item i.fa-chrome {
+  color: #4285F4;
+}
+
+.browser-item i.fa-edge {
+  color: #0078D4;
+}
+
+.browser-item i.fa-firefox-browser {
+  color: #FF7139;
+}
+
 .browser-item span {
   font-size: 14px;
   color: var(--text-secondary);

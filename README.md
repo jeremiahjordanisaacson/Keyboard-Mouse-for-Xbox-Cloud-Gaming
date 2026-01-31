@@ -142,13 +142,6 @@ Safari requires building the extension with Xcode. See the detailed [Safari buil
 | ⚠️ Build Required | Safari (*requires Xcode on macOS - see [build guide](safari/README.md)) |
 | ❌ Not Supported | iOS/iPadOS (Apple restrictions), Internet Explorer, Edge Legacy |
 
-### From Browser Stores
-
-Coming soon to:
-- Chrome Web Store
-- Edge Add-ons
-- Firefox Add-ons
-
 ## 🎮 How to Use
 
 1. Install the extension
