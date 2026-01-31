@@ -376,16 +376,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Also save to legacy format for backward compatibility
-    const config = {
-      enabled: enabledCheckbox.checked,
-      mouseSensitivity: parseInt(sensitivitySlider.value),
-      invertY: invertYCheckbox.checked,
-      sensitivityCurve: sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear',
-      deadzone: deadzoneSlider ? parseInt(deadzoneSlider.value) : 5
-    };
+    // Read existing config first to preserve showOverlay and other values
+    chrome.storage.sync.get(['config'], function(result) {
+      const config = result.config || {};
+      config.enabled = enabledCheckbox.checked;
+      config.mouseSensitivity = parseInt(sensitivitySlider.value);
+      config.invertY = invertYCheckbox.checked;
+      config.sensitivityCurve = sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear';
+      config.deadzone = deadzoneSlider ? parseInt(deadzoneSlider.value) : 5;
+      // Preserve showOverlay
+      if (config.showOverlay === undefined && showOverlayCheckbox) {
+        config.showOverlay = showOverlayCheckbox.checked;
+      }
 
-    chrome.storage.sync.set({ config, keyBindings: currentBindings }, function() {
-      console.log('Config saved');
+      chrome.storage.sync.set({ config, keyBindings: currentBindings }, function() {
+        console.log('Config saved');
+      });
     });
 
     // Notify content script
