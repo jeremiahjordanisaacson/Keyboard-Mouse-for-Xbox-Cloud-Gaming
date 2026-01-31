@@ -13,6 +13,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.8.0] - 2026-01-30
+
+### Added
+- **Multi-key bindings** - Bind multiple keys to the same action
+  - Click + button to add additional keys
+  - Click × on any key chip to remove it
+  - Clicking the button directly replaces all bindings
+  - Backwards compatible with single-key format
+- **Community preset library** - Ready-made profiles for popular games
+  - 15 game presets: Halo Infinite, Forza Horizon 5, Starfield, Call of Duty, Destiny 2, and more
+  - Search and filter by category (FPS, Racing, RPG, Adventure, Sports, Universal)
+  - One-click install directly into extension
+- **GitHub Pages website** - New landing page and preset browser
+  - Landing page with features, how-it-works, browser support
+  - Preset browser with search, filtering, and detail modals
+  - Full i18n support (50+ languages)
+  - Dark theme matching extension UI
+- **External messaging API** - Allows website to install presets via `chrome.runtime.onMessageExternal`
+
+### Fixed
+- **Critical: Settings not saving properly** - Multiple config persistence bugs
+  - Overlay toggle no longer overwrites other settings (#5)
+  - Enabled toggle now preserves all config values (#6)
+  - Changing sensitivity/curve/deadzone no longer loses overlay setting (#8)
+- Website: Firefox now correctly shown as supported browser (#1)
+- Website: Download links now point to GitHub releases (#2)
+- Website: Nav logo link fixed for GitHub Pages subdirectory (#3)
+- Website: Added missing Adventure category filter (#4)
+- README: Removed "Coming soon to browser stores" placeholder (#7)
+
+### Changed
+- Default bindings now use array format internally
+- Updated README with website and preset library links
+- Updated project structure documentation for docs/ folder
+
+---
+
 ## [1.7.1] - 2026-01-30
 
 ### Added
@@ -234,6 +271,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Highlights |
 |---------|------|------------|
+| 1.8.0 | 2026-01-30 | Multi-key bindings, preset library, GitHub Pages website |
 | 1.7.1 | 2026-01-30 | Bug report button |
 | 1.7.0 | 2025-01-28 | Macro recording |
 | 1.6.0 | 2025-01-28 | On-screen overlay, profile switch fix |
@@ -250,7 +288,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.1...HEAD
+[Unreleased]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.1...v1.8.0
 [1.7.1]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.7.0...v1.7.1
 [1.7.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/compare/v1.5.0...v1.6.0
