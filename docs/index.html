@@ -1,156 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xbox Cloud Gaming KB+M - Play with Keyboard and Mouse</title>
-  <meta name="description" content="Play Xbox Cloud Gaming with keyboard and mouse. Free Chrome extension with customizable key bindings, sensitivity curves, game profiles, and macro recording.">
+  <title data-i18n="pageTitle">Xbox Cloud Gaming KB+M - Play with Keyboard and Mouse</title>
+  <meta name="description" data-i18n-attr="content" data-i18n="metaDescription" content="Play Xbox Cloud Gaming with keyboard and mouse. Free Chrome extension with customizable key bindings, sensitivity curves, game profiles, and macro recording.">
   <meta name="keywords" content="Xbox Cloud Gaming, keyboard mouse, xCloud, Chrome extension, game profiles">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="canonical" href="https://jeremiahjordanisaacson.github.io/Keyboard-Mouse-for-Xbox-Cloud-Gaming/">
 </head>
 <body>
-  <nav class="nav">
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-link" data-i18n="skipToContent">Skip to main content</a>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-content">
-      <a href="./" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <a href="./" class="nav-logo" aria-label="Xbox Cloud KB+M Home">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <rect width="32" height="32" rx="6" fill="#107c10"/>
           <path d="M8 12h4v8H8v-8zm6 0h4v8h-4v-8zm6 0h4v8h-4v-8z" fill="white"/>
         </svg>
         <span>Xbox Cloud KB+M</span>
       </a>
-      <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="presets/">Preset Library</a></li>
-        <li><a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
+
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#features" data-i18n="navFeatures">Features</a></li>
+          <li><a href="#how-it-works" data-i18n="navHowItWorks">How It Works</a></li>
+          <li><a href="presets/" data-i18n="navPresets">Preset Library</a></li>
+          <li><a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+
+        <!-- Language Selector -->
+        <div class="language-selector" role="region" aria-label="Language selection">
+          <button class="language-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">
+            <i class="fa-solid fa-globe" aria-hidden="true"></i>
+            <span class="current-lang">EN</span>
+            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="language-dropdown" role="listbox" aria-label="Available languages">
+            <!-- Languages populated by JS -->
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 
-  <main>
-    <section class="hero">
+  <main id="main-content" role="main">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="hero-content">
-        <h1>Play Xbox Cloud Gaming with Keyboard + Mouse</h1>
-        <p class="tagline">Transform your xCloud experience with precise keyboard and mouse controls. Free, open-source, and fully customizable.</p>
+        <h1 id="hero-title" data-i18n="heroTitle">Play Xbox Cloud Gaming with Keyboard + Mouse</h1>
+        <p class="tagline" data-i18n="heroTagline">Transform your xCloud experience with precise keyboard and mouse controls. Free, open-source, and fully customizable.</p>
         <div class="hero-buttons">
           <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases" class="btn btn-primary" target="_blank" rel="noopener">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-            Download from GitHub
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            <span data-i18n="downloadBtn">Download from GitHub</span>
           </a>
           <a href="presets/" class="btn btn-secondary">
-            Browse Presets
+            <span data-i18n="browsePresetsBtn">Browse Presets</span>
           </a>
         </div>
       </div>
     </section>
 
-    <section id="features" class="features">
-      <h2 class="section-title">Features</h2>
+    <section id="features" class="features" aria-labelledby="features-title">
+      <h2 id="features-title" class="section-title" data-i18n="featuresTitle">Features</h2>
       <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon">WASD</div>
-          <h3>Full Keyboard Support</h3>
-          <p>Use any key on your keyboard to control movement, actions, and menus. WASD moves, Space jumps, and everything is customizable.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">+</div>
-          <h3>Multi-Key Bindings</h3>
-          <p>Bind multiple keys to the same action. Use both Space and Enter for the A button, or create comfortable alternatives.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">Aim</div>
-          <h3>Mouse Aiming</h3>
-          <p>Precise mouse control for camera and aiming. Click in the game to lock your cursor and start aiming.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">Profiles</div>
-          <h3>Game Profiles</h3>
-          <p>Create different profiles for different games. Auto-switch profiles when you launch specific games.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">Curves</div>
-          <h3>Sensitivity Curves</h3>
-          <p>Choose linear, exponential, or S-curve sensitivity. Adjust deadzone for perfect control feel.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">Macro</div>
-          <h3>Macro Recording</h3>
-          <p>Record button sequences with timing and replay them with a single key press. Perfect for combos.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">Cloud</div>
-          <h3>Cloud Sync</h3>
-          <p>Your settings sync across devices via Chrome. Set up once, play anywhere with the same configuration.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">Overlay</div>
-          <h3>On-Screen Overlay</h3>
-          <p>See your current profile and status with a minimal overlay. Drag to reposition or hide completely.</p>
-        </div>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">WASD</div>
+          <h3 data-i18n="featureKeyboardTitle">Full Keyboard Support</h3>
+          <p data-i18n="featureKeyboardDesc">Use any key on your keyboard to control movement, actions, and menus. WASD moves, Space jumps, and everything is customizable.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">+</div>
+          <h3 data-i18n="featureMultiKeyTitle">Multi-Key Bindings</h3>
+          <p data-i18n="featureMultiKeyDesc">Bind multiple keys to the same action. Use both Space and Enter for the A button, or create comfortable alternatives.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Aim</div>
+          <h3 data-i18n="featureMouseTitle">Mouse Aiming</h3>
+          <p data-i18n="featureMouseDesc">Precise mouse control for camera and aiming. Click in the game to lock your cursor and start aiming.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Profiles</div>
+          <h3 data-i18n="featureProfilesTitle">Game Profiles</h3>
+          <p data-i18n="featureProfilesDesc">Create different profiles for different games. Auto-switch profiles when you launch specific games.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Curves</div>
+          <h3 data-i18n="featureCurvesTitle">Sensitivity Curves</h3>
+          <p data-i18n="featureCurvesDesc">Choose linear, exponential, or S-curve sensitivity. Adjust deadzone for perfect control feel.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Macro</div>
+          <h3 data-i18n="featureMacroTitle">Macro Recording</h3>
+          <p data-i18n="featureMacroDesc">Record button sequences with timing and replay them with a single key press. Perfect for combos.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Cloud</div>
+          <h3 data-i18n="featureCloudTitle">Cloud Sync</h3>
+          <p data-i18n="featureCloudDesc">Your settings sync across devices via Chrome. Set up once, play anywhere with the same configuration.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">Overlay</div>
+          <h3 data-i18n="featureOverlayTitle">On-Screen Overlay</h3>
+          <p data-i18n="featureOverlayDesc">See your current profile and status with a minimal overlay. Drag to reposition or hide completely.</p>
+        </article>
       </div>
     </section>
 
-    <section id="how-it-works" class="how-it-works">
+    <section id="how-it-works" class="how-it-works" aria-labelledby="how-it-works-title">
       <div class="container">
-        <h2 class="section-title">How It Works</h2>
-        <div class="steps">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Install Extension</h3>
-            <p>Add the extension to Chrome or Edge from the browser store. It's free and open-source.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>Open Xbox Cloud Gaming</h3>
-            <p>Go to xbox.com/play and start any game. The extension activates automatically.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>Click to Lock Mouse</h3>
-            <p>Click on the game stream to lock your mouse for camera control. Press Escape to unlock.</p>
-          </div>
+        <h2 id="how-it-works-title" class="section-title" data-i18n="howItWorksTitle">How It Works</h2>
+        <div class="steps" role="list">
+          <article class="step" role="listitem">
+            <div class="step-number" aria-hidden="true">1</div>
+            <h3 data-i18n="step1Title">Install Extension</h3>
+            <p data-i18n="step1Desc">Add the extension to Chrome or Edge from the browser store. It's free and open-source.</p>
+          </article>
+          <article class="step" role="listitem">
+            <div class="step-number" aria-hidden="true">2</div>
+            <h3 data-i18n="step2Title">Open Xbox Cloud Gaming</h3>
+            <p data-i18n="step2Desc">Go to xbox.com/play and start any game. The extension activates automatically.</p>
+          </article>
+          <article class="step" role="listitem">
+            <div class="step-number" aria-hidden="true">3</div>
+            <h3 data-i18n="step3Title">Click to Lock Mouse</h3>
+            <p data-i18n="step3Desc">Click on the game stream to lock your mouse for camera control. Press Escape to unlock.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <section id="browsers" class="browser-support">
-      <h2 class="section-title">Browser Support</h2>
-      <div class="browser-grid">
-        <div class="browser-item supported">
-          <i class="fa-brands fa-chrome"></i>
+    <section id="browsers" class="browser-support" aria-labelledby="browsers-title">
+      <h2 id="browsers-title" class="section-title" data-i18n="browserSupportTitle">Browser Support</h2>
+      <p class="browser-subtitle" data-i18n="browserSubtitle">Works with any Chromium-based browser</p>
+      <div class="browser-grid" role="list" aria-label="Supported browsers">
+        <div class="browser-item supported" role="listitem">
+          <i class="fa-brands fa-chrome" aria-hidden="true"></i>
           <span>Chrome</span>
         </div>
-        <div class="browser-item supported">
-          <i class="fa-brands fa-edge"></i>
+        <div class="browser-item supported" role="listitem">
+          <i class="fa-brands fa-edge" aria-hidden="true"></i>
           <span>Edge</span>
         </div>
-        <div class="browser-item supported">
-          <i class="fa-brands fa-firefox-browser"></i>
+        <div class="browser-item supported" role="listitem">
+          <i class="fa-brands fa-brave" aria-hidden="true"></i>
+          <span>Brave</span>
+        </div>
+        <div class="browser-item supported" role="listitem">
+          <i class="fa-brands fa-opera" aria-hidden="true"></i>
+          <span>Opera</span>
+        </div>
+        <div class="browser-item supported" role="listitem">
+          <svg class="browser-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="20" fill="#EF3939"/>
+            <path d="M24 8L14 38h6l2-6h12l2 6h6L32 8h-8zm0 8l4 12h-8l4-12z" fill="#fff"/>
+          </svg>
+          <span>Vivaldi</span>
+        </div>
+        <div class="browser-item supported" role="listitem">
+          <svg class="browser-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#arc-gradient)"/>
+            <path d="M14 34V14h4v16h12V14h4v20H14z" fill="#fff"/>
+            <defs>
+              <linearGradient id="arc-gradient" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FF6B9D"/>
+                <stop offset="0.5" stop-color="#C86BFF"/>
+                <stop offset="1" stop-color="#6B9DFF"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>Arc</span>
+        </div>
+        <div class="browser-item supported" role="listitem">
+          <i class="fa-brands fa-opera" aria-hidden="true"></i>
+          <span>Opera GX</span>
+        </div>
+        <div class="browser-item supported" role="listitem">
+          <svg class="browser-icon-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="20" fill="#5C5CFF"/>
+            <circle cx="24" cy="24" r="10" fill="#fff"/>
+            <circle cx="24" cy="24" r="5" fill="#5C5CFF"/>
+          </svg>
+          <span>Chromium</span>
+        </div>
+        <div class="browser-item supported" role="listitem">
+          <i class="fa-brands fa-firefox-browser" aria-hidden="true"></i>
           <span>Firefox</span>
         </div>
       </div>
     </section>
 
-    <section class="preset-cta">
-      <h2>Ready-Made Presets</h2>
-      <p>Browse community-created profiles for popular games. One-click install directly into your extension.</p>
+    <section class="preset-cta" aria-labelledby="preset-cta-title">
+      <h2 id="preset-cta-title" data-i18n="presetCtaTitle">Ready-Made Presets</h2>
+      <p data-i18n="presetCtaDesc">Browse community-created profiles for popular games. One-click install directly into your extension.</p>
       <a href="presets/" class="btn btn-primary">
-        Browse Preset Library
+        <span data-i18n="presetCtaBtn">Browse Preset Library</span>
       </a>
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="footer-content">
       <div class="footer-links">
         <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/issues" target="_blank" rel="noopener">Report a Bug</a>
-        <a href="presets/">Preset Library</a>
+        <a href="https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/issues" target="_blank" rel="noopener" data-i18n="footerReportBug">Report a Bug</a>
+        <a href="presets/" data-i18n="footerPresets">Preset Library</a>
       </div>
-      <p>Open-source project. Not affiliated with Microsoft or Xbox.</p>
+      <p data-i18n="footerDisclaimer">Open-source project. Not affiliated with Microsoft or Xbox.</p>
     </div>
   </footer>
+
+  <script src="js/i18n.js"></script>
 </body>
 </html>

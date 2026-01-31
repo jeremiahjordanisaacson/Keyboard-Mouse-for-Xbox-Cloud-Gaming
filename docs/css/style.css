@@ -275,12 +275,20 @@ a:hover {
   padding: 80px 24px;
 }
 
+.browser-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-top: -32px;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
 .browser-grid {
   display: flex;
-  gap: 24px;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -289,11 +297,11 @@ a:hover {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 20px;
+  padding: 16px 20px;
   background: var(--bg-secondary);
   border-radius: 12px;
   border: 1px solid var(--border-color);
-  min-width: 120px;
+  min-width: 100px;
 }
 
 .browser-item svg {
@@ -315,6 +323,19 @@ a:hover {
 
 .browser-item i.fa-firefox-browser {
   color: #FF7139;
+}
+
+.browser-item i.fa-brave {
+  color: #FB542B;
+}
+
+.browser-item i.fa-opera {
+  color: #FF1B2D;
+}
+
+.browser-icon-svg {
+  width: 48px;
+  height: 48px;
 }
 
 .browser-item span {
