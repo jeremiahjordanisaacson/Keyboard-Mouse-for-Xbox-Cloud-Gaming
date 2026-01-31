@@ -8,6 +8,8 @@ This browser extension injects a virtual Xbox controller into the Xbox Cloud Gam
 [![Latest Release](https://img.shields.io/github/v/release/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming)](https://github.com/jeremiahjordanisaacson/Keyboard-Mouse-for-Xbox-Cloud-Gaming/releases/latest)
 [![Changelog](https://img.shields.io/badge/changelog-view-blue)](CHANGELOG.md)
 
+**[Visit the Website](https://jeremiahjordanisaacson.github.io/Keyboard-Mouse-for-Xbox-Cloud-Gaming/)** | **[Browse Preset Library](https://jeremiahjordanisaacson.github.io/Keyboard-Mouse-for-Xbox-Cloud-Gaming/presets/)**
+
 ## ✨ Features
 
 - **WASD Movement** - Smooth analog stick simulation
@@ -220,9 +222,11 @@ When playing a game on xCloud, the extension detects which game you're playing:
 │   └── setup.sh       # Setup script for Safari extension
 ├── mobile/            # Mobile browser support
 │   └── README.md      # Android installation guide
-└── docs/              # Documentation
-    ├── PRIVACY_POLICY.md
-    └── STORE_SUBMISSION.md
+└── docs/              # GitHub Pages website & documentation
+    ├── index.html     # Landing page
+    ├── css/           # Website styles
+    ├── js/            # Website scripts
+    └── presets/       # Preset library browser & presets.json
 ```
 
 ## 🌍 Supported Languages
