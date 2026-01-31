@@ -165,36 +165,32 @@ const I18n = {
 
     if (!dropdown || !btn) return;
 
-    // Group languages by region for better organization
-    const regions = {
-      'Americas': ['en', 'es', 'pt_BR', 'pt_PT', 'fr'],
-      'Europe': ['de', 'fr', 'it', 'nl', 'pl', 'ru', 'uk', 'cs', 'sk', 'hu', 'ro', 'bg', 'hr', 'sl', 'sr', 'el', 'da', 'sv', 'nb', 'fi', 'lt', 'lv', 'ca'],
-      'Middle East': ['ar', 'he', 'fa', 'tr', 'ur'],
-      'Asia': ['zh_CN', 'zh_TW', 'ja', 'ko', 'hi', 'bn', 'ta', 'te', 'ml', 'kn', 'mr', 'gu', 'pa', 'ne', 'th', 'vi', 'id', 'ms', 'fil', 'my', 'kk'],
-      'Africa': ['sw']
-    };
-
-    // Create flat list sorted by native name
+    // Sort languages alphabetically by English name
     const sortedLangs = Object.keys(this.languages).sort((a, b) =>
-      this.languages[a].nativeName.localeCompare(this.languages[b].nativeName)
+      this.languages[a].name.localeCompare(this.languages[b].name)
     );
 
-    // Build dropdown HTML
-    let html = '<div class="language-search"><input type="text" placeholder="Search languages..." aria-label="Search languages"></div>';
-    html += '<div class="language-list">';
+    // Build dropdown HTML with search and scrollable list
+    let html = `
+      <div class="lang-dropdown-header">
+        <div class="lang-search-wrap">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="text" class="lang-search-input" placeholder="Search..." aria-label="Search languages">
+        </div>
+      </div>
+      <div class="lang-list" role="listbox">
+    `;
 
     sortedLangs.forEach(code => {
       const lang = this.languages[code];
       const isSelected = code === this.currentLang;
       html += `
-        <button class="language-option ${isSelected ? 'selected' : ''}"
+        <button class="lang-item ${isSelected ? 'active' : ''}"
                 data-lang="${code}"
                 role="option"
-                aria-selected="${isSelected}"
-                ${lang.rtl ? 'dir="rtl"' : ''}>
-          <span class="lang-native">${lang.nativeName}</span>
-          <span class="lang-english">${lang.name}</span>
-          ${isSelected ? '<i class="fa-solid fa-check" aria-hidden="true"></i>' : ''}
+                aria-selected="${isSelected}">
+          <span class="lang-name">${lang.nativeName}</span>
+          <span class="lang-code">${code.replace('_', '-').toUpperCase()}</span>
         </button>
       `;
     });
@@ -205,59 +201,89 @@ const I18n = {
     // Toggle dropdown
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !isExpanded);
-      dropdown.classList.toggle('show');
+      const isOpen = dropdown.classList.contains('open');
 
-      if (!isExpanded) {
-        // Focus search input when opening
-        const searchInput = dropdown.querySelector('input');
-        if (searchInput) searchInput.focus();
+      if (isOpen) {
+        this.closeDropdown(btn, dropdown);
+      } else {
+        this.openDropdown(btn, dropdown);
       }
     });
 
     // Close on outside click
-    document.addEventListener('click', () => {
-      btn.setAttribute('aria-expanded', 'false');
-      dropdown.classList.remove('show');
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+        this.closeDropdown(btn, dropdown);
+      }
     });
 
-    dropdown.addEventListener('click', (e) => {
-      e.stopPropagation();
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeDropdown(btn, dropdown);
+      }
     });
 
     // Language selection
     dropdown.addEventListener('click', async (e) => {
-      const option = e.target.closest('.language-option');
+      const option = e.target.closest('.lang-item');
       if (option) {
         const lang = option.dataset.lang;
         await this.changeLanguage(lang);
-        btn.setAttribute('aria-expanded', 'false');
-        dropdown.classList.remove('show');
+        this.closeDropdown(btn, dropdown);
       }
     });
 
     // Search functionality
-    const searchInput = dropdown.querySelector('input');
+    const searchInput = dropdown.querySelector('.lang-search-input');
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        dropdown.querySelectorAll('.language-option').forEach(option => {
-          const native = option.querySelector('.lang-native').textContent.toLowerCase();
-          const english = option.querySelector('.lang-english').textContent.toLowerCase();
-          const matches = native.includes(query) || english.includes(query);
+        const query = e.target.value.toLowerCase().trim();
+        dropdown.querySelectorAll('.lang-item').forEach(option => {
+          const code = option.dataset.lang.toLowerCase();
+          const native = option.querySelector('.lang-name').textContent.toLowerCase();
+          const english = this.languages[option.dataset.lang].name.toLowerCase();
+          const matches = !query || native.includes(query) || english.includes(query) || code.includes(query);
           option.style.display = matches ? '' : 'none';
         });
       });
-    }
 
-    // Keyboard navigation
-    btn.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        btn.click();
-      }
-    });
+      // Prevent dropdown close when clicking search
+      searchInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  },
+
+  openDropdown(btn, dropdown) {
+    btn.setAttribute('aria-expanded', 'true');
+    dropdown.classList.add('open');
+
+    // Focus search after animation
+    setTimeout(() => {
+      const searchInput = dropdown.querySelector('.lang-search-input');
+      if (searchInput) searchInput.focus();
+    }, 100);
+
+    // Scroll active item into view
+    const activeItem = dropdown.querySelector('.lang-item.active');
+    if (activeItem) {
+      setTimeout(() => {
+        activeItem.scrollIntoView({ block: 'center', behavior: 'instant' });
+      }, 50);
+    }
+  },
+
+  closeDropdown(btn, dropdown) {
+    btn.setAttribute('aria-expanded', 'false');
+    dropdown.classList.remove('open');
+
+    // Clear search
+    const searchInput = dropdown.querySelector('.lang-search-input');
+    if (searchInput) {
+      searchInput.value = '';
+      dropdown.querySelectorAll('.lang-item').forEach(opt => opt.style.display = '');
+    }
   },
 
   // Change language
@@ -271,19 +297,11 @@ const I18n = {
     this.applyTranslations();
     this.updateDocumentDirection();
 
-    // Update selector UI
-    document.querySelectorAll('.language-option').forEach(option => {
+    // Update selector UI - mark new selection as active
+    document.querySelectorAll('.lang-item').forEach(option => {
       const isSelected = option.dataset.lang === lang;
-      option.classList.toggle('selected', isSelected);
+      option.classList.toggle('active', isSelected);
       option.setAttribute('aria-selected', isSelected);
-
-      // Update checkmark
-      const existingCheck = option.querySelector('.fa-check');
-      if (isSelected && !existingCheck) {
-        option.insertAdjacentHTML('beforeend', '<i class="fa-solid fa-check" aria-hidden="true"></i>');
-      } else if (!isSelected && existingCheck) {
-        existingCheck.remove();
-      }
     });
 
     // Announce language change to screen readers
