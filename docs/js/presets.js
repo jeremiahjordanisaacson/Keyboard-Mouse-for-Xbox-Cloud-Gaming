@@ -181,8 +181,8 @@
           ` : ''}
         </div>
         <div class="preset-card-footer">
-          <button class="btn btn-secondary btn-small view-btn" data-preset-id="${escapeHtml(preset.id)}">View Details</button>
-          <button class="btn btn-primary btn-small install-btn" data-preset-id="${escapeHtml(preset.id)}" ${!extensionInstalled ? 'disabled title="Extension not installed"' : ''}>Install</button>
+          <button type="button" class="btn btn-secondary btn-small view-btn" data-preset-id="${escapeHtml(preset.id)}" aria-label="View details for ${escapeHtml(preset.name)}">View Details</button>
+          <button type="button" class="btn btn-primary btn-small install-btn" data-preset-id="${escapeHtml(preset.id)}" aria-label="Install ${escapeHtml(preset.name)} preset" ${!extensionInstalled ? 'disabled title="Extension not installed"' : ''}>Install</button>
         </div>
       </div>
     `).join('');
@@ -230,11 +230,14 @@
     modalInstallBtn.disabled = !extensionInstalled;
 
     presetModal.classList.add('active');
+    presetModal.setAttribute('aria-hidden', 'false');
+    modalClose.focus();
   }
 
   // Close modal
   function closeModal() {
     presetModal.classList.remove('active');
+    presetModal.setAttribute('aria-hidden', 'true');
     selectedPreset = null;
   }
 
@@ -313,8 +316,12 @@
     // Filter button handlers
     filterButtons.addEventListener('click', (e) => {
       if (e.target.classList.contains('filter-btn')) {
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-pressed', 'false');
+        });
         e.target.classList.add('active');
+        e.target.setAttribute('aria-pressed', 'true');
         filterPresets(searchInput.value, e.target.dataset.category);
       }
     });

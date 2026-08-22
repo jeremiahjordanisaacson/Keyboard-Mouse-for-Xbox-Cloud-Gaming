@@ -8,10 +8,12 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="presets-page">
-  <nav class="nav">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
     <div class="nav-content">
-      <a href="../" class="nav-logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <a href="../" class="nav-logo" aria-label="Xbox Cloud KB+M Home">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
           <rect width="32" height="32" rx="6" fill="#107c10"/>
           <path d="M8 12h4v8H8v-8zm6 0h4v8h-4v-8zm6 0h4v8h-4v-8z" fill="white"/>
         </svg>
@@ -25,7 +27,7 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
     <header class="presets-header">
       <h1>Preset Library</h1>
       <p>Community-created keyboard and mouse profiles for popular games. Click install to add directly to your extension.</p>
@@ -45,19 +47,20 @@
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Search presets..." aria-label="Search presets">
         </div>
-        <div class="filter-buttons" id="filterButtons">
-          <button class="filter-btn active" data-category="all">All</button>
-          <button class="filter-btn" data-category="fps">FPS</button>
-          <button class="filter-btn" data-category="racing">Racing</button>
-          <button class="filter-btn" data-category="rpg">RPG</button>
-          <button class="filter-btn" data-category="adventure">Adventure</button>
-          <button class="filter-btn" data-category="sports">Sports</button>
-          <button class="filter-btn" data-category="universal">Universal</button>
+        <div class="filter-buttons" id="filterButtons" role="group" aria-label="Filter presets by category">
+          <button type="button" class="filter-btn active" data-category="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-btn" data-category="fps" aria-pressed="false">FPS</button>
+          <button type="button" class="filter-btn" data-category="racing" aria-pressed="false">Racing</button>
+          <button type="button" class="filter-btn" data-category="rpg" aria-pressed="false">RPG</button>
+          <button type="button" class="filter-btn" data-category="adventure" aria-pressed="false">Adventure</button>
+          <button type="button" class="filter-btn" data-category="sports" aria-pressed="false">Sports</button>
+          <button type="button" class="filter-btn" data-category="universal" aria-pressed="false">Universal</button>
         </div>
       </div>
     </div>
 
-    <div id="presetsGrid" class="presets-grid">
+    <h2 class="sr-only">Available presets</h2>
+    <div id="presetsGrid" class="presets-grid" aria-live="polite">
       <div class="loading">
         <div class="loading-spinner"></div>
         <p>Loading presets...</p>
@@ -66,8 +69,8 @@
   </main>
 
   <!-- Preset Detail Modal -->
-  <div class="modal-overlay" id="presetModal">
-    <div class="modal">
+  <div class="modal-overlay" id="presetModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" aria-hidden="true">
+    <div class="modal" tabindex="-1">
       <div class="modal-header">
         <div>
           <h2 id="modalTitle">Preset Name</h2>
@@ -76,7 +79,7 @@
             <span class="preset-category" id="modalCategory">fps</span>
           </div>
         </div>
-        <button class="modal-close" id="modalClose">&times;</button>
+        <button type="button" class="modal-close" id="modalClose" aria-label="Close preset details">&times;</button>
       </div>
       <div class="modal-body">
         <div class="modal-section">
@@ -118,8 +121,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
-        <button class="btn btn-primary" id="modalInstallBtn">Install Preset</button>
+        <button type="button" class="btn btn-secondary" id="modalCancelBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="modalInstallBtn">Install Preset</button>
       </div>
     </div>
   </div>

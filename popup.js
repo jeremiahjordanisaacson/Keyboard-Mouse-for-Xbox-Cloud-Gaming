@@ -193,14 +193,18 @@ document.addEventListener('DOMContentLoaded', function() {
     keyBindButtons.forEach(btn => {
       const action = btn.dataset.action;
       const binding = currentBindings[action];
+      const actionName = getMessage(action) || action;
       if (binding) {
         const keys = normalizeBinding(binding);
         if (keys.length === 0) {
           btn.innerHTML = '<span class="add-key">+ Add</span>';
+          btn.setAttribute('aria-label', `Change ${actionName} key binding. No keys assigned.`);
         } else {
+          const displayKeys = keys.map(k => keyCodeToDisplayName(k)).join(', ');
           btn.innerHTML = keys.map(k =>
-            `<span class="key-chip">${escapeHtml(keyCodeToDisplayName(k))}<button type="button" class="remove-key" data-key="${escapeHtml(k)}" data-action="${action}" title="Remove this key">&times;</button></span>`
+            `<span class="key-chip">${escapeHtml(keyCodeToDisplayName(k))}<span class="remove-key" data-key="${escapeHtml(k)}" data-action="${escapeHtml(action)}" title="Remove this key" aria-hidden="true">&times;</span></span>`
           ).join('') + '<span class="add-key" data-action="' + action + '" title="Add another key">+</span>';
+          btn.setAttribute('aria-label', `Change ${actionName} key binding. Current keys: ${displayKeys}.`);
         }
       }
     });
@@ -365,11 +369,22 @@ document.addEventListener('DOMContentLoaded', function() {
   function saveCurrentProfile() {
     if (!profiles[activeProfileId]) return;
 
+    const contentConfig = {
+      enabled: enabledCheckbox.checked,
+      mouseSensitivity: parseInt(sensitivitySlider.value),
+      invertY: invertYCheckbox.checked,
+      sensitivityCurve: sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear',
+      deadzone: deadzoneSlider ? parseInt(deadzoneSlider.value) : 5
+    };
+    if (showOverlayCheckbox) {
+      contentConfig.showOverlay = showOverlayCheckbox.checked;
+    }
+
     profiles[activeProfileId].keyBindings = { ...currentBindings };
-    profiles[activeProfileId].mouseSensitivity = parseInt(sensitivitySlider.value);
-    profiles[activeProfileId].invertY = invertYCheckbox.checked;
-    profiles[activeProfileId].sensitivityCurve = sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear';
-    profiles[activeProfileId].deadzone = deadzoneSlider ? parseInt(deadzoneSlider.value) : 5;
+    profiles[activeProfileId].mouseSensitivity = contentConfig.mouseSensitivity;
+    profiles[activeProfileId].invertY = contentConfig.invertY;
+    profiles[activeProfileId].sensitivityCurve = contentConfig.sensitivityCurve;
+    profiles[activeProfileId].deadzone = contentConfig.deadzone;
 
     chrome.storage.sync.set({ profiles }, function() {
       console.log('Profile saved:', activeProfileId);
@@ -379,15 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Read existing config first to preserve showOverlay and other values
     chrome.storage.sync.get(['config'], function(result) {
       const config = result.config || {};
-      config.enabled = enabledCheckbox.checked;
-      config.mouseSensitivity = parseInt(sensitivitySlider.value);
-      config.invertY = invertYCheckbox.checked;
-      config.sensitivityCurve = sensitivityCurveSelect ? sensitivityCurveSelect.value : 'linear';
-      config.deadzone = deadzoneSlider ? parseInt(deadzoneSlider.value) : 5;
-      // Preserve showOverlay
-      if (config.showOverlay === undefined && showOverlayCheckbox) {
-        config.showOverlay = showOverlayCheckbox.checked;
-      }
+      Object.assign(config, contentConfig);
 
       chrome.storage.sync.set({ config, keyBindings: currentBindings }, function() {
         console.log('Config saved');
@@ -399,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (tabs[0]?.id) {
         chrome.tabs.sendMessage(tabs[0].id, {
           type: 'CONFIG_UPDATE',
-          config: config,
+          config: contentConfig,
           keyBindings: currentBindings
         }).catch(() => {});
       }
@@ -933,10 +940,10 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="macro-name">${escapeHtml(macro.name)}</div>
           <div class="macro-details">${actionCount} actions, ${duration}s</div>
         </div>
-        <button class="macro-trigger" data-macro-id="${macro.id}" title="${getMessage('changeTrigger')}">${keyCodeToDisplayName(macro.triggerKey) || '?'}</button>
+        <button type="button" class="macro-trigger" data-macro-id="${escapeHtml(macro.id)}" title="${getMessage('changeTrigger')}" aria-label="${getMessage('changeTrigger')}">${keyCodeToDisplayName(macro.triggerKey) || '?'}</button>
         <div class="macro-actions">
-          <button class="macro-btn play-btn" data-macro-id="${macro.id}" title="${getMessage('playMacro')}">▶</button>
-          <button class="macro-btn danger delete-btn" data-macro-id="${macro.id}" title="${getMessage('deleteMacro')}">×</button>
+          <button type="button" class="macro-btn play-btn" data-macro-id="${escapeHtml(macro.id)}" title="${getMessage('playMacro')}" aria-label="${getMessage('playMacro')}">▶</button>
+          <button type="button" class="macro-btn danger delete-btn" data-macro-id="${escapeHtml(macro.id)}" title="${getMessage('deleteMacro')}" aria-label="${getMessage('deleteMacro')}">×</button>
         </div>
       `;
 

@@ -668,8 +668,8 @@
       <div class="xcloud-kbm-overlay-header">
         <span class="xcloud-kbm-overlay-title">KB+M</span>
         <div class="xcloud-kbm-overlay-controls">
-          <button class="xcloud-kbm-overlay-btn minimize" title="Minimize">−</button>
-          <button class="xcloud-kbm-overlay-btn close" title="Hide (Alt+Shift+O)">×</button>
+          <button type="button" class="xcloud-kbm-overlay-btn minimize" title="Minimize" aria-label="Minimize keyboard and mouse overlay">−</button>
+          <button type="button" class="xcloud-kbm-overlay-btn close" title="Hide (Alt+Shift+O)" aria-label="Hide keyboard and mouse overlay">×</button>
         </div>
       </div>
       <div class="xcloud-kbm-overlay-content">

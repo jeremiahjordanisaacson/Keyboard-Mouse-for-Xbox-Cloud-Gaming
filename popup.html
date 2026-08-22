@@ -586,7 +586,7 @@
     }
 
     .game-label {
-      color: #888;
+      color: #b0b0b0;
     }
 
     .game-name {
@@ -617,7 +617,7 @@
       padding: 10px 12px;
       margin-top: 12px;
       font-size: 11px;
-      color: #888;
+      color: #b0b0b0;
     }
 
     .hotkey-info-title {
@@ -732,7 +732,7 @@
       padding: 6px 12px;
       font-size: 10px;
       font-weight: 600;
-      color: #888;
+      color: #b0b0b0;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       border-bottom: 1px solid #3d3d3d;
@@ -890,7 +890,7 @@
     .macro-empty {
       padding: 16px;
       text-align: center;
-      color: #666;
+      color: #b0b0b0;
       font-size: 12px;
     }
 
@@ -920,7 +920,7 @@
 
     .macro-details {
       font-size: 10px;
-      color: #888;
+      color: #b0b0b0;
     }
 
     .macro-trigger {
@@ -1055,7 +1055,7 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="mouse-settings-heading">
+    <section class="section">
       <h2 id="mouse-settings-heading" data-i18n="mouseSensitivity">Mouse Settings</h2>
 
       <div class="slider-row">
@@ -1114,11 +1114,15 @@
                value="5"
                aria-valuemin="0"
                aria-valuemax="30"
-               aria-valuenow="5">
+               aria-valuenow="5"
+               aria-describedby="deadzone-help">
+        <span id="deadzone-help" class="visually-hidden">
+          Adjust the controller stick deadzone from 0 percent to 30 percent
+        </span>
       </div>
     </section>
 
-    <section class="section" aria-labelledby="keybindings-heading">
+    <section class="section">
       <div class="section-header">
         <h2 id="keybindings-heading" data-i18n="keyBindings">Key Bindings</h2>
         <button type="button" class="reset-btn" id="resetBindings" aria-label="Reset all key bindings to defaults" data-i18n="resetToDefaults">
@@ -1227,12 +1231,12 @@
       </div>
     </section>
 
-    <section class="section" aria-labelledby="macros-heading">
+    <section class="section">
       <div class="section-header">
         <h2 id="macros-heading" data-i18n="macros">Macros</h2>
-        <button type="button" class="small-btn" id="newMacroBtn" data-i18n="newMacro">+ New</button>
+        <button type="button" class="small-btn" id="newMacroBtn" data-i18n="newMacro" aria-label="Create new macro">+ New</button>
       </div>
-      <div class="macro-list" id="macroList">
+      <div class="macro-list" id="macroList" role="region" aria-labelledby="macros-heading" aria-live="polite">
         <div class="macro-empty" id="macroEmpty" data-i18n="noMacros">No macros recorded</div>
       </div>
     </section>
@@ -1311,7 +1315,7 @@
           <span class="recording-dot"></span>
           <span class="recording-text" data-i18n="recordingMacro">Recording... Press buttons to record</span>
         </div>
-        <p style="font-size:11px; color:#888; margin-bottom:12px;" data-i18n="macroInstructions">Press your game buttons in sequence. Timing is recorded.</p>
+        <p style="font-size:11px; color:#b0b0b0; margin-bottom:12px;" data-i18n="macroInstructions">Press your game buttons in sequence. Timing is recorded.</p>
         <div class="modal-buttons">
           <button type="button" class="modal-btn" id="cancelRecordingBtn" data-i18n="cancel">Cancel</button>
           <button type="button" class="modal-btn primary" id="stopRecordingBtn" data-i18n="stopRecording">Stop & Save</button>

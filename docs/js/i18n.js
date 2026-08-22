@@ -178,17 +178,17 @@ const I18n = {
           <input type="text" class="lang-search-input" placeholder="Search..." aria-label="Search languages">
         </div>
       </div>
-      <div class="lang-list" role="listbox">
+      <div class="lang-list">
     `;
 
     sortedLangs.forEach(code => {
       const lang = this.languages[code];
       const isSelected = code === this.currentLang;
       html += `
-        <button class="lang-item ${isSelected ? 'active' : ''}"
+        <button type="button"
+                class="lang-item ${isSelected ? 'active' : ''}"
                 data-lang="${code}"
-                role="option"
-                aria-selected="${isSelected}">
+                aria-pressed="${isSelected}">
           <span class="lang-name">${lang.nativeName}</span>
           <span class="lang-code">${code.replace('_', '-').toUpperCase()}</span>
         </button>
@@ -301,7 +301,7 @@ const I18n = {
     document.querySelectorAll('.lang-item').forEach(option => {
       const isSelected = option.dataset.lang === lang;
       option.classList.toggle('active', isSelected);
-      option.setAttribute('aria-selected', isSelected);
+      option.setAttribute('aria-pressed', isSelected);
     });
 
     // Announce language change to screen readers

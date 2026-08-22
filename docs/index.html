@@ -34,12 +34,12 @@
 
         <!-- Language Selector -->
         <div class="language-selector" role="region" aria-label="Language selection">
-          <button class="language-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">
+          <button type="button" class="language-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="languageDropdown" aria-label="Select language">
             <i class="fa-solid fa-globe" aria-hidden="true"></i>
             <span class="current-lang">EN</span>
             <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
           </button>
-          <div class="language-dropdown" role="listbox" aria-label="Available languages">
+          <div class="language-dropdown" id="languageDropdown" role="dialog" aria-label="Available languages">
             <!-- Languages populated by JS -->
           </div>
         </div>
@@ -113,18 +113,18 @@
     <section id="how-it-works" class="how-it-works" aria-labelledby="how-it-works-title">
       <div class="container">
         <h2 id="how-it-works-title" class="section-title" data-i18n="howItWorksTitle">How It Works</h2>
-        <div class="steps" role="list">
-          <article class="step" role="listitem">
+        <div class="steps">
+          <article class="step">
             <div class="step-number" aria-hidden="true">1</div>
             <h3 data-i18n="step1Title">Install Extension</h3>
             <p data-i18n="step1Desc">Add the extension to Chrome or Edge from the browser store. It's free and open-source.</p>
           </article>
-          <article class="step" role="listitem">
+          <article class="step">
             <div class="step-number" aria-hidden="true">2</div>
             <h3 data-i18n="step2Title">Open Xbox Cloud Gaming</h3>
             <p data-i18n="step2Desc">Go to xbox.com/play and start any game. The extension activates automatically.</p>
           </article>
-          <article class="step" role="listitem">
+          <article class="step">
             <div class="step-number" aria-hidden="true">3</div>
             <h3 data-i18n="step3Title">Click to Lock Mouse</h3>
             <p data-i18n="step3Desc">Click on the game stream to lock your mouse for camera control. Press Escape to unlock.</p>
